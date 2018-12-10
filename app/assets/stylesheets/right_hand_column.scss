@@ -1,0 +1,220 @@
+/* ********* right hand column panels ********** */
+.x_panel.right-hand-column {
+  padding: 0;
+}
+
+.row.main-column {
+  margin-right: 0px;
+  margin-left:  0px;
+}
+
+.right-column {
+  @media (max-width: 768px) {
+    display:none;
+  }
+}
+.x_title.right-hand-column {
+  padding: 0;
+  min-height: 60px;
+  background: #21d0bf;
+}
+.x_title.right-hand-column h2 {
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  height: 40px;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 17px;
+  font-weight: normal;
+}
+
+.x_title.right-hand-column h2.left-aligned {
+  text-align: left;
+  width: 30%;
+  margin-left: 25px;
+}
+
+.x_title.right-hand-column h2.left-aligned-sm {
+  text-align: left;
+  width: 20%;
+  margin-left: 25px;
+
+  @media (max-width: 1200px) {
+    width: 30%
+  }
+}
+
+.x_title.right-hand-column h2.left-aligned-lg {
+  text-align: left;
+  width: 40%;
+  margin-left: 25px;
+}
+
+.x_title.right-hand-column .top_search {
+  padding-left: 10px;
+  padding-top: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.x_title.right-hand-column.no-margin {
+  margin-bottom: 0 !important;
+}
+
+.x_content.right-hand-column {
+  padding: 0;
+  width: 100%;
+  float: left;
+  clear: both;
+  margin-top: 0;
+}
+
+
+.btn-right-hand-column{
+  background: #21d0bf !important;
+  border: 1px solid #21d0bf !important;
+  color: #fff !important;
+  min-width: 100px;
+  float: right;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+#filters {
+  float: none;
+}
+
+#filters .btn-right-hand-column {
+  float: none;
+}
+
+.btn-right-hand-column:hover{
+  background: #424242;
+  border: 1px solid #f2f2f2;
+  color: #f2f2f2;
+  min-width: 100px;
+}
+
+.btn-segmented {
+  background: #f2f2f2;
+  border: 1px solid #f2f2f2 !important;
+  color: #424242 !important;
+  min-width: 100px;
+  float: right;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+.btn-segmented.active {
+  background: #ffcdd2 !important;
+  color: #fff !important;
+  border: 1px solid #ffebee !important;
+}
+
+
+.btn-right-hand-column .caret {
+  margin-left: 10px;
+}
+.btn-right-hand-column span {
+  color: #fff;
+}
+
+.btn-filters {
+  margin: 0 auto;
+  text-align: left;
+  margin-top: 15px;
+  padding-left: 15px;
+  background: #4db2df !important;
+  border: 1px solid #4db2df !important;
+  color: #fff !important;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.btn-dashboard {
+  background: #21d0bf;
+  border: 1px solid white !important;
+  color: white !important;
+  min-width: 100px;
+  min-height: 40px;
+  line-height: 1.5;
+  float: right;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+   -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+   box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+  padding-top: 10px;
+}
+
+.btn-dashboard.active {
+  background: #fff !important;
+  color: #21d0bf !important;
+  border: 1px solid #fff !important;
+  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+
+.btn-navy{
+  background: #21d0bf !important;
+  border: 1px solid #21d0bf !important;
+  color: #fff !important;
+  min-width: 100px;
+  float: right;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.btn-navy:hover{
+  background: #424242;
+  border: 1px solid #f2f2f2;
+  color: #f2f2f2;
+  min-width: 100px;
+}
+
+.btn-blue{
+  background: #4db2df !important;
+  border: 1px solid #4db2df !important;
+  color: #fff !important;
+  min-width: 100px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.btn-blue:hover{
+  background: #f44336;
+  border: 1px solid #f2f2f2;
+  color: #f2f2f2;
+  min-width: 100px;
+}
+
+.btn-red{
+  background: #f44336 !important;
+  border: 1px solid #f44336 !important;
+  color: #fff !important;
+  min-width: 100px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.btn-red:hover{
+  background: #f44336;
+  border: 1px solid #f2f2f2;
+  color: #f2f2f2;
+  min-width: 100px;
+}
+
+.btn-green{
+  background: #3db563 !important;
+  border: 1px solid #3db563 !important;
+  color: #fff !important;
+  min-width: 100px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+}
+
+.btn-green:hover{
+  background: #424242;
+  border: 1px solid #f2f2f2;
+  color: #f2f2f2;
+  min-width: 100px;
+}

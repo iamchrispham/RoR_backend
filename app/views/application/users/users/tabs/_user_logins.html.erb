@@ -1,0 +1,37 @@
+<div class="row main-column" id="objects">
+  <table class="data table table-striped no-margin">
+    <thead>
+    <tr>
+      <th> <%= t('views.users.show.content.user_logins.ip') %></th>
+      <th> <%= t('views.users.show.content.user_logins.location') %></th>
+      <th> <%= t('views.users.show.content.user_logins.user_agent') %></th>
+      <th> <%= t('views.users.show.content.user_logins.timestamp') %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @user_logins.each do |login| %>
+        <tr>
+          <td><%= login.ip %></td>
+          <td><%= login.location %></td>
+          <td><%= login.application.present? ? login.application.name : login.user_agent %></td>
+          <td><%= login.updated_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) %></td>
+          <td>
+            <% if can? :managed, login %>
+                <% if login.revoked? %>
+                    <span class="heading"><%= t('views.users.show.content.user_logins.actions.revoked') %></span>
+                <% else %>
+                    <%= link_to t('views.users.show.content.user_logins.actions.revoke'), user_user_login_path(@user, login), method: :delete %>
+                <% end %>
+            <% end %>
+          </td>
+        </tr>
+    <% end%>
+    </tbody>
+  </table>
+</div>
+<div class="row main-column">
+  <div id="paginator" class="pull-right">
+    <%= will_paginate @user_logins, renderer: BootstrapPagination::Rails, param_name: 'login_page', params: {scope: 'user_logins'} %>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+en:
+  views:
+    developers:
+      email_address: 'Email Address'
+      password: 'Password'
+      remember_me: 'Remember Me?'
+      forgot_password: 'Forgot Password?'
+      confirm_password: 'Confirm Password'
+      log_in: 'Login'
+      change_my_password: 'Change my Password'
+      reset_password: 'Reset Password'
+      change_password: 'Change Password'

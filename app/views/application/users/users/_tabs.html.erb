@@ -1,0 +1,18 @@
+<ul id="object-tabs" class="nav nav-tabs bar_tabs" role="tablist">
+
+  <% if can? :read, Event %>
+      <li role="presentation" class="active"><a href="#hosting_events" role="tab" id="hosting_events-tab" data-toggle="tab" aria-expanded="true"><%= t 'views.users.show.tabs.hosting_events' %></a></li>
+      <li role="presentation" class=""><a href="#attending_events" role="tab" id="attending_events-tab" data-toggle="tab" aria-expanded="true"><%= t 'views.users.show.tabs.attending_events' %></a></li>
+      <li role="presentation" class=""><a href="#maybe_attending_events" role="tab" id="maybe_attending_events-tab" data-toggle="tab" aria-expanded="true"><%= t 'views.users.show.tabs.maybe_attending_events' %></a></li>
+  <% end %>
+
+  <% if can? :read, UserLogin %>
+      <li role="presentation" class=""><a href="#user_logins" role="tab" id="user_logins-tab" data-toggle="tab" aria-expanded="false"><%= t 'views.users.show.tabs.user_logins' %></a></li>
+  <% end %>
+
+  <% if can? :read, Report %>
+    <li role="presentation" class="">
+      <a href="#reports" role="tab" id="reports-tab" data-toggle="tab" aria-expanded="false"><%= t 'views.users.show.tabs.reports' %></a>
+    </li>
+  <% end %>
+</ul>

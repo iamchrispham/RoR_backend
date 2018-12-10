@@ -1,0 +1,49 @@
+.table.metrics-table > thead > tr > th,
+.table.metrics-table > thead > tr > td,
+.table.metrics-table > tbody > tr > th,
+.table.metrics-table > tbody > tr > td,
+.table.metrics-table > tfoot > tr > th,
+.table.metrics-table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 0;
+  color: #000000;
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: normal !important;
+}
+
+.table.metrics-table > thead > tr > th.summary-bold,
+.table.metrics-table > thead > tr > td.summary-bold,
+.table.metrics-table > tbody > tr > th.summary-bold,
+.table.metrics-table > tbody > tr > td.summary-bold,
+.table.metrics-table > tfoot > tr > th.summary-bold,
+.table.metrics-table > tfoot > tr > td.summary-bold {
+  font-weight: 600 !important;
+}
+
+td.title-green {
+  background: #21d0bf !important;
+  color: white !important;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+td.title-dark-green {
+  background: #2b542c !important;
+  color: white !important;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+td.title-black {
+  background: #2198f2 !important;
+  color: white !important;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+td.uppercase {
+  text-transform: uppercase;
+}

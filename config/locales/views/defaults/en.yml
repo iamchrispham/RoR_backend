@@ -1,0 +1,40 @@
+en:
+  views:
+    defaults:
+      error: 'Error'
+      success: 'Success'
+      submit: 'Submit'
+      save: 'Save'
+      clear: 'Clear'
+      view: 'View'
+      cancel: 'Cancel'
+      delete: "Delete"
+      edit: 'Edit'
+      register: "Register"
+      unknown: "Unknown"
+      not_specified: "Not Specified"
+      email_address: 'Email Address'
+      password: 'Password'
+      remember_me: 'Remember Me?'
+      forgot_password: 'Forgot Password?'
+      confirm_password: 'Confirm Password'
+      log_in: 'Login'
+      loading: 'Loading...'
+      affirmative: 'Yes'
+      negative: 'No'
+      unknown: 'Unknown'
+      confirmations:
+        cancel:
+          description: 'Are you sure you navigate away from this page? You will lose any changes you have made.'
+          title: 'Cancel'
+          confirm: 'Yes'
+          deny: 'No'
+      sessions:
+        reset_password: 'Reset Password'
+        change_password: 'Change Password'
+        password_reset: 'Your password has been reset, please log in using the application.'
+        deactivated: 'Your account has been deactivated, please contact support@mygo.io to re-enable your account'
+      confirmations:
+        confirmed: 'Your account has been confirmed, please return to the application and continue using your account.'
+        resend_confirmation: 'Resend Verification Email'
+      object_not_found: "That item cannot be found"

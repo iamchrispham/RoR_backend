@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations necessary to add source foreign keys to receipts
+
+Example:
+    rails generate showoff:payments:add_source_to_receipts
+
+    This will create:
+        db/migrate/add_source_to_receipts.rb

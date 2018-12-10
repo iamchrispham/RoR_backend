@@ -1,0 +1,8 @@
+Description:
+    This will install a configuration initializer for Showoff::SNS where keys & region can be set.
+
+Example:
+    rails generate showoff:sns:initializer
+
+    This will create:
+        config/initializers/showoff_sns.rb

@@ -1,0 +1,192 @@
+<script>
+    $(document).ready(function () {
+        $('#<%= @scope.to_s %>-tab').tab('show');
+    });
+
+</script>
+
+<% content_for :page_title, @user.name %>
+
+<div class="objects-details-view">
+  <div class="x_panel main-column">
+    <div class="x_title main-column">
+      <div class="x_title no-margin">
+        <h2 class="pull-left left-aligned-lg">
+          <%= @user.name %>
+          <span class="white label label-<%= @user.status_class %>"><%= @user.status %></span>
+        </h2>
+        <div class="title_right">
+          <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+            <div class="pull-right" role="group">
+              <% if can? :manage, @user %>
+                <% if @user.active? %>
+                  <%= link_to (t 'views.users.show.actions.deactivate'),
+                              user_deactivate_path(@user),
+                              class: "btn btn-danger",
+                              data: {
+                                  title: (t 'views.users.show.actions.confirmations.deactivate.title'),
+                                  confirm: (t 'views.users.show.actions.confirmations.deactivate.description'),
+                                  commit: (t 'views.users.show.actions.confirmations.deactivate.confirm'),
+                                  cancel: (t 'views.users.show.actions.confirmations.deactivate.deny'),
+                                  'commit-class': 'btn-danger',
+                                  verify: @user.name,
+                                  verify_text: (t 'views.users.show.actions.confirmations.deactivate.verify_text', name: @user.name)
+                              },
+                              method: :put
+                  %>
+                <% else %>
+                  <%= link_to (t 'views.users.show.actions.activate'),
+                              user_activate_path(@user),
+                              class: "btn btn-success",
+                              data: {
+                                  title: (t 'views.users.show.actions.confirmations.activate.title'),
+                                  confirm: (t 'views.users.show.actions.confirmations.activate.description'),
+                                  commit: (t 'views.users.show.actions.confirmations.activate.confirm'),
+                                  cancel: (t 'views.users.show.actions.confirmations.activate.deny'),
+                                  'commit-class': 'btn-primary'
+                              },
+                              method: :put
+                  %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="pull-right" role="group">
+              <% if can? :manage, @user %>
+                <% if !@user.suspended %>
+                  <%= link_to (t 'views.users.show.actions.suspend'),
+                              user_suspend_path(@user),
+                              class: "btn btn-danger",
+                              data: {
+                                  title: (t 'views.users.show.actions.confirmations.suspend.title'),
+                                  confirm: (t 'views.users.show.actions.confirmations.suspend.description'),
+                                  commit: (t 'views.users.show.actions.confirmations.suspend.confirm'),
+                                  cancel: (t 'views.users.show.actions.confirmations.suspend.deny'),
+                                  'commit-class': 'btn-danger',
+                                  verify: @user.name,
+                                  verify_text: (t 'views.users.show.actions.confirmations.suspend.verify_text', name: @user.name)
+                              },
+                              method: :put
+                  %>
+                <% else %>
+                  <%= link_to (t 'views.users.show.actions.unsuspend'),
+                              user_unsuspend_path(@user),
+                              class: "btn btn-success",
+                              data: {
+                                  title: (t 'views.users.show.actions.confirmations.unsuspend.title'),
+                                  confirm: (t 'views.users.show.actions.confirmations.unsuspend.description'),
+                                  commit: (t 'views.users.show.actions.confirmations.unsuspend.confirm'),
+                                  cancel: (t 'views.users.show.actions.confirmations.unsuspend.deny'),
+                                  'commit-class': 'btn-primary'
+                              },
+                              method: :put
+                  %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+      <div class="profile_img">
+        <div id="crop-avatar">
+          <!-- Current avatar -->
+          <%= image_tag @user.image.url(:small), class: 'full-width center-block img-responsive' %>
+          <br/><br/>
+        </div>
+      </div>
+      <br/><br/>
+      <div class="clearfix"></div>
+      <h3><%= @user.name %></h3>
+
+      <ul class="list-unstyled user_data">
+        <li>
+          <i class="fa fa-envelope user-profile-icon"></i>
+          <%= link_to @user.email, "mailto:#{@user.email}" %>
+        </li>
+
+        <li>
+          <i class="fa fa-calendar user-profile-icon"></i>
+          <%= @user.date_of_birth.present? ? @user.date_of_birth : 'Not Specified' %>
+        </li>
+
+        <li>
+          <i class="fa fa-transgender-alt user-profile-icon"></i>
+          <%= @user.gender.present? ? @user.gender.humanize : 'Not Specified' %>
+        </li>
+
+        <li>
+          <i class="fa fa-phone user-profile-icon"></i>
+          <%= @user.phone_number.present? ? @user.phone_number : 'Not Specified' %>
+        </li>
+
+        <li>
+          <i class="fa fa-user-secret user-profile-icon"></i>
+          <%= @user.eighteen_plus.present? ? @user.eighteen_plus.to_s.humanize : 'Not Specified' %>
+        </li>
+
+        <li>
+          <i class="fa fa-calendar-check-o user-profile-icon"></i>
+          <%= @user.save_events_to_calendar.present? ? @user.save_events_to_calendar.to_s.humanize : 'Not Specified' %>
+        </li>
+
+
+        <li>
+          <br/>
+          <h4>Events</h4>
+        </li>
+        <% if can? :read, Event %>
+          <li>
+            <i class="fa fa-calendar user-profile-icon"></i>
+            <%= t('views.users.show.attending_events_count', count: @user.attending_events.count) %>
+          </li>
+          <li>
+            <i class="fa fa-female user-profile-icon"></i>
+            <%= t('views.users.show.hosting_events_count', count: @user.hosting_events.count) %>
+          </li>
+        <% end %>
+
+      </ul>
+      <br>
+    </div>
+
+    <div class="col-md-9 col-sm-9 col-xs-12 profile_right">
+
+      <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <%= render partial: "application/users/users/tabs", locals: {user: @user} %>
+        <div id="object-tabs-content" class="tab-content">
+
+          <% if can? :read, Event %>
+            <div role="tabpanel" class="tab-pane fade active in" id="hosting_events" aria-labelledby="hosting_events-tab">
+              <%= render 'application/users/users/tabs/hosting_events' %>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade in" id="attending_events" aria-labelledby="attending_events-tab">
+              <%= render 'application/users/users/tabs/attending_events' %>
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade in" id="maybe_attending_events" aria-labelledby="maybe_attending_events-tab">
+              <%= render 'application/users/users/tabs/maybe_attending_events' %>
+            </div>
+          <% end %>
+
+          <% if can? :read, UserLogin %>
+            <div role="tabpanel" class="tab-pane fade" id="user_logins" aria-labelledby="user_logins-tab">
+              <%= render 'application/users/users/tabs/user_logins' %>
+            </div>
+          <% end %>
+
+          <% if can? :read, Report %>
+            <div role="tabpanel" class="tab-pane fade" id="reports" aria-labelledby="reports-tab">
+              <%= render 'application/users/users/tabs/reports' %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

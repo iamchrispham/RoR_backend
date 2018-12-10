@@ -1,0 +1,165 @@
+.dashboard {
+
+  #revenue-range {
+    background: #fff;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: #21d0bf;
+    height: 40px;
+
+    i {
+      color: #21d0bf;
+      font-size: 17px;
+    }
+
+    .caret {
+      color: #21d0bf;
+      font-size: 17px;
+    }
+  }
+
+  #region-select {
+    max-width: 200px;
+    margin-right: 10px;
+  }
+
+  .x_title {
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+    span {
+      color: #21d0bf;
+      font-size: 17px;
+    }
+  }
+
+  .nav-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+    margin: 0;
+    padding-top: 20px;
+    height: auto !important;
+
+  }
+
+  .nav-tabs>li {
+    float:none;
+  }
+
+  .tile-stats {
+    text-align: center;
+    .count {
+      color: #21d0bf;
+      margin-left: 5px;
+      margin-right: 5px;
+
+      /* Custom, iPhone Retina */
+      @media only screen and (min-width : 320px) {
+        font-size: 25px !important;
+      }
+
+      /* Extra Small Devices, Phones */
+      @media only screen and (min-width : 480px) {
+        font-size: 25px !important;
+      }
+
+      /* Small Devices, Tablets */
+      @media only screen and (min-width : 768px) {
+        font-size: 25px !important;
+      }
+
+      /* Medium Devices, Desktops */
+      @media only screen and (min-width : 992px) {
+        font-size: 30px !important;
+      }
+
+      /* Large Devices, Wide Screens */
+      @media only screen and (min-width : 1200px) {
+        font-size: 35px !important;
+      }
+    }
+    h3 {
+      color: #000000 !important;
+      margin-left: 5px;
+      margin-right: 5px;
+
+      /* Custom, iPhone Retina */
+      @media only screen and (min-width : 320px) {
+        font-size: 25px !important;
+      }
+
+      /* Extra Small Devices, Phones */
+      @media only screen and (min-width : 480px) {
+        font-size: 25px !important;
+      }
+
+      /* Small Devices, Tablets */
+      @media only screen and (min-width : 768px) {
+        font-size: 25px !important;
+      }
+
+      /* Medium Devices, Desktops */
+      @media only screen and (min-width : 992px) {
+        font-size: 30px !important;
+      }
+
+      /* Large Devices, Wide Screens */
+      @media only screen and (min-width : 1200px) {
+        font-size: 35px !important;
+      }
+    }
+  }
+
+  .profile_left,
+  .profile_right{
+    margin-top: 20px;
+  }
+
+  .profile_left {
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  .table-striped {
+    color: #000000;
+  }
+
+  .table > thead > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > th,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > th,
+  .table > tfoot > tr > td {
+    vertical-align: middle;
+  }
+
+  th {
+    color: #21d0bf;
+  }
+
+  td.title {
+    width: 90px;
+    font-weight: bold;
+    color: #21d0bf;
+  }
+
+  h3,
+  h4{
+    color: #21d0bf;
+  }
+
+  i {
+    color: #000000;
+  }
+
+  .list-unstyled {
+    color: #000000;
+  }
+
+  .x_title span.white {
+    color: #ffffff;
+  }
+}

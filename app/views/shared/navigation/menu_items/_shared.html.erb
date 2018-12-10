@@ -1,0 +1,6 @@
+<% if (can? :update, current_admin) || (respond_to? :main_app)%>
+    <%= menu_item title: (t 'views.navigation.menu.settings'), path: edit_settings_profile_path, controller: :application_settings_profile %>
+<% end %>
+
+
+

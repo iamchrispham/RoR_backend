@@ -1,0 +1,49 @@
+
+<table class="table main-column">
+  <thead>
+  <tr>
+    <% if @scope == :pending_verification %>
+        <th> <%= t('views.identifications.table.pending.user') %></th>
+        <th> <%= t('views.identifications.table.pending.pending_since') %></th>
+        <th> <%= t('views.identifications.table.pending.status') %></th>
+    <% elsif @scope == :verified %>
+        <th> <%= t('views.identifications.table.verified.user') %></th>
+        <th> <%= t('views.identifications.table.verified.verified_by') %></th>
+        <th> <%= t('views.identifications.table.verified.verified_at') %></th>
+        <th> <%= t('views.identifications.table.verified.status') %></th>
+    <% elsif @scope == :rejected %>
+        <th> <%= t('views.identifications.table.rejected.user') %></th>
+        <th> <%= t('views.identifications.table.rejected.rejected_by') %></th>
+        <th> <%= t('views.identifications.table.rejected.rejected_at') %></th>
+        <th> <%= t('views.identifications.table.rejected.status') %></th>
+    <% else %>
+        <th> <%= t('views.identifications.table.pending.user') %></th>
+        <th> <%= t('views.identifications.table.all.created_at') %></th>
+        <th> <%= t('views.identifications.table.rejected.status') %></th>
+  <% end %>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @objects.each do |object|%>
+      <tr>
+        <td class="wrapped"> <%= link_to object.user.name, user_path(object.user) %> </td>
+        <% if @scope == :pending_verification %>
+            <td><%= object.created_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) %></td>
+        <% elsif @scope == :verified || @scope == :rejected %>
+            <td class="wrapped"> <%= object.verifier.present? ? object.verifier.name : t('views.defaults.unknown') %> </td>
+            <td><%= object.verified_at.present? ? object.verified_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) : t('views.defaults.unknown') %></td>
+        <% else %>
+            <td><%= object.created_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) %></td>
+      <% end %>
+
+        <td class="wrapped"> <span class="label label-<%= object.status_class %>"><%= object.status %></span> </td>
+        <td class="pull-right bottom-align">
+          <%= link_to t('views.identifications.actions.view'), identification_path(object), class: 'btn btn-primary bottom' %>
+        </td>
+      </tr>
+
+  <% end %>
+  </tbody>
+
+</table>

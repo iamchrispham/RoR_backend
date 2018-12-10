@@ -1,0 +1,61 @@
+en:
+  views:
+    admins:
+      email_address: 'Email Address'
+      password: 'Password'
+      remember_me: 'Remember Me?'
+      forgot_password: 'Forgot Password?'
+      confirm_password: 'Confirm Password'
+      log_in: 'Login'
+      change_my_password: 'Change my Password'
+      reset_password: 'Reset Password'
+      change_password: 'Change Password'
+      accept_invite: 'Accept Invitation'
+      created: 'Admin created successfully'
+      destroyed: 'Admin destroyed successfully'
+      deactivated: 'Admin deactivated successfully'
+      activated: 'Admin activated successfully'
+      updated: 'Admin updated successfully'
+      resend_invitation: 'Admin invite resent'
+      role: 'Role'
+      unauthorized: 'You are not authorized to perform that action.'
+      actions:
+        create: 'Create Admin'
+        edit: 'Edit Admin'
+        resend_invitation: 'Resend Invitation'
+        activate: 'Activate'
+        deactivate: 'Deactivate'
+        destroy: 'Delete'
+      table:
+        name: 'Name'
+        email: 'Email'
+        role: 'Role'
+        status: 'Status'
+      edit:
+        title: 'Edit %{name}'
+      create:
+        title: 'Create Admin'
+        first_name: 'First Name'
+        last_name: 'Last Name'
+        email: 'Email'
+        image: 'Picture'
+        role: 'Role'
+      dashboard:
+        titles:
+          totals: 'Totals'
+          users: 'Users'
+          events: 'Events'
+          contributions: 'Contributions'
+        panels:
+          users: 'Users'
+          events: 'Events'
+          contributions: 'Contributions'
+        reporting:
+          reports:
+            title: "Statistics"
+            week: "Week"
+            month: "Month"
+            year: "Year"
+            users: 'User Sign Ups'
+            events: 'Events'
+

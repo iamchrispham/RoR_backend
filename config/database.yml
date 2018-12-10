@@ -1,0 +1,25 @@
+default: &default
+  adapter: postgis
+  encoding: unicode
+  schema_search_path: "public,postgis"
+  pool: 5
+  min_messages: warning
+  pool: <%= [Integer(ENV.fetch("MAX_THREADS", 5)), Integer(ENV.fetch("DB_POOL", 5))].max %>
+  reaping_frequency: <%= Integer(ENV.fetch("DB_REAPING_FREQUENCY", 10)) %>
+  timeout: 5000
+  prepared_statements: false
+
+development:
+  <<: *default
+  database: go-app-api_development
+
+test:
+  <<: *default
+  database: go-app-api_test
+
+production:
+  <<: *default
+  database: go-app-api_production
+  username: go-app-api
+  password: <%= ENV['GO_API_DATABASE_PASSWORD'] %>
+

@@ -1,0 +1,36 @@
+<div class="row top_tiles">
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id="total"><%= @detail_views.count %></div>
+      <h3>Total</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id="unique"><%= @users.uniq.count %></div>
+      <h3>Unique</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id="male"><%= @users.male.uniq.count %></div>
+      <h3>Male</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id="female"><%= @users.female.uniq.count %></div>
+      <h3>Female</h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id="unspecified"><%= @users.unspecified.uniq.count %></div>
+      <h3>Unspecified</h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+
+<nav class="bg-navy" role="navigation">
+
+</nav>
+
+<nav class="bg-navy navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-menu" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to root_url, class: 'navbar-brand hidden-sm hidden-md hidden-lg' do %>
+          <%= image_tag 'navigation_logo.png' %>
+      <% end %>
+    </div>
+
+    <div class="collapse navbar-collapse" id="nav-menu">
+      <ul class="hidden-sm hidden-md hidden-lg nav navbar-nav">
+
+        <li role="separator" class="divider"></li>
+        <%= render 'shared/navigation/menu_items' %>
+
+        <li role="separator" class="divider"></li>
+        <% if (current_admin.present?) || (respond_to? :main_app) %>
+            <li class="uppercase">
+              <%= link_to t('views.navigation.menu.logout'), logout_url, :method => :delete %>
+            </li>
+        <% end %>
+      </ul>
+
+      <ul class="hidden-xs nav navbar-nav navbar-right">
+        <% if (current_admin.present?) || (respond_to? :main_app) %>
+            <li class="uppercase">
+              <%= link_to t('views.navigation.menu.logout'), logout_url, :method => :delete %>
+            </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

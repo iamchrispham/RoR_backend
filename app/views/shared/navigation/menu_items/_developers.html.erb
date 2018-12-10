@@ -1,0 +1,11 @@
+<%= menu_item title: (t 'views.navigation.menu.dashboard'), path: dashboard_url, controller: :application_developers_dashboard %>
+
+<% if (can? :manage, :objects) || (respond_to? :main_app) %>
+    <%= menu_item title: (t 'views.navigation.menu.objects.applications'), path: oauth_applications_path, controller: :doorkeeper_applications %>
+<% end %>
+
+
+
+
+
+

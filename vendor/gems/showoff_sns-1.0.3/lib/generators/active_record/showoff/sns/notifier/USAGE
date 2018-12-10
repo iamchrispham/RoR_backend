@@ -1,0 +1,11 @@
+Description:
+    This will generate a model which contains a notification, and the necessary migrations.
+    It will also generate an appropriate model with stubbed required methods
+    The generated model inherits the Notifier base class.
+
+Example:
+    rails generate active_record:showoff:sns:notifier MODEL_NAME [options]
+
+    This will create:
+        app/model/MODEL_NAME.rb
+        db/migrate/TIMESTAMP_showoff_sns_create_notifier_MODEL_NAME.rb

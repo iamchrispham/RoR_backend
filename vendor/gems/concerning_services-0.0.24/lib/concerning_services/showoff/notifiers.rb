@@ -1,0 +1,1 @@
+require 'concerning_services/showoff/notifiers/facebook_friend_notifier'

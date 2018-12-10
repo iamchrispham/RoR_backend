@@ -1,0 +1,7 @@
+en:
+  models:
+    admin_roles:
+      types:
+        admin: 'Admin'
+        help_desk: 'Help Desk Agent'
+        sales: 'Sales'

@@ -1,0 +1,33 @@
+en:
+  views:
+    events:
+      successfully_updated: 'Event Updated'
+      deactivated: 'Event deactivated successfully'
+      cannot_deactivate: 'Cannot deactivate this Event as it has active orders'
+      error_deactivate: 'Cannot deactivate this Event as an internal error has occurred. Please try again. If this problem persists please contact support'
+      activated: 'Event activated successfully'
+      error_activate: 'Cannot activate this Event as an internal error has occurred. Please try again. If this problem persists please contact support'
+
+      timeline_items:
+        activated: 'Timeline Item Activated'
+        comments:
+          activated: 'Comment Activated'
+      filters:
+        search: 'Search'
+        sort: 'Sort'
+      show:
+        actions:
+          deactivate: 'Deactivate'
+          activate: 'Activate'
+          confirmations:
+            activate:
+              description: 'Are you sure you wish to activate this event?'
+              title: 'Activate Event'
+              confirm: 'Yes'
+              deny: 'No'
+            deactivate:
+              description: 'Are you sure you wish to deactivate this event? This will cause the event to be removed from the platform'
+              title: 'Deactivate Event'
+              confirm: 'Yes'
+              deny: 'No'
+              verify_text: 'Please type `%{name}` to confirm'

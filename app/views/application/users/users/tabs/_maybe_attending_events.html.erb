@@ -1,0 +1,46 @@
+<div class="row main-column" id="objects">
+  <table class="data table table-striped no-margin">
+    <thead>
+    <tr>
+      <th> <%= t('views.users.show.content.events.title') %></th>
+      <th> <%= t('views.users.show.content.events.description') %></th>
+      <th> <%= t('views.users.show.content.events.date') %></th>
+      <th> <%= t('views.users.show.content.events.location') %></th>
+      <th> <%= t('views.users.show.content.events.private') %></th>
+      <th> <%= t('views.users.show.content.events.over_eighteen') %></th>
+      <th> <%= t('views.users.show.content.events.attendees') %></th>
+      <th> <%= t('views.users.show.content.events.event_forwarding') %></th>
+      <th> <%= t('views.users.show.content.events.allow_chat') %></th>
+      <th> <%= t('views.users.show.content.events.show_timeline') %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @maybe_attending_events.each do |event| %>
+        <tr>
+          <td><%= event.title %></td>
+          <td><%= truncate(event.description, length: 50) %></td>
+          <td><%= "#{event.date.strftime(Api::Emails::DEFAULT_TIME_FORMAT)}" %></td>
+          <td><%= event.public_address %></td>
+          <td class="text-center"><i class="fa <%= event.private_event ? "fa-lock" : "fa-unlock" %>" aria-hidden="true"></i></td>
+          <td class="text-center"><i class="fa <%= event.eighteen_plus ? "fa-check" : "fa-times" %>" aria-hidden="true"></i></td>
+          <td class="text-center"><%= event.event_attendees.going.count %></td>
+          <td class="text-center"><i class="fa <%= event.event_forwarding ? "fa-check" : "fa-times" %>" aria-hidden="true"></i></td>
+          <td class="text-center"><i class="fa <%= event.allow_chat ? "fa-check" : "fa-times" %>" aria-hidden="true"></i></td>
+          <td class="text-center"><i class="fa <%= event.show_timeline ? "fa-check" : "fa-times" %>" aria-hidden="true"></i></td>
+
+          <td>
+            <% if can? :read, event %>
+                <%= link_to t('views.users.show.content.events.actions.view'), event_path(event), class: 'btn btn-success' %>
+            <% end %>
+          </td>
+        </tr>
+    <% end%>
+    </tbody>
+  </table>
+</div>
+<div class="row main-column">
+  <div id="paginator" class="pull-right">
+    <%= will_paginate @maybe_attending_events, renderer: BootstrapPagination::Rails, param_name: 'maybe_attending_event_page', params: {scope: 'maybe_attending_events'} %>
+  </div>
+</div>

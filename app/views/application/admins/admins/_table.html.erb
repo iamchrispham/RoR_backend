@@ -1,0 +1,40 @@
+
+<table class="table main-column">
+  <thead>
+  <tr>
+    <th></th>
+    <th> <%= t('views.admins.table.name') %></th>
+    <th> <%= t('views.admins.table.email') %></th>
+    <th> <%= t('views.admins.table.role') %></th>
+    <th> <%= t('views.admins.table.status') %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @objects.each do |object|%>
+      <tr>
+        <td class="profile_img"> <%= image_tag(object.image.url(:large), class: "profile_img") %> </td>
+        <td class="wrapped"> <%= object.name %> </td>
+        <td class="wrapped wrapped-lg"> <%= object.email %> </td>
+        <td class="wrapped"> <%= object.roles.pluck(:name).map {|r|r.titleize}.join(', ') %> </td>
+        <td class="wrapped"> <span class="label label-<%= object.status_class %>"><%= object.status %></span> </td>
+        <td class="pull-right bottom-align">
+          <%= link_to t('views.admins.actions.edit'), edit_admin_path(object), class: 'btn btn-primary bottom' %>
+
+          <% if object.invited? %>
+            <%= link_to t('views.admins.actions.resend_invitation'), admin_resend_invitation_path(object), class: 'btn btn-success bottom', method: :put %>
+            <%= link_to t('views.admins.actions.destroy'), admin_path(object), class: 'btn btn-danger bottom', method: :delete %>
+          <% else %>
+            <% if object != current_admin %>
+              <% if object.active? %>
+                <%= link_to t('views.admins.actions.deactivate'), admin_deactivate_path(object), class: 'btn btn-danger bottom', method: :put %>
+              <% else %>
+                <%= link_to t('views.admins.actions.activate'), admin_activate_path(object), class: 'btn btn-success bottom', method: :put %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

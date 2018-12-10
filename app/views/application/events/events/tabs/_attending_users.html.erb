@@ -1,0 +1,43 @@
+<div class="row main-column" id="objects">
+  <table class="data table table-striped no-margin">
+    <thead>
+    <tr>
+      <th> <%= t('views.users.table.image') %></th>
+      <th> <%= t('views.users.table.name') %></th>
+      <th> <%= t('views.users.table.country') %></th>
+      <th> <%= t('views.users.table.hosting_events') %></th>
+      <th> <%= t('views.users.table.attending_events') %></th>
+      <th> <%= t('views.users.table.verified') %></th>
+      <th> <%= t('views.users.table.gender') %></th>
+      <th> <%= t('views.users.table.reports') %></th>
+      <th> <%= t('views.users.table.status') %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @attending_users.each do |object| %>
+      <tr>
+        <td class="profile_img"> <%= image_tag(object.image.url(:small), class: "profile_img") %> </td>
+        <td class="wrapped"> <%= object.name %> </td>
+        <td class="wrapped wrapped-lg"> <%= object.country ? object.country.name : t('views.defaults.unknown') %> </td>
+        <td class="wrapped"> <%= object.hosting_events.count %> </td>
+        <td class="wrapped"> <%= object.attending_events.count %> </td>
+        <td class="wrapped"> <%= object.seller_validation_required? ? t('views.defaults.negative') : t('views.defaults.affirmative') %> </td>
+        <td class="wrapped"> <%= object.gender ? object.gender.humanize : t('views.defaults.not_specified') %> </td>
+        <td class="wrapped"> <%= object.reported_by.count %> </td>
+        <td class="wrapped"><span class="label label-<%= object.status_class %>"><%= object.status %></span></td>
+
+        <td class="pull-right bottom-align">
+          <%= link_to t('views.users.actions.view'), user_path(object), class: 'btn btn-primary bottom' %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="row main-column">
+  <div id="paginator" class="pull-right">
+    <%= will_paginate @attending_users, renderer: BootstrapPagination::Rails, param_name: 'attending_users_page', params: {scope: 'attending_users'} %>
+  </div>
+</div>

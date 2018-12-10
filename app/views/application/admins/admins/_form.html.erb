@@ -1,0 +1,104 @@
+<script>
+  function imagePreview() {
+    $(".image-file").unbind('change').bind("change", function() {
+      var files = !!this.files ? this.files : [];
+      if (!files.length || !window.FileReader) return;
+
+      if (/^image/.test( files[0].type)){
+        var reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = function(){
+          $("#object-image").attr('src', this.result);
+        }
+      }
+    });
+  }
+  $(function() {
+    imagePreview();
+  });
+</script>
+
+
+<div class="admin-details">
+  <% if @admin.new_record? %>
+      <% action = {action: "create"} %>
+      <% method = :post %>
+      <% disabled = false %>
+  <% else %>
+      <% action = {action: "update"} %>
+      <% method = :put %>
+      <% disabled = current_admin == @admin %>
+  <% end %>
+
+  <%= form_for @admin, url: action, html: {class: 'form-horizontal'}, method: method do |form| %>
+      <div class="row main-column">
+        <div class="col-md-8 col-sm-10 col-xs-12">
+          <div class="main-box-body clearfix">
+            <div class="form-group">
+              <%= form.label :first_name, class: "col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label", required: true  %>
+              <div class="col-lg-10 col-xs-10">
+                <%= form.text_field :first_name, class: "form-control", placeholder: t('views.admins.create.first_name') %>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-box-body clearfix">
+            <div class="form-group">
+              <%= form.label :last_name, class: "col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label", required: true  %>
+              <div class="col-lg-10 col-xs-10">
+                <%= form.text_field :last_name, class: "form-control", placeholder: t('views.admins.create.last_name') %>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-box-body clearfix">
+            <div class="form-group">
+              <%= form.label :email, class: "col-lg-2 col-md-2 col-sm-2 col-xs-2  control-label", required: true  %>
+              <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <%= form.text_field :email, class: "form-control", placeholder: t('views.admins.email_address') %>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-box-body clearfix">
+            <div class="form-group">
+              <%= form.label :image, class: "col-lg-2 col-md-2 col-sm-2 col-xs-2  control-label", required: true  %>
+              <div class="col-lg-10 col-xs-10">
+                <%= form.file_field :image, class: "form-control image-file"%>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-box-body clearfix">
+            <div class="form-group">
+              <%= form.label :role, class: "col-lg-2 col-xs-2 control-label", required: true  %>
+              <div class="col-lg-10 col-xs-10">
+                <%= select_tag 'admin[role]', options_for_select(AdminRole.options_for_select, @admin.current_role), {class: "form-control", id: "format-select", disabled: disabled} %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-10 col-xs-12">
+          <%= image_tag(@admin.image.url(:large), class: "profile_img", id: "object-image") %>
+        </div>
+      </div>
+
+      <div class="row main-column table-selector">
+        <div class="col-lg-12">
+          <div class="main-box">
+            <div class="main-box-body clearfix">
+              <br/>
+              <div class="form-group">
+                <div class="col-lg-offset-1 col-lg-2">
+                  <button type="submit" class="btn btn-green"><%= t('views.defaults.save') %></button>
+                </div>
+                <div class="col-lg-2">
+                  <%= link_to t('views.defaults.cancel'), admins_url, class: "btn btn-red" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

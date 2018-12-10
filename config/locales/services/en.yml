@@ -1,0 +1,5 @@
+en:
+  showoff:
+    services:
+      sms:
+        error_sending: 'There seems to be an issue sending an SMS to this number. Please ensure the number is a mobile number and try again.'

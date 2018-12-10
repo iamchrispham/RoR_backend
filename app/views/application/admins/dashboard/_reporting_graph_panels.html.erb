@@ -1,0 +1,63 @@
+<div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+  <div class="x_panel tile right-hand-column">
+    <div class="x_title right-hand-column ">
+      <h2 class="pull-left left-aligned-sm hidden-xs">
+        <%= t('views.admins.dashboard.reporting.reports.users') %>
+      </h2>
+
+      <h2 class="pull-left col-xs-12 visible-xs">
+        <%= t('views.admins.dashboard.reporting.reports.users') %>
+      </h2>
+
+      <div class="title_right">
+        <div class="col-md-4 col-sm-6 col-xs-12 pull-right form-group top_search">
+          <div class="btn-group pull-right" role="group">
+            <%= link_to (t 'views.admins.dashboard.reporting.reports.week'), dashboard_url(user_period: 'week', event_period: @event_period), class: "btn btn-dashboard #{((@user_period.blank?) || (@user_period.eql? 'week'))? 'active' : nil}" %>
+            <%= link_to (t 'views.admins.dashboard.reporting.reports.month'), dashboard_url(user_period: 'month', event_period: @event_period), class: "btn btn-dashboard #{(@user_period.eql? 'month') ? 'active' : nil}" %>
+            <%= link_to (t 'views.admins.dashboard.reporting.reports.year'), dashboard_url(user_period: 'year', event_period: @event_period), class: "btn btn-dashboard #{(@user_period.eql? 'year') ? 'active' : nil}" %>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+      <%= render "application/admins/dashboard/report_panels/user_report_panel" %>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+  <div class="x_panel tile right-hand-column">
+    <div class="x_title right-hand-column ">
+      <h2 class="pull-left left-aligned-sm hidden-xs">
+        <%= t('views.admins.dashboard.reporting.reports.events') %>
+      </h2>
+
+      <h2 class="pull-left col-xs-12 visible-xs">
+        <%= t('views.admins.dashboard.reporting.reports.events') %>
+      </h2>
+
+      <div class="title_right">
+        <div class="col-md-4 col-sm-6 col-xs-12 pull-right form-group top_search">
+          <div class="btn-group pull-right" role="group">
+            <%= link_to (t 'views.admins.dashboard.reporting.reports.week'), dashboard_url(event_period: 'week', user_period: @user_period), class: "btn btn-dashboard #{((@event_period.blank?) || (@event_period.eql? 'week'))? 'active' : nil}" %>
+            <%= link_to (t 'views.admins.dashboard.reporting.reports.month'), dashboard_url(event_period: 'month', user_period: @user_period), class: "btn btn-dashboard #{(@event_period.eql? 'month') ? 'active' : nil}" %>
+            <%= link_to (t 'views.admins.dashboard.reporting.reports.year'), dashboard_url(event_period: 'year', user_period: @user_period), class: "btn btn-dashboard #{(@event_period.eql? 'year') ? 'active' : nil}" %>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+      <%= render "application/admins/dashboard/report_panels/events_report_panel" %>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.btn-dashboard').click(function () {
+    showLoading();
+  });
+
+</script>
+

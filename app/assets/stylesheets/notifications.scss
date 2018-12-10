@@ -1,0 +1,86 @@
+/* Notification List */
+.row.main-column {
+  margin-right: 0px;
+  margin-left:  0px;
+}
+.notification_list_column {
+  border-left: 0px solid #DBDBDB;
+}
+.notification_view {
+  border-left: 0px solid #DBDBDB
+}
+.notification_list {
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 2px;
+  display: inline-block;
+}
+.notification_list .left {
+  min-width: 4%;
+  float: left;
+  margin-right: 2%;
+}
+.notification_list .right {
+  width: 90%;
+  float: left;
+
+  @media (max-width: 767px) {
+    width: 85%;
+  }
+}
+
+.notification_list h3 {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0px 0 6px;
+  color: #2198f2;
+}
+.notification_list p {
+  color: #424242;
+}
+.notification_list span {
+  color: #4db2df;
+}
+.notification_list h3 small {
+  float: right;
+  font-size: 11px;
+  line-height: 20px;
+  color: #424242;
+
+  @media (max-width: 767px) {
+    float: none;
+    white-space: pre;
+  }
+}
+
+@media (max-width: 767px) {
+  .notification_list {
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+}
+
+
+  /* Notifications Table */
+.table-notifications {
+  color: #424242;
+  margin-bottom: 0px !important;;
+}
+.table-notifications-details td {
+  border-bottom: 0 !important;
+
+}
+.table-notifications td.image {
+  max-width: 60px;
+}
+
+.table-notifications td {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+

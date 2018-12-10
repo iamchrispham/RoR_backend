@@ -1,0 +1,7 @@
+class AddAddressToReceipts < ActiveRecord::Migration
+  def change
+    add_column :showoff_payments_receipts, :address_id, :integer, index: true
+    add_column :showoff_payments_receipts, :address_type, :string, index: true
+    add_index :showoff_payments_receipts, [:address_id, :address_type], name: :showoff_payments_receipts_address
+  end
+end

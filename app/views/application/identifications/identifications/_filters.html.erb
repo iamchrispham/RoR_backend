@@ -1,0 +1,50 @@
+<div class="row main-column">
+  <%= form_for_filterrific @filterrific, :html => {:class => 'form'} do |f| %>
+      <div class="col-lg-4">
+        <div class="row  main-column">
+          <%= t('views.identifications.filters.search') %><br/>
+        </div>
+
+        <div class="row  main-column">
+          <div class="form-group">
+            <div class="col-lg-10">
+              <%= f.text_field :search_query, class: "filterrific-periodically-observed form-control", placeholder: t('views.identifications.filters.search_placeholder') %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="row  main-column">
+          <%= t('views.identifications.filters.sort') %><br/>
+        </div>
+
+        <div class="row main-column">
+          <div class="form-group">
+            <div class="col-lg-10">
+              <%= f.select :sorted_by, @filterrific.select_options[:sorted_by],{},{ :class => 'form-control' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="row  main-column">
+          <%= t('views.identifications.filters.status') %><br/>
+        </div>
+
+        <div class="row main-column">
+          <div class="form-group">
+            <div class="col-lg-10">
+              <%= f.select :with_status, @filterrific.select_options[:with_status],{},{ :class => 'form-control' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <br/>
+      <br/>
+  <% end %>
+
+</div>

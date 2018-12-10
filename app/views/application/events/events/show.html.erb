@@ -1,0 +1,140 @@
+
+<script type="application/javascript">
+    $(document).ready(function () {
+
+        $('#<%= @scope.to_s %>-tab').tab('show');
+
+        $('#location-tab').on('shown.bs.tab', function (e) {
+            handler = Gmaps.build('Google');
+            handler.buildMap({
+                provider: {},
+                internal: {
+                    id: 'listing-map'
+                }
+            }, function () {
+                markers = handler.addMarkers([
+                    {
+                        "lat": <%= @event.latitude %>,
+                        "lng": <%= @event.longitude %>,
+                        "infowindow": "<%= @event.public_address %>",
+                    }
+                ]);
+
+                var southWest = new google.maps.LatLng(<%= @event.geometry[:bounds][:southwest][:latitude] %>, <%= @event.geometry[:bounds][:southwest][:longitude] %>);
+                var northEast = new google.maps.LatLng(<%= @event.geometry[:bounds][:northeast][:latitude] %>, <%= @event.geometry[:bounds][:northeast][:longitude] %>);
+                var bounds = new google.maps.LatLngBounds(southWest, northEast);
+                handler.map.fitToBounds(bounds);
+
+            });
+        });
+
+    });
+
+
+</script>
+
+<% content_for :page_title, @event.title %>
+
+<div class="objects-details-view">
+  <div class="x_panel main-column">
+    <div class="x_title main-column">
+      <div class="x_title no-margin">
+        <h2 class="pull-left left-aligned-lg">
+          <%= @event.title %>
+          <span class="white label label-<%= @event.status_class %>"><%= @event.status %></span>
+        </h2>
+        <div class="title_right">
+          <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+            <div class="pull-right" role="group">
+              <% if can? :manage, @event %>
+                  <% if @event.active? %>
+                      <%= link_to (t 'views.events.show.actions.deactivate'),
+                                  event_deactivate_path(@event),
+                                  class: "btn btn-danger",
+                                  data: {
+                                      title: (t 'views.events.show.actions.confirmations.deactivate.title'),
+                                      confirm: (t 'views.events.show.actions.confirmations.deactivate.description'),
+                                      commit: (t 'views.events.show.actions.confirmations.deactivate.confirm'),
+                                      cancel: (t 'views.events.show.actions.confirmations.deactivate.deny'),
+                                      'commit-class': 'btn-danger',
+                                      verify: @event.title,
+                                      verify_text: (t 'views.events.show.actions.confirmations.deactivate.verify_text', name: @event.title)
+                                  },
+                                  method: :put
+                      %>
+                  <% else %>
+                      <%= link_to (t 'views.events.show.actions.activate'),
+                                  event_activate_path(@event),
+                                  class: "btn btn-success",
+                                  data: {
+                                      title: (t 'views.events.show.actions.confirmations.activate.title'),
+                                      confirm: (t 'views.events.show.actions.confirmations.activate.description'),
+                                      commit: (t 'views.events.show.actions.confirmations.activate.confirm'),
+                                      cancel: (t 'views.events.show.actions.confirmations.activate.deny'),
+                                      'commit-class': 'btn-primary'
+                                  },
+                                  method: :put
+                      %>
+                  <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 profile_right">
+
+      <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <%= render partial: "application/events/events/tabs", locals: {event: @event} %>
+        <div id="object-tabs-content" class="tab-content">
+
+          <div role="tabpanel" class="tab-pane fade active in" id="details" aria-labelledby="details-tab">
+            <%= render 'application/events/events/tabs/details' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="location" aria-labelledby="location-tab">
+            <%= render 'application/events/events/tabs/location' %>
+          </div>
+
+          <% if can? :read, Report %>
+            <div role="tabpanel" class="tab-pane fade" id="reports" aria-labelledby="reports-tab">
+              <%= render 'application/events/events/tabs/reports' %>
+            </div>
+          <% end %>
+
+          <div role="tabpanel" class="tab-pane fade" id="attending_users" aria-labelledby="attending_users-tab">
+            <%= render 'application/events/events/tabs/attending_users' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="not_attending_users" aria-labelledby="not_attending_users-tab">
+            <%= render 'application/events/events/tabs/not_attending_users' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="maybe_attending_users" aria-labelledby="maybe_attending_users-tab">
+            <%= render 'application/events/events/tabs/maybe_attending_users' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="invited_users" aria-labelledby="invited_users-tab">
+            <%= render 'application/events/events/tabs/invited_users' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="event_ticket_detail_views" aria-labelledby="event_ticket_detail_views-tab">
+            <%= render 'application/events/events/tabs/ticket_views' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="event_attendee_contributions" aria-labelledby="event_attendee_contributions-tab">
+            <%= render 'application/events/events/tabs/contributions' %>
+          </div>
+
+          <div role="tabpanel" class="tab-pane fade" id="event_shares" aria-labelledby="event_shares-tab">
+            <%= render 'application/events/events/tabs/shares' %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

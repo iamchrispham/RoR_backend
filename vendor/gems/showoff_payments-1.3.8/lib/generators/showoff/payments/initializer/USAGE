@@ -1,0 +1,8 @@
+Description:
+    This will install a configuration initializer for Showoff::Payments where provider slug and managed account enabled can be set.
+
+Example:
+    rails generate showoff:payments:initializer
+
+    This will create:
+        config/initializers/showoff_payments.rb

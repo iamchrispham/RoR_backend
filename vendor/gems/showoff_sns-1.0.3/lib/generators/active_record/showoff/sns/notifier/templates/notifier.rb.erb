@@ -1,0 +1,36 @@
+class <%= table_name.singularize.camelize %> < Showoff::SNS::Notifier::Base
+  def set_owner
+    # Define your notification owner here
+    raise NotImplementedError, 'You must define a notifier owner'
+  end
+
+  def self.notification_type
+    # Define your notification type here
+    raise NotImplementedError, 'You must define a notification type'
+  end
+
+  def subscribers
+    # Define your notification subscribers here
+    raise NotImplementedError, 'You must define a set of subscribers for your notification'
+  end
+
+  def message(target)
+    # Define your notification message here
+    raise NotImplementedError, 'You must define a message for your notification'
+  end
+
+  def extra_information(target)
+    # Define your notification extra information here
+    raise NotImplementedError, 'You must define extra information for your notification'
+  end
+
+  def should_notify?(target)
+    # Define a condition which will allow the notification to be sent (optional)
+    super
+  end
+
+  def resources(target)
+    # Define the serialized resources that will be added to a instance of this notifier
+    {}
+  end
+end

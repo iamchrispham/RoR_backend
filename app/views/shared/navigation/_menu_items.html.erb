@@ -1,0 +1,6 @@
+<% if current_admin.is_a? Admin%>
+    <%= render 'shared/navigation/menu_items/admins' %>
+<% elsif (current_admin.is_a? Developer) || (respond_to? :main_app)%>
+    <%= render 'shared/navigation/menu_items/developers' %>
+<% end %>
+<%= render 'shared/navigation/menu_items/shared' %>

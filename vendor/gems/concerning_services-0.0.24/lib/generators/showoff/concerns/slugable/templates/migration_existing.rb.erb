@@ -1,0 +1,15 @@
+class AddShowoffConcernsSlugableTo<%= table_name.camelize %> < ActiveRecord::Migration<%= migration_version %>
+  def self.up
+    change_table :<%= table_name %> do |t|
+      t.string :slug
+<% attributes.each do |attribute| -%>
+      t.<%= attribute.type %> :<%= attribute.name %>
+<% end -%>
+    end
+    add_index :<%= table_name %>, [:slug]
+  end
+
+  def self.down
+    remove_column :<%= table_name %>, :slug
+  end
+end

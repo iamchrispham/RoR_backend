@@ -1,0 +1,29 @@
+en:
+  views:
+    general_notifications:
+      posts:
+        created: 'Notification created successfully'
+        destroyed: 'Notification destroyed successfully'
+        deactivated: 'Notification unpublished successfully'
+        activated: 'Notification published successfully'
+        updated: 'Notification updated successfully'
+        sent: 'Notification sent successfully'
+        cannot_delete: 'Cannot delete this Notification. Please try again.'
+        actions:
+          create: 'Create Notification'
+          edit: 'Edit Notification'
+          activate: 'Send'
+          deactivate: 'UnPublish'
+          destroy: 'Delete'
+        table:
+          title: 'Title'
+          description: 'Description'
+          users: 'Users'
+          status: 'Status'
+        edit:
+          title: 'Edit %{title}'
+        create:
+          title: 'Create Notification'
+        form:
+          title: 'Title'
+          description: 'Text'

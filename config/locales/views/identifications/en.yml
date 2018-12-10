@@ -1,0 +1,91 @@
+en:
+  views:
+    identifications:
+      rejected: 'Identification rejected successfully'
+      reset: 'Identification reset successfully'
+      verified: 'Identification verified successfully'
+      sign_in_required: 'In order to view the identifications you must re-authenticate your credentials'
+      resend_invitation: 'Admin invite resent'
+      role: 'Role'
+      scopes:
+        verified: 'Verified'
+        pending: 'Pending'
+        rejected: 'Rejected'
+      filters:
+        search: 'Search'
+        search_placeholder: 'First Name, Last Name or Email'
+        sort: 'Sorted By'
+        type: 'Type'
+        country: 'Country'
+        status: 'Status'
+      actions:
+        view: 'View'
+        reject: 'Reject'
+        pending: 'Reset to Pending'
+        verify: 'Verify'
+        confirmations:
+          verify:
+            description: 'Are you sure you wish to confirm this identification?'
+            title: 'Verify Identification'
+            confirm: 'Yes'
+            deny: 'No'
+          pending:
+            description: 'Are you sure you wish to reset this identification to a pending state?'
+            title: 'Reset Identification to Pending'
+            confirm: 'Yes'
+            deny: 'No'
+          reject:
+            description: 'Are you sure you wish to reject this identification? This will cause the user to have to verify their identity again.'
+            title: 'Reject Identification'
+            confirm: 'Yes'
+            deny: 'No'
+      table:
+        all:
+          created_at: 'Uploaded'
+        pending:
+          user: 'User'
+          pending_since: 'Pending Since'
+          status: 'Status'
+        verified:
+          user: 'User'
+          verified_at: 'Verified Date'
+          verified_by: 'Verified By'
+          status: 'Status'
+        rejected:
+          user: 'User'
+          rejected_by: 'Rejected By'
+          rejected_at: 'Rejected At'
+          status: 'Status'
+      content:
+        titles:
+          user: 'User'
+          identification: 'Identification'
+          verification: 'Verification Details'
+          explanation: "Please ensure that the details of the user on the left match the details on their identification on the right.<br/><br/> If the details are correct please click <strong>'Verify'</strong> to verify the identification.<br/><br/>If the details do not match please click <strong>'Reject'</strong> to reject this identification."
+        user:
+          name: 'Name'
+          date_of_birth: 'Date of Birth'
+          gender: 'Gender'
+          image: 'Image'
+          country: 'Country'
+          description: 'Description'
+          location: 'Location'
+          address: 'Address'
+          view_in_maps: 'View In Maps'
+          email: 'Email'
+          phone_number: 'Phone Number'
+        identification:
+          number: 'Number'
+          type: 'Type'
+          country: 'Country'
+          front_image: 'Front Image'
+          back_image: 'Back Image'
+          issue_date: 'Issue Date'
+        verification:
+          verified_by: 'Verified By'
+          verified_at: 'Verified At'
+          rejected_by: 'Rejected By'
+          rejected_at: 'Rejected At'
+
+
+

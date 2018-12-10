@@ -1,0 +1,76 @@
+<div id="filters-panel" class="row main-column">
+  <%= form_for_filterrific @filterrific, :html => {:class => 'form'} do |f| %>
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.search') %><br/>
+      </div>
+
+      <div class="row  main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.text_field :search_query, :class => "filterrific-periodically-observed form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.sort') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.select :sorted_by, @filterrific.select_options[:sorted_by], {}, {:class => 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.gender') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.select :by_gender, @filterrific.select_options[:by_gender], {}, {:class => 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.type') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.select :by_type, @filterrific.select_options[:by_type], {}, {:class => 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.age_range') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.select :by_age_range, @filterrific.select_options[:by_age_range], {}, {:class => 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br/>
+    <br/>
+  <% end %>
+
+</div>

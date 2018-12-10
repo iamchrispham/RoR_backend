@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations necessary to add addresses to receipts
+
+Example:
+    rails generate showoff:payments:add_address_to_receipts
+
+    This will create:
+        db/migrate/add_address_to_receipts.rb

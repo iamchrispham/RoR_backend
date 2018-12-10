@@ -1,0 +1,35 @@
+.chevron a:before {
+  border-style: solid;
+  border-width: 0.2em 0.2em 0 0;
+  content: '';
+  display: inline-block;
+  height: 0.80em;
+  width: 0.80em;
+  left: 0.15em;
+  position: relative;
+  transform: rotate(-45deg);
+  color: #424242;
+}
+
+.chevron a:hover:before {
+  content: '';
+  font-weight: bold;
+  color: black;
+}
+
+/* Right Arrow */
+.chevron.right a:before {
+  left: 0;
+  transform: rotate(45deg);
+}
+
+.chevron.left a:before {
+  left: 1em;
+  transform: rotate(-135deg);
+  top: 1.70em;
+}
+
+.chevron.bottom a:before {
+  top: 0;
+  transform: rotate(135deg);
+}

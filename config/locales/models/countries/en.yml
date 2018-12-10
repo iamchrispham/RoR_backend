@@ -1,0 +1,5 @@
+en:
+  models:
+    countries:
+      united_kingdom:
+        title: 'United Kingdom'

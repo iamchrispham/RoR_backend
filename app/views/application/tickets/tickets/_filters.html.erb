@@ -1,0 +1,130 @@
+<script type="application/javascript">
+    $(document).ready(function () {
+        var cb = function (start, end, label) {
+            $('#filter-range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        };
+
+        var optionSet1 = {
+            startDate: <%= @start_at.to_i %>,
+            endDate: <%= @end_at.to_i %>,
+            minDate: '<%=(Time.zone.now - 10.years).strftime('%m/%d/%Y') %>',
+            maxDate: '<%=(Time.zone.now + 10.years).strftime('%m/%d/%Y') %>',
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                '<%= t 'calendar.today' %>': [moment(), moment()],
+                '<%= t 'calendar.yesterday' %>': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '<%= t 'calendar.last_7_days' %>': [moment().subtract(6, 'days'), moment()],
+                '<%= t 'calendar.last_30_days' %>': [moment().subtract(29, 'days'), moment()],
+                '<%= t 'calendar.this_month' %>': [moment().startOf('month'), moment().endOf('month')],
+                '<%= t 'calendar.last_month' %>': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                '<%= t 'calendar.year_to_date' %>': [moment().startOf('year'), moment()],
+                '<%= t 'calendar.this_year' %>': [moment().startOf('year'), moment().endOf('year')]
+            },
+            opens: 'left',
+            buttonClasses: ['btn btn-default'],
+            applyClass: 'btn-small btn-primary',
+            cancelClass: 'btn-small',
+            format: 'MM/DD/YYYY',
+            separator: '<%= t 'calendar.seperator' %>',
+            locale: {
+                applyLabel: '<%= t 'calendar.apply' %>',
+                cancelLabel: '<%= t 'calendar.cancel' %>',
+                fromLabel: '<%= t 'calendar.from' %>',
+                toLabel: '<%= t 'calendar.to' %>',
+                customRangeLabel: '<%= t 'calendar.custom' %>',
+                firstDay: 0
+            }
+        };
+        $('#filter-range span').html(
+            '<%= @start_at.strftime('%B %d, %Y') %>' + ' - ' + '<%= @end_at.strftime('%B %d, %Y') %>'
+        );
+        $('#filter-range').daterangepicker(optionSet1, cb);
+        $('#filter-range').on('apply.daterangepicker', function (ev, picker) {
+            $('#search_start_at').val(picker.startDate.unix());
+            $('#search_end_at').val(picker.endDate.unix());
+        });
+        $('#options1').click(function () {
+            $('#filter-range').data('daterangepicker').setOptions(optionSet1, cb);
+        });
+        $('#options2').click(function () {
+            $('#filter-range').data('daterangepicker').setOptions(optionSet2, cb);
+        });
+        $('#destroy').click(function () {
+            $('#filter-range').data('daterangepicker').remove();
+        });
+    });
+</script>
+
+
+<div id="filters-panel" class="row main-column">
+  <%= form_for_filterrific @filterrific, :html => {:class => 'form'} do |f| %>
+    <%= hidden_field_tag 'filterrific[start_at]', @start_at.to_i, id: 'search_start_at', class: 'filterrific-periodically-observed' %>
+    <%= hidden_field_tag 'filterrific[end_at]', @end_at.to_i, id: 'search_end_at', class: 'filterrific-periodically-observed' %>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.search') %><br/>
+      </div>
+
+      <div class="row  main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.text_field :search_query, :class => "filterrific-periodically-observed form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.dates') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div id="filter-range" class="pull-left">
+            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+            <span></span> <b class="caret"></b>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.sort') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.select :sorted_by, @filterrific.select_options[:sorted_by], {}, {:class => 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="row  main-column">
+        <%= t('views.users.filters.status') %><br/>
+      </div>
+
+      <div class="row main-column">
+        <div class="form-group">
+          <div class="">
+            <%= f.select :by_status, @filterrific.select_options[:by_status], {}, {:class => 'form-control'} %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <br/>
+    <br/>
+  <% end %>
+
+</div>

@@ -1,0 +1,234 @@
+@charset "utf-8";
+
+@import "normalize-rails";
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bootstrap-datetimepicker';
+
+@import 'icheck/square/grey';
+
+@import "select2";
+@import "select2-bootstrap";
+@import "morris";
+@import "cookies_eu";
+
+@import "css/animate.min";
+@import "css/custom";
+@import "css/floatexamples";
+@import "css/normalize";
+@import "css/ion.rangeSlider";
+@import "css/ion.rangeSlider.skinFlat";
+@import "css/select/select2.min";
+@import "pace";
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+@import "login";
+@import "notifications";
+@import "right_hand_column";
+@import "main_column";
+@import "pagination";
+@import "settings";
+@import "loading_indicator";
+@import "dashboard";
+@import "chevrons";
+@import "select2-custom";
+@import "objects";
+@import "switchery";
+
+@import "jquery-ui";
+@import 'fullcalendar';
+
+@import "metrics";
+
+.p-l-10 {
+  padding-left: 10px;
+}
+
+
+.alert-success {
+  color: white;
+  background-color: #21d0bf;
+  border-color: #21d0bf;
+}
+
+body.terms {
+  color: #000;
+  background: #fff;
+}
+
+.wrapped {
+  max-width: 150px !important;
+  word-wrap: break-word !important;
+}
+
+.wrapped-lg {
+  max-width: 250px !important;
+}
+
+.modal-footer .btn + .btn {
+  margin-bottom: 5px;
+}
+
+
+#listing-map{
+  min-height: 500px;
+  width: 100%;
+}
+
+.m-t-10 {
+  margin-top: 10px !important;
+}
+
+.m-b-10 {
+  margin-bottom: 10px !important;
+}
+
+.m-t-15 {
+  margin-top: 15px !important;
+}
+
+.m-t-20 {
+  margin-top: 20px !important;
+}
+
+.m-l-20 {
+  margin-left: 20px !important;
+}
+
+.m-r-20 {
+  margin-right: 20px !important;
+}
+
+.m-l-10 {
+  margin-left: 10px !important;
+}
+
+.p-l-0 {
+  padding-left: 0;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.btn-primary {
+  color: white !important;
+  background-color: #21d0bf;
+  border-color: #009742;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active{
+  color: #424242;
+  background-color: #009742 !important;
+  border-color: #009742 !important;
+}
+
+.btn-primary:active, .btn-primary.active {
+  color: #424242;
+  background-color: #009742 !important;
+  border-color: #009742 !important;
+}
+
+.btn-link {
+  color: #21d0bf;
+  text-decoration: none;
+}
+
+.label-info {
+  color: #424242 !important;
+  background-color: #21d0bf;
+}
+
+
+a, a:hover, a:focus, a:active {
+  color: #21d0bf;
+  text-decoration: none;
+}
+
+.profile_img, .profile_img_small{
+  position:relative;
+  text-align:center;
+  float: left;
+  max-width: 100px;
+}
+
+
+.form-top-border {
+  border-top: 1px solid #E6E9ED;
+}
+
+.form-heading {
+  padding-top: 15px;
+  color: #424242;
+}
+
+
+.form-horizontal select {
+  width: 100%;
+}
+
+#filter-range {
+  padding-top: 5px;
+  padding-bottom: 7px;
+  border: 1px solid #ccc;
+  width: 100%;
+  padding-left: 10px;
+  cursor: pointer;
+
+  span {
+    color: black;
+    font-size: 14px;
+    padding-left: 10px;
+  }
+}
+
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border: 0px !important;
+  border-color: transparent;
+}
+
+.navbar-default {
+  border: 0px !important;
+  border-color: transparent;
+}
+
+.navbar-brand img {
+  max-height: 35px;
+  margin-top: -5px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: transparent !important;
+  border: 0px !important;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  border-color: transparent !important;
+  border: 0px !important;
+}
+
+.navbar-header {
+  background: #21d0bf !important;
+}
+
+.nav.navbar-nav > li > a.active {
+  color: #424242 !important;
+  background: #f7f7f7;
+}
+
+.no-margin{
+  margin: 0
+}

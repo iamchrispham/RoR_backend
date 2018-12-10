@@ -1,0 +1,16 @@
+<p>Hi <%= @resource.first_name %>!</p>
+
+<p>We need to verify your email address. This ensures we have a contact email for you and is one of the steps in verifying your identity on Go!</p>
+
+<p>Please verify your email address using this link:</p>
+
+<p>
+  <%= link_to confirmation_url(@resource, confirmation_token: @token), class:"center-block email-button button-custom"  do %>
+      <span class="white">Verify Email Address</span>
+  <% end %>
+</p>
+
+<p>
+  Thanks,<br/>
+  Go!
+</p>

@@ -1,0 +1,78 @@
+.settings-details{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.settings-details .profile_img {
+  height: 175px !important;
+  width: 175px !important;
+  max-width: 175px !important;
+  max-height: 175px !important;
+  margin-bottom: 20px;
+  background: #f2f2f2;
+}
+
+.settings-details .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background-color: #fff;
+  opacity: 1;
+  cursor: default;
+}
+
+.settings-details label {
+  color: #424242;
+  text-align: left;
+  font-weight: normal;
+}
+
+
+.admin-details{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.post_table_img {
+  width: 120px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.admin-details .profile_img {
+  height: 175px !important;
+  width: 175px !important;
+
+  max-height: 175px !important;
+  max-width: 175px !important;
+
+  margin-bottom: 20px;
+  background: #f2f2f2;
+}
+
+.admin-details .post_img {
+  height: 250px;
+  width: 350px;
+  margin-bottom: 20px;
+  background: #f2f2f2;
+}
+
+.admin-details .post_video {
+  max-height: 250px;
+  max-width: 350px;
+  margin-bottom: 20px;
+  background: #f2f2f2;
+}
+
+
+
+.admin-details .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  background-color: #eee;
+  opacity: 1;
+  cursor: default;
+}
+
+.admin-details label {
+  color: #424242;
+  text-align: left;
+  font-weight: normal;
+}
+
+

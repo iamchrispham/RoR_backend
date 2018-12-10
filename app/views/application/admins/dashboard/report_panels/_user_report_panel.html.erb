@@ -1,0 +1,12 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <% if @user_period.blank? || (@user_period.eql? 'week') %>
+    <% graph_period = graph_period_week %>
+  <% elsif @user_period.eql? 'month' %>
+    <% graph_period = graph_period_month %>
+  <% elsif @user_period.eql? 'year' %>
+    <% graph_period = graph_period_year %>
+  <% end %>
+  <%= area_chart reporting_users_graph_data(graph_period), graph_options %>
+
+</div>
+

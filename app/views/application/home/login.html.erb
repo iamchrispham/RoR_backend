@@ -1,0 +1,23 @@
+<div class="flash">
+  <%= flashes %>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= link_to new_admin_session_url, class: 'btn btn-right-hand-column col-xs-12' do%>
+        <span class="glyphicon glyphicon-car pull-left"></span> <%= t('views.login.admin_login') %>
+    <% end %>
+  </div>
+</div>
+
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <p class="social-text"><%= t('views.login.need_account') %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <%= link_to t('views.login.request_account'), 'mailto://support@mygo.io', class: "btn btn-right-hand-column col-xs-12", method: :get %>
+  </div>
+</div>

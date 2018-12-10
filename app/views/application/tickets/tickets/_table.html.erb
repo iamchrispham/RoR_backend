@@ -1,0 +1,35 @@
+<table class="table main-column" id="objects">
+  <thead>
+  <tr>
+    <th></th>
+    <th>User</th>
+    <th>Event</th>
+    <th>URL</th>
+    <th>Date</th>
+    <th>Total Views</th>
+    <th>Unique Views</th>
+    <th>Male Views</th>
+    <th>Female Views</th>
+    <th>Unspecified Views</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @objects.each do |ticket| %>
+    <tr>
+      <td><%= ticket.event.media_item.present? ? image_tag(ticket.event.media_item.image.url(:small), class: 'profile_img') : image_tag(EventMediaItem.placeholder_url, class: 'profile_img') %></td>
+      <td><%= link_to ticket.event.user.name, user_path(ticket.event.user) %></td>
+      <td><%= ticket.event.title %></td>
+      <td><%= ticket.url %></td>
+      <td><%= "#{ticket.updated_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT)}" %></td>
+      <td class="text-center"><%= ticket.event_ticket_detail_views.count %></td>
+      <td class="text-center"><%= ticket.event_ticket_detail_viewed_users.uniq.count %></td>
+      <td class="text-center"><%= ticket.event_ticket_detail_viewed_users.male.uniq.count %></td>
+      <td class="text-center"><%= ticket.event_ticket_detail_viewed_users.female.uniq.count %></td>
+      <td class="text-center"><%= ticket.event_ticket_detail_viewed_users.unspecified.uniq.count %></td>
+
+      <td><%= link_to t('views.users.show.content.events.actions.go_to'), ticket.url, class: 'btn btn-success', target: '_blank' %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

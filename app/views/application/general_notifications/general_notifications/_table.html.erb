@@ -1,0 +1,36 @@
+<table class="table main-column">
+  <thead>
+  <tr>
+    <th> <%= t('views.general_notifications.posts.table.title') %></th>
+    <th> <%= t('views.general_notifications.posts.table.description') %></th>
+    <th> <%= t('views.general_notifications.posts.table.users') %></th>
+    <th> <%= t('views.general_notifications.posts.table.status') %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @objects.each do |object| %>
+      <tr>
+        <td class="wrapped"> <%= object.title %> </td>
+        <td class="wrapped wrapped-lg"> <%= "#{object.message[0..150]}..." %> </td>
+        <td class="wrapped"> <%= object.users.count.zero? ? User.count : object.users.count %> </td>
+        <td class="wrapped"><span class="label label-<%= object.status_class %>"><%= object.status %></span></td>
+        <td class="pull-right bottom-align">
+          <br/>
+          <%= link_to t('views.general_notifications.posts.actions.destroy'), general_notification_path(object), class: 'btn btn-danger bottom', method: :delete %>
+          <% if object.draft? || object.failed? %>
+              <br/>
+              <%= link_to t('views.general_notifications.posts.actions.activate'),
+                          general_notification_send_notification_path(object),
+                          class: 'btn btn-success bottom',
+                          method: :put
+              %>
+          <% end %>
+
+        </td>
+      </tr>
+
+  <% end %>
+  </tbody>
+
+</table>

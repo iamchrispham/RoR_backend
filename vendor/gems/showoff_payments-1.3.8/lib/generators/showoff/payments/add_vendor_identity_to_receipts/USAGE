@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations necessary to add vendor identities to receipts
+
+Example:
+    rails generate showoff:payments:add_vendor_identity_to_receipts
+
+    This will create:
+        db/migrate/add_vendor_identity_to_receipts.rb

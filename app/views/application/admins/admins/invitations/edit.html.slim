@@ -1,0 +1,19 @@
+- content_for :page_title, (t 'views.admins.accept_invite')
+
+= simple_form_for resource, as: resource_name, url: invitation_path(resource_name), html: {method: :put}, role: 'form' do |form|
+  = flashes
+  = form.hidden_field :invitation_token
+
+  .input-group
+    span.input-group-addon
+      i.fa.fa-user
+    = form.password_field :password, class: 'form-control', placeholder: (t 'views.admins.password'), required: true, autofocus: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+
+  .input-group
+    span.input-group-addon
+      i.fa.fa-user
+    = form.password_field :password_confirmation, class: 'form-control', placeholder: (t 'views.admins.confirm_password'), required: true
+
+  .row
+    .col-xs-12
+      = content_tag :button, (t 'devise.invitations.edit.submit_button'), type: :submit, class: 'btn btn-right-hand-column col-xs-12'

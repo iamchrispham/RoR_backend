@@ -1,0 +1,26 @@
+<div class="navbar nav_title bg-navy">
+  <%= link_to root_url, class: "site_title" do %>
+    <%= image_tag 'navigation_logo.png' %>
+  <% end %>
+</div>
+
+<div class="clearfix"></div>
+
+<% if current_admin.respond_to? :image %>
+  <div class="profile clearfix">
+    <div class="profile_pic">
+      <%= image_tag current_admin.image.url, class: "img-circle profile_img" %>
+    </div>
+    <div class="profile_info">
+      <h2><%= current_admin.name %></h2>
+    </div>
+  </div>
+<% end %>
+
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+  <div class="menu_section active">
+    <ul class="nav side-menu" style="">
+      <%= render 'shared/navigation/menu_items' %>
+    </ul>
+  </div>
+</div>

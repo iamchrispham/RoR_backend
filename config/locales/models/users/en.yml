@@ -1,0 +1,6 @@
+en:
+  models:
+    users:
+      genders:
+        male: 'Male'
+        female: 'Female'

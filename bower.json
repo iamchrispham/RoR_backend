@@ -1,0 +1,12 @@
+{
+  "name": "Go!",
+  "authors": [
+    "Showoff"
+  ],
+  "description": "Go!",
+  "main": "",
+  "homepage": "",
+  "dependencies": {
+    "gentelella": "^1.1.0"
+  }
+}

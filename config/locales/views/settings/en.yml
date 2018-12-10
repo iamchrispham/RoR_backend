@@ -1,0 +1,12 @@
+en:
+  views:
+    settings:
+      profile: 'Edit Profile'
+    profile:
+      edit:
+        first_name: 'First Name'
+        last_name: 'Last Name'
+        email: 'Email'
+        image: 'Picture'
+      update:
+        success: 'Your profile has been updated'

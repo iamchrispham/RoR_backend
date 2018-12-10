@@ -1,0 +1,33 @@
+<% if @event_attendee_contributions.count.zero? %>
+  <div class="row main-column" id="objects">
+    <strong>No Contributions Found</strong>
+  </div>
+<% else %>
+
+  <div class="row main-column" id="objects">
+    <table class="data table table-striped no-margin">
+      <thead>
+      <tr>
+        <th> User</th>
+        <th> Timestamp</th>
+        <th> Amount </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @event_attendee_contributions.each do |contribution| %>
+        <tr>
+          <td><%= link_to contribution.user.name, user_path(contribution.user) %></td>
+          <td><%= contribution.created_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) %></td>
+          <td><%= number_to_currency(contribution.amount_cents / 100, unit: contribution.amount.currency.symbol) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="row main-column">
+    <div id="paginator" class="pull-right">
+      <%= will_paginate @event_attendee_contributions, renderer: BootstrapPagination::Rails, param_name: 'event_attendee_contributions_page', params: {scope: 'event_attendee_contributions'} %>
+    </div>
+  </div>
+
+<% end %>

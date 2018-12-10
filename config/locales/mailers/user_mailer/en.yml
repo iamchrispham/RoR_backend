@@ -1,0 +1,4 @@
+en:
+  user_mailer:
+    invite:
+      subject: 'A friend has invited you to join Go!'

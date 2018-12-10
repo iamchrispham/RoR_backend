@@ -1,0 +1,8 @@
+class AddManagedAccountsToVendorIdentities < ActiveRecord::Migration
+  def change
+    add_column :showoff_payments_vendor_identities, :vendor_identity_type, :integer, index: { name: :showoff_payments_vendor_identities_vendor_identity_type }, default: 0, index: true
+    add_column :showoff_payments_vendor_identities, :provider_secret, :text, index: { name: :showoff_payments_vendor_identities_provider_secret }
+    add_column :showoff_payments_vendor_identities, :provider_key, :text, index: { name: :showoff_payments_vendor_identities_provider_key }
+
+  end
+end

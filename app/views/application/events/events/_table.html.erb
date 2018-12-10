@@ -1,0 +1,51 @@
+<table class="table main-column" id="objects">
+  <thead>
+  <tr>
+    <th> <%= t('views.users.show.content.events.media') %></th>
+    <th> <%= t('views.users.show.content.events.user') %></th>
+    <th> <%= t('views.users.show.content.events.title') %></th>
+    <th> <%= t('views.users.show.content.events.description') %></th>
+    <th> <%= t('views.users.show.content.events.date') %></th>
+    <th> <%= t('views.users.show.content.events.location') %></th>
+    <th class="text-center"> <%= t('views.users.show.content.events.private') %></th>
+    <th class="text-center"> <%= t('views.users.show.content.events.over_eighteen') %></th>
+    <th class="text-center"> <%= t('views.users.show.content.events.attendees') %></th>
+    <th class="text-center"> <%= t('views.users.show.content.events.event_forwarding') %></th>
+    <th class="text-center"> <%= t('views.users.show.content.events.allow_chat') %></th>
+    <th class="text-center"> <%= t('views.users.show.content.events.show_timeline') %></th>
+    <th> <%= t('views.users.show.content.events.contribution') %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @objects.each do |event| %>
+    <tr>
+      <td><%= event.media_item.present? ? image_tag(event.media_item.image.url(:small), class: 'profile_img') : image_tag(EventMediaItem.placeholder_url, class: 'profile_img') %></td>
+      <td><%= link_to event.user.name, user_path(event.user) %></td>
+      <td><%= event.title %></td>
+      <td><%= truncate(event.description, length: 50) %></td>
+      <td><%= "#{event.date.strftime(Api::Emails::DEFAULT_TIME_FORMAT)}" %></td>
+      <td><%= event.public_address %></td>
+      <td class="text-center">
+        <i class="fa <%= event.private_event ? "fa-lock" : "fa-unlock" %>" aria-hidden="true"></i></td>
+      <td class="text-center">
+        <i class="fa <%= event.eighteen_plus ? "fa-check" : "fa-times" %>" aria-hidden="true"></i></td>
+      <td class="text-center"><%= event.event_attendees.count %></td>
+      <td class="text-center">
+        <i class="fa <%= event.event_forwarding ? "fa-check" : "fa-times" %>" aria-hidden="true"></i></td>
+      <td class="text-center"><i class="fa <%= event.allow_chat ? "fa-check" : "fa-times" %>" aria-hidden="true"></i>
+      </td>
+      <td class="text-center">
+        <i class="fa <%= event.show_timeline ? "fa-check" : "fa-times" %>" aria-hidden="true"></i>
+      </td>
+      <td><%= event.event_contribution_detail.present? ? number_to_currency(event.event_contribution_detail.amount, unit: event.event_contribution_detail.amount.currency.symbol, precision: 2) : 'Not Required' %></td>
+
+      <td>
+        <% if can? :read, event %>
+          <%= link_to t('views.users.show.content.events.actions.view'), event_path(event), class: 'btn btn-success' %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

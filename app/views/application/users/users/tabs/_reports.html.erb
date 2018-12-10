@@ -1,0 +1,25 @@
+<div class="row main-column" id="objects">
+  <table class="data table table-striped no-margin">
+    <thead>
+    <tr>
+      <th> Reported By </th>
+      <th> Timestamp </th>
+      <th> Reason </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @reports.each do |report| %>
+        <tr>
+          <td><%= report.reporter.name %></td>
+          <td><%= report.created_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) %></td>
+          <td><%= report.reason.humanize %></td>
+        </tr>
+    <% end%>
+    </tbody>
+  </table>
+</div>
+<div class="row main-column">
+  <div id="paginator" class="pull-right">
+    <%= will_paginate @reports, renderer: BootstrapPagination::Rails, param_name: 'report_page', params: {scope: 'reports'} %>
+  </div>
+</div>

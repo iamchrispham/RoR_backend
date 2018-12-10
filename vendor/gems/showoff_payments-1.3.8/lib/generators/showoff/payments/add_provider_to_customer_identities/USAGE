@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations necessary to add providers to customer identities
+
+Example:
+    rails generate showoff:payments:add_provider_to_customer_identities
+
+    This will create:
+        db/migrate/add_provider_to_customer_identities.rb

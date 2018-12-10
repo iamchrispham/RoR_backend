@@ -1,0 +1,7 @@
+class AddQuantitiesAndNotesToReceipts < ActiveRecord::Migration
+  def change
+
+    add_column :showoff_payments_receipts, :quantity, :integer, null: false, index: true, default: 1
+    add_column :showoff_payments_receipts, :notes, :text
+  end
+end

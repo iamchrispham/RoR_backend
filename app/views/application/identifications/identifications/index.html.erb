@@ -1,0 +1,29 @@
+<%  content_for :page_title, (t 'views.navigation.menu.identifications') %>
+
+<div class="x_panel main-column">
+  <div class="x_title main-column">
+    <h2><%= (t 'views.navigation.menu.identifications') %></h2>
+
+    <div class="clearfix"></div>
+  </div>
+
+  <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+    <div class="x_panel tile right-hand-column">
+      <div class="x_title no-margin">
+        <%= render "application/identifications/identifications/filters" %>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="row main-column" id="objects">
+        <%= render 'table' %>
+      </div>
+      <div class="row main-column">
+        <div id="paginator" class="pull-right">
+          <%= will_paginate @objects, renderer: BootstrapPagination::Rails %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

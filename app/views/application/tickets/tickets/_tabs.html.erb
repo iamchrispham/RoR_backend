@@ -1,0 +1,48 @@
+<ul id="object-tabs" class="nav nav-tabs bar_tabs" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#details" role="tab" id="details-tab" data-toggle="tab" aria-expanded="false">Details</a>
+  </li>
+
+
+  <% if can? :read, Report %>
+    <li role="presentation" class="">
+      <a href="#reports" role="tab" id="reports-tab" data-toggle="tab" aria-expanded="false">Reports</a>
+    </li>
+  <% end %>
+
+  <li role="presentation" class="">
+    <a href="#location" role="tab" id="location-tab" data-toggle="tab" aria-expanded="false">Location</a>
+  </li>
+
+  <li role="presentation" class="">
+    <a href="#attending_users" role="tab" id="attending_users-tab" data-toggle="tab" aria-expanded="false">Attending Users</a>
+  </li>
+
+  <li role="presentation" class="">
+    <a href="#maybe_attending_users" role="tab" id="maybe_attending_users-tab" data-toggle="tab" aria-expanded="false">Maybe Attending Users</a>
+  </li>
+
+  <li role="presentation" class="">
+    <a href="#not_attending_users" role="tab" id="not_attending_users-tab" data-toggle="tab" aria-expanded="false">Not Attending Users</a>
+  </li>
+
+  <li role="presentation" class="">
+    <a href="#invited_users" role="tab" id="invited_users-tab" data-toggle="tab" aria-expanded="false">Invited Users</a>
+  </li>
+
+
+  <li role="presentation" class="">
+    <a href="#event_ticket_detail_views" role="tab" id="event_ticket_detail_views-tab" data-toggle="tab" aria-expanded="false">Ticket Views</a>
+  </li>
+
+  <li role="presentation" class="">
+    <a href="#event_attendee_contributions" role="tab" id="event_attendee_contributions-tab" data-toggle="tab" aria-expanded="false">Contributions</a>
+  </li>
+  <li role="presentation" class="">
+    <a href="#event_shares" role="tab" id="event_shares-tab" data-toggle="tab" aria-expanded="false">Shares</a>
+  </li>
+
+
+</ul>
+
+

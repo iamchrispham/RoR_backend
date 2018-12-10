@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations to add an endpoint owner to a device.
+
+Example:
+    rails generate showoff:sns:add_endpoint_owner_to_devices
+
+    This will create:
+        db/add_endpoint_owner_to_s_n_s_devices.rb

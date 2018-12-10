@@ -1,0 +1,24 @@
+en:
+  views:
+    navigation:
+      footer:
+        title: 'Go!'
+      menu:
+        dashboard: 'Dashboard'
+        settings: 'Settings'
+        admins: 'Admins'
+        events: 'Events'
+        tickets: 'Tickets'
+        users: 'Users'
+        revenues: 'Revenues'
+        logout: 'Logout'
+        general_notifications: 'Notifications'
+        reported_comments: 'Reported Comments'
+        reported_items: 'Reported Timeline Items'
+        reported_users: 'Reported Users'
+        reported_events: 'Reported Events'
+        identifications: 'Identifications'
+        objects:
+          title: 'Objects'
+          applications: 'Applications'
+

@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations necessary for this gem.
+
+Example:
+    rails generate showoff:sns:install_migrations
+
+    This will create:
+        db/timestamp_create_notifications.rb

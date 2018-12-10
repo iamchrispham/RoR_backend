@@ -1,0 +1,8 @@
+class AddEndpointOwnerToSNSDevices < ActiveRecord::Migration
+  def change
+    add_column :showoff_sns_devices, :endpoint_owner_id, :integer
+    add_column :showoff_sns_devices, :endpoint_owner_type, :text, index: true
+
+    add_index :showoff_sns_devices, [:endpoint_owner_id, :endpoint_owner_type], name: :idx_showoff_sns_devices_on_endpoint_owner
+  end
+end

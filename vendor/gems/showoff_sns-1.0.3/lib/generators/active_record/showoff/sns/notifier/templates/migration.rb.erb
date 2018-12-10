@@ -1,0 +1,16 @@
+class ShowoffSnsCreateNotifier<%= table_name.camelize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :<%= table_name %> do |t|
+      t.belongs_to :showoff_sns_notification, index: { name: :index_<%= table_name %>_on_notification }, foreign_key: true, null: false
+  <% attributes.each do |attribute| -%>
+    t.<%= attribute.type %> :<%= attribute.name %>
+  <% end -%>
+
+      t.string :owner_type, null: false, index: true
+      t.bigint :owner_id, null: false, index: true
+      t.timestamps null: false
+    end
+
+    add_index :<%= table_name %>, [:owner_id, :owner_type]
+  end
+end

@@ -1,0 +1,181 @@
+en:
+  api:
+    responses:
+      conversations:
+        participants:
+          not_found: 'That participant was not found.'
+        message_you_placeholder: "You:"
+        not_found: 'That conversation does not exist'
+        leaving_message: ' has left the chat'
+        joining_message: ' has joined the chat'
+        you_joining_message: 'You joined the chat'
+        you_leaving_message: 'You left the chat'
+        participant_joining_message: '%{participant} joined the chat'
+        participant_leaving_message: '%{participant} left the chat'
+        you_attachment_message: 'You sent an %{type}'
+        you_attachment_location_message: 'You sent a %{type}'
+        participant_attachment_message: '%{participant} sent an %{type}'
+        participant_attachment_location_message: '%{participant} sent a %{type}'
+        messages:
+          not_found: 'That message does not exist'
+          statuses:
+            invalid_status: 'Invalid status.'
+            not_found: 'That status does not exist'
+          attachments:
+            unknown_error_occurred: 'An error occurred while processing your message. Please try again.'
+            not_supported: 'Attachment type not supported: %{type}'
+      oauth:
+        facebook:
+          unauthorized: 'Facebook Account Unauthorized'
+          merge: 'Looks like you already have an account. Would you like to merge your account with this Facebook account?'
+        token:
+          revoked: 'Token Successfully Revoked'
+          invalid: 'Invalid token'
+      success: 'Success'
+      unauthorized: 'Your session has expired. Please login again to continue'
+      invalid_argument: '%{argument} is invalid'
+      invalid_email: '%{email} is an invalid email address'
+      invalid_password: 'Password is invalid'
+      invalid_credentials: 'Invalid credentials. Please check your email and password combination.'
+      session_expired: 'Session expired, please log in again.'
+      invalid_version: 'Invalid API Version Detected.'
+      invalid_action: 'Invalid action detected. Please try again.'
+      object_not_found: "Unknown Item detected"
+      invalid_request_format: "Invalid Request Format"
+      missing_parameter: "Unfortunately you need to supply the parameter '%{param}' to continue"
+      internal_error: "An error has occurred. Please try again"
+      unknown_field: 'Unknown'
+      events:
+        already_more_attending_than_cap: 'There are already more attendees than the maximum capacity you are trying to set.'
+        minimum_number_of_media_items: 'You must supply at least %{count} media item for this event'
+        minimum_contribution: 'The minimum amount for a contribution is %{total_amount}'
+        not_found: 'Event not found'
+        cancelled: 'This event has now been cancelled'
+        suspended: 'This event is not active. Please try another'
+        attendees:
+          event_past: 'This event is now over'
+          not_found: 'Attendee not found'
+          owner_error: 'You cannot RSVP to your own event'
+          maximum_attendees: 'This event has reached its capacity.'
+          requests:
+            pending: 'Your attendance request is currently pending. Please wait for the host to respond'
+            rejected: 'Your attendance request has been rejected so we cannot update your status. Please contact the host if you feel this is wrong.'
+          contributions:
+            types:
+              contribution:
+                cta_description: 'Would you like to make a Contribution? You will be charged %{total_amount}, this includes what %{host} has asked for plus a Go! processing fee.'
+                cta_description_optional: 'Would you like to make a Contribution? You will be charged %{total_amount}, this includes a Go! processing fee.'
+            already_contributed: 'You have already contributed to this event'
+            totals:
+              required: 'A total in cents for the payment is required'
+            payments:
+              payment_failed: 'Unfortunately we have failed to charge the customers card for this payment. Please try again'
+              payment_failed_generic: 'Unfortunately we have failed to charge the customers card for this payment. Please try again.'
+              payment_reject_generic: 'Unfortunately we have failed to refund the customers card for this payment. Please try again.'
+        timelines:
+          item:
+            suspended: 'This event timeline item is not active. Please try another'
+            not_found: 'Timeline Item Not Found'
+            likes:
+              not_found: 'Like not Found'
+            comments:
+              not_found: 'Comment not Found'
+      payments:
+        pay_error: "An error has occurred: %{error}. Please try again"
+        payment_sources_error: "An error has occurred: %{error}. Please try again"
+        add_card_error: "An error has occurred: %{error}. Please try again"
+        remove_card_error: "An error has occurred: %{error}. Please try again"
+        make_default_error: "An error has occurred: %{error}. Please try again"
+        create_customer_error: "An error has occurred: %{error}. Please try again"
+      notifications:
+        not_found: 'That notification does not exist'
+        invalid_status: 'That status is invalid'
+        invalid_notification: 'That notification is not valid'
+      alerts:
+        not_found: 'That alert does not exist'
+        invalid_status: 'That status is invalid'
+        invalid_alert: 'That alert is not valid'
+        nearby:
+          enter_message: 'There is one offer nearby in %{location}'
+          enter_message_multiples: 'There are %{offer_count} offers nearby in %{location}'
+          exit_message: ''
+      referrals:
+        title: 'You have %{currency}%{value} in free credits'
+        award_types:
+          awarded: 'awarded'
+          deducted: 'deducted'
+        invite:
+          title: "Invite a friend to join Go! and get %{currency}%{value} free credit when they sign up."
+          social:
+            title: "Check out Go!"
+            description: "Check out Go!. Sign up today and find awesome events near you!"
+      users:
+        no_currency_present: 'In order to proceed you must set the default currency on your profile. Please set your default currency and try again.'
+        already_blocked: 'That user has already been blocked'
+        not_blocked: 'That user is not blocked'
+        suspended: 'Your Account has been suspended. Please contact Go! support for more information'
+        inactive: 'Inactive user account'
+        unable_to_merge: 'Unable To Merge Accounts'
+        missing:
+          facebook_user_id: 'Missing Facebook User ID'
+          facebook_user_access_token: 'Missing Facebook User Access Token'
+        facebook:
+          events:
+            import: 'Facebook Event Import has started. You will receive a notification when it is completed'
+        contacts:
+          invite:
+            already_sent: 'An invite has already been sent to %{user}'
+            sent: 'An invite has been sent to %{user}'
+            sms_message: '%{inviter} has invited you to join them on Go!. They will be hosting their events and parties here as well as your other friends and contacts. Know What You’re Doing From The Word Go! %{link}'
+            events:
+              sms_message: '%{inviter} has invited you to %{event} on Go! Click on the link below to respond, see who else is going, and setup your own events. %{link}'
+        payments:
+          no_credit_card: 'In order to proceed you must add a payment method.'
+          invalid_application_fee: 'Could not proceed with payment. An internal error has occurred'
+        email:
+          taken: 'That email is already taken'
+        addresses:
+          not_found: 'Address not found'
+        account_exists: "A user with that email already exists"
+        confirmation_email: "Verification email sent to %{email}. Please check your email address for further instructions."
+        reset_password: "Password reset email sent to %{email}. Please check your email address for further instructions."
+        password_changed: 'Password updated'
+        not_found: 'That user does not exist'
+        deactivated: 'Your account has been deactivated. Please contact Go! support for more information.'
+        registration:
+          invalid_email: "Valid email address not present. Please check your details"
+          user_already_exists: "User already exists. Please try logging into your account"
+        update:
+          email_taken: "Email already exists. Please try another"
+        me:
+          not_found: "User Not Found"
+      user_notification_settings:
+        invalid_options: "Invalid Notification Setting Options. Please try again."
+
+      user_phone_number:
+        number_exists: "A Phone number with that number already exists"
+        message_text: "Go! security code: %{confirmation_code}. Use this to finish verification."
+        not_found: "Phone Number Not Found"
+        unable_to_verify: "We were unable to validate your phone number. Please try again."
+      devices:
+        cannot_delete: 'Unable to delete device: %{error}'
+        cannot_save: 'Unable to save device: %{error}'
+        not_found: 'That device does not exist'
+        already_exists: 'That device has already been registered'
+      doorkeeper:
+        unknown_client: "Unknown Client"
+        invalid_token: "Invalid Token"
+        successfully_revoked: "Token Successfully Revoked"
+      notifiers:
+        message_sent_notifier: "%{sender} sent you a message: %{message}"
+      identifications:
+        cannot_delete: 'Unable to delete identification'
+        cannot_save: 'Unable to save identification'
+      friends:
+        not_found: 'You are not friends with this user'
+        invalid_scope: 'Invalid Scope Found'
+        requests:
+          not_found: 'Friend Request Not Found'
+          invalid_scope: 'Invalid Scope Found'
+
+

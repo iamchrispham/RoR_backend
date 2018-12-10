@@ -1,0 +1,27 @@
+<%= menu_item title: (t 'views.navigation.menu.dashboard'), path: dashboard_url, controller: :application_admins_dashboard %>
+
+<% if can? :read, User %>
+    <%= menu_item title: (t 'views.navigation.menu.users'), path: users_path, controller: :application_users_users %>
+<% end %>
+
+<% if can? :read, Event %>
+    <%= menu_item title: (t 'views.navigation.menu.events'), path: events_path, controller: :application_events_events %>
+    <%= menu_item title: (t 'views.navigation.menu.tickets'), path: tickets_path, controller: :application_tickets_tickets %>
+<% end %>
+
+<% if can? :manage, GeneralNotification%>
+    <%= menu_item title: (t 'views.navigation.menu.general_notifications'), path: general_notifications_path, controller: :application_general_notifications_general_notifications %>
+<% end %>
+
+<% if can? :read, Identification%>
+    <%= menu_item title: (t 'views.navigation.menu.identifications'), path: identifications_path, controller: :application_identifications_identifications %>
+<% end %>
+
+<% if can? :manage, Admin %>
+    <%= menu_item title: (t 'views.navigation.menu.admins'), path: admins_path, controller: :application_admins_admins %>
+<% end %>
+
+<% if can? :manage, Report %>
+  <%= menu_item title: (t 'views.navigation.menu.reported_events'), path: reports_events_path, controller: :application_reports_events %>
+  <%= menu_item title: (t 'views.navigation.menu.reported_users'), path: reports_users_path, controller: :application_reports_users %>
+<% end %>

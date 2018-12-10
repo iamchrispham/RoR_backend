@@ -1,0 +1,7 @@
+en:
+  views:
+    login:
+      title: 'Login'
+      admin_login: 'Admin Login'
+      need_account: 'Need an Account?'
+      request_account: 'Request an Account'

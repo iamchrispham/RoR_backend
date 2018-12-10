@@ -1,0 +1,6 @@
+en:
+  event_mailer:
+    invite:
+      subject: "You're invited to %{event_name}"
+    contact_invite:
+      subject: "You're invited to %{event_name}"

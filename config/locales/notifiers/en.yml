@@ -1,0 +1,48 @@
+en:
+  notifiers:
+    event_cancelled: 'The event %{name} hosted by %{user} has been cancelled.'
+    event_upcoming_invited: 'Just a reminder that %{name} hosted by %{user} is coming up soon'
+    event_upcoming_going: 'Just a reminder that %{name} hosted by %{user} is coming up soon'
+    event_upcoming_maybe_going: 'Just a reminder that %{name} hosted by %{user} is coming up soon'
+    message_sent:
+      event:
+        message: '%{group}: %{message}'
+      chat:
+        message: '%{message}'
+    friend_request:
+      message: '%{user} has sent you a friend request'
+    friendship:
+      message: 'You and %{user} are now friends'
+    event_share:
+      message: '%{user} has shared an event with you'
+    event_invitation:
+      message: '%{user} has invited you to their event %{event}'
+    event_attendee_request:
+      message: '%{user} has requested to attend your event %{event}'
+    event_attendee_request_response:
+      rejected:
+        message: '%{user} has declined your request to attend %{event} as the event is now full.'
+      message: '%{user} has %{response} your request to attend their event %{event}.%{contribute}'
+      contribute: ' You may now contribute to the event to confirm your attendance'
+    event_owner_attendee:
+      maybe_going: 'maybe going'
+      not_going: 'not going'
+      going: 'going'
+      message: '%{user} is %{response} to your event %{event}'
+    event_timeline_item_like:
+      message: '%{user} has liked your %{type} in the event %{event}'
+    event_timeline_item_comment:
+      message: '%{user} has commented on your %{type} in the event %{event}'
+    user_facebook_event_import:
+      failed_and_imported:
+        message: '%{failed} events failed to import. Some required information was missing on some of your Facebook events so we could not import them. %{imported} events were imported successfully. You can view these on your profile.'
+      failed:
+        message: '%{failed} events failed to import. Some required information was missing on some of your Facebook events so we could not import them.'
+      imported:
+        message: 'We have successfully imported %{imported} events. These are now on your profile'
+      imported_singular:
+        message: 'We have successfully imported %{imported} event. These are now on your profile'
+      nothing:
+        message: 'No new events were found during this import. Any existing events found were reactivated and are now visible on your profile.'
+      generic:
+        message: 'Your Facebook Event Import has completed.'

@@ -1,0 +1,9 @@
+en:
+  models:
+    feeds:
+      actions:
+        event_attendee: 'is going to this event'
+        event_shared: 'shared this event with you'
+        event_timeline_item_post: 'posted this'
+        event_timeline_item_comment: 'commented on this'
+        event_timeline_item_like: 'liked this'

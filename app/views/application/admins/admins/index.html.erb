@@ -1,0 +1,21 @@
+<%  content_for :page_title, (t 'views.navigation.menu.admins') %>
+
+<div class="x_panel main-column">
+  <div class="x_title main-column">
+    <h2><%= (t 'views.navigation.menu.admins') %></h2>
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content main-column">
+    <div class="row main-column table-selector">
+      <%= link_to t('views.admins.actions.create'), new_admin_url, class: "btn btn-green m-l-20 m-t-10" %>
+    </div>
+    <div class="row main-column">
+      <%= render 'table' %>
+    </div>
+    <div class="row main-column">
+      <div id="paginator" class="pull-right">
+        <%= will_paginate @objects, renderer: BootstrapPagination::Rails %>
+      </div>
+    </div>
+  </div>
+</div>

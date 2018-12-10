@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <%= stylesheet_link_tag 'email', media: 'all' %>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet"/>
+
+    <style>
+      .media-table {
+        position: relative !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .media-table table {
+        width: 100% !important;
+      }
+
+      .media-table td {
+        width: 33% !important;
+      }
+
+      #play-button {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      #invitation-button {
+        padding: 10px 20px;
+        font-size: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      #invitation-button,
+      .welcome {
+        min-width: 50%;
+        width: 100%;
+      }
+
+      .welcome {
+        margin-left: 0;
+      }
+
+      .social-icons {
+        padding: 0 !important;
+        width: 100%;
+        min-width: 33% !important;
+      }
+
+      @media screen and (min-width:768px) {
+        .social-icons {
+          width: 33% !important;
+          margin-left: 33% !important;
+        }
+      }
+
+      .social-icon {
+        display: inline-block;
+      }
+
+      .social-icon img {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        max-width: 50px !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      @media screen and (min-width:992px) {
+        .container {
+          width: 940px !important;
+        }
+      }
+
+      @media screen and (min-width:1200px) {
+        .container {
+          width: 1170px !important;
+        }
+      }
+
+      @media screen and (min-width:768px) {
+        .welcome {
+          width: 50% !important;
+          margin-left: 25% !important;
+        }
+      }
+
+      @media screen and (min-width:768px) {
+        .social-icon {
+          width: 33% !important;
+        }
+      }
+
+      u + .invite .container  {
+        width: 800px !important;
+        max-width: 800px !important;
+      }
+    </style>
+  </head>
+  <body class="invite">
+    <div id="invite">
+      <div class="container">
+        <div class="row email-bg">
+          <div class="col-xs-12 envelope text-left pull-left">
+            <%= image_tag "https://s3-eu-west-1.amazonaws.com/#{ENV['AWS_BUCKET']}/public/go-email-logo.png", class: "img-responsive", id: 'invited' %>
+          </div>
+          <div class='shadow'>
+            <div class="col-xs-12 col-md-8 bg-white invited">
+              <div class="row welcome">
+                <div class="col-xs-12 text-center">
+                  Hi <b><%= @user.first_name %></b>,
+                  <br>
+                  <b><%= @event.user.name %></b> has invited you to
+                  <br>
+                  <strong class='event-name'><%= @event.title %></strong>
+                  When: <strong><%= "#{@event.date.strftime("%b %d %Y")}" %></strong> at <strong><%= "#{@event.time.strftime("%I:%M%p")}" %></strong> in
+                  <br>
+                  <strong><%= @event.public_address %></strong>.
+                </div>
+              </div>
+            </div>
+
+            <% @event_link = @event.branch_link %>
+
+            <div class="col-xs-12 col-md-8 bg-white">
+              <div class="row event-cover">
+                <%= link_to @event_link do %>
+                  <div class="event-image">
+                    <table style="border-collapse:separate;line-height:100%;" class='media-table'>
+                      <tr>
+                        <td background="<%= @event&.media_item&.sharing_url %>" style="background:#2a3448 url(<%= @event&.media_item&.image_url %>) no-repeat center center / cover;background-position:center center;background-repeat:no-repeat;padding:100px 0px;vertical-align:top;">
+                          <table>
+                            <tr><td></td><td></td><td></td></tr>
+                            <tr><td></td><td><%= @event&.media_item&.type == :video ? image_tag("https://s3-eu-west-1.amazonaws.com/#{ENV['AWS_BUCKET']}/public/go-email-play.png", class: "img-responsive", id: 'play-button') : '' %></td><td></td></tr>
+                            <tr><td></td><td></td><td></td></tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="col-xs-12 col-md-8 bg-white no-padding">
+                            <div class="col-xs-12 bg-white no-padding">
+                              <%= link_to @event_link, class: "email-button", id: "invitation-button" do %>
+                                <span class="white">Let's GO!</span>
+                              <% end %>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class='shadow separated'>
+            <div class="col-xs-12 col-md-8 bg-white footer-top-padding">
+              <div class="row cta-padding">
+                <div class="col-xs-12 text-center cta">
+                  <strong class='footer-cta'>
+                    The app to host and go to any occasion.
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-md-8 bg-white ">
+              <div class="row">
+                <div class="col-xs-12 text-center info">
+                  This link will take you to the event in Go! app if you have it installed on your device or take you to the
+                  App Store to download the FREE Go! app. Once the download is complete simply click the email again.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-md-8 bg-white footer-bottom-padding">
+              <div class="col-xs-6">
+                <%= link_to ENV['BRANCH_URL'] do %>
+                  <%= image_tag "https://s3-eu-west-1.amazonaws.com/#{ENV['AWS_BUCKET']}/public/go-email-apple.png", class: "pull-right img-responsive", id: 'app-store' %>
+                <% end %>
+              </div>
+
+              <div class="col-xs-6">
+                <%= link_to ENV['BRANCH_URL'] do %>
+                  <%= image_tag "https://s3-eu-west-1.amazonaws.com/#{ENV['AWS_BUCKET']}/public/go-email-google.png", class: "pull-left img-responsive", id: 'app-store' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class='social-icons'>
+            <%= link_to ENV.fetch('FACEBOOK_URL', ''), class: 'social-icon col-xs-4' do %>
+              <%= image_tag ENV.fetch('EMAIL_FACEBOOK_IMAGE', '') %>
+            <% end %>
+
+            <%= link_to ENV.fetch('INSTAGRAM_URL', ''), class: 'social-icon col-xs-4' do %>
+              <%= image_tag ENV.fetch('EMAIL_INSTAGRAM_IMAGE', '') %>
+            <% end %>
+
+            <%= link_to ENV.fetch('TWITTER_URL', ''), class: 'social-icon col-xs-4' do %>
+              <%= image_tag ENV.fetch('EMAIL_TWITTER_IMAGE', '') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

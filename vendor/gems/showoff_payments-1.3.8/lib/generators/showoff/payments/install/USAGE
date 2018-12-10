@@ -1,0 +1,10 @@
+Description:
+    This will install the migrations necessary for using Showoff::Payments
+
+Example:
+    rails generate showoff:payments:install
+
+    This will create:
+        db/migrate/create_showoff_payments_vendor_identities.rb
+        db/migrate/create_showoff_payments_customer_identities.rb
+        db/migrate/create_showoff_payments_providers.rb

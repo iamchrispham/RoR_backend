@@ -1,0 +1,8 @@
+Description:
+    This will create an initializer for Apipie which is used by Showoff::API::Doc.
+
+Example:
+    rails generate showoff:api:doc:initializer
+
+    This will create:
+        config/initializers/apipie.rb

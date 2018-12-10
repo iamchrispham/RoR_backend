@@ -1,0 +1,36 @@
+en:
+  payments:
+    pay_error: "An error has occurred: %{error}. Please try again"
+    purchases:
+      missing: 'A purchase object is required for this operation'
+    sources:
+      payment_sources_error: "An error has occurred: %{error}. Please try again"
+      add_card_error: "An error has occurred: %{error}. Please try again"
+      remove_card_error: "An error has occurred: %{error}. Please try again"
+      make_default_error: "An error has occurred: %{error}. Please try again"
+    bank_accounts:
+      bank_accounts_error: "An error has occurred: %{error}. Please try again"
+      add_bank_account_error: "An error has occurred: %{error}. Please try again"
+      remove_bank_account_error: "An error has occurred: %{error}. Please try again"
+      make_bank_account_default_error: "An error has occurred: %{error}. Please try again"
+
+    create_customer_error: "An error has occurred: %{error}. Please try again"
+    customers:
+      undefined_method: 'That attribute does not exist on this customer.'
+      missing: 'A customer is required for this operation.'
+    providers:
+      missing: 'A payment provider is required for this operation. Please ensure you have set up your payment provider'
+    receipts:
+      undefined_method: 'That attribute does not exist on this receipt.'
+    refunds:
+      undefined_method: 'That attribute does not exist on this refund.'
+    sources:
+      undefined_method: 'That attribute does not exist on this source.'
+    bank_accounts:
+      undefined_method: 'That attribute does not exist on this bank account.'
+    vendors:
+      undefined_method: 'That attribute does not exist on this vendor.'
+      missing_managed_vendor_data: 'You must supply the field %{field} to set up a managed account'
+      missing: 'A vendor is required for this operation.'
+      vendor_identification_error: 'An error occurred while processing this vendor identification. Please try again.'
+

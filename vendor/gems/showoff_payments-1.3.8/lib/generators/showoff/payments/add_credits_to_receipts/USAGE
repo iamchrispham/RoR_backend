@@ -1,0 +1,8 @@
+Description:
+    This will install the migrations necessary to add credits to receipts
+
+Example:
+    rails generate showoff:payments:add_credits_to_receipts
+
+    This will create:
+        db/migrate/add_credits_to_receipts.rb

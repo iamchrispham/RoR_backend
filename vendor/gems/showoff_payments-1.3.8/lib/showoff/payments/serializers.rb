@@ -1,0 +1,6 @@
+require 'showoff/payments/serializers/provider_serializer.rb'
+require 'showoff/payments/serializers/providers/source_serializer.rb'
+require 'showoff/payments/serializers/receipts/overview_serializer.rb'
+require 'showoff/payments/serializers/receipts/receipt_voucher_serializer.rb'
+require 'showoff/payments/serializers/refunds/overview_serializer.rb'
+require 'showoff/payments/serializers/sources/overview_serializer.rb'

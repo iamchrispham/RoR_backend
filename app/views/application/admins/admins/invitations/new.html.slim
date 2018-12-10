@@ -1,0 +1,12 @@
+- content_for :page_title, (t 'devise.invitations.new.header')
+
+= form_for resource, as: resource_name, url: invitation_path(resource_name), html: {method: :post}, role: 'form' do |form|
+  = flashes
+
+  - resource.class.invite_key_fields.each do |field|
+    .input-group
+      = form.input field, class: 'form-control', required: true, autofocus: true
+
+  .row
+    .col-xs-12
+      = content_tag :button, (t 'devise.invitations.new.submit_button'), type: :submit, class: 'btn btn-right-hand-column col-xs-12'

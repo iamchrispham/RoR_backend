@@ -1,0 +1,1 @@
+require 'showoff/sns/spec/shared_examples/behaves_like_a_showoff_s_n_s_notifier'

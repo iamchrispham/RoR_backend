@@ -1,0 +1,23 @@
+- content_for :page_title, (t 'views.login.title')
+
+= form_for resource, as: resource_name, url: session_path(resource_name), role: 'form' do |form|
+  = flashes
+
+  .input-group
+    span.input-group-addon
+      i.fa.fa-user
+    = form.email_field :email, class: 'form-control', placeholder: (t 'views.users.email_address'), required: true, autofocus: true
+
+  .input-group
+    span.input-group-addon
+      i.fa.fa-key
+    = form.password_field :password, class: 'form-control', placeholder: (t 'views.users.password'), required: true
+
+  #remember-me-wrapper
+    .col-xs-12
+    .row
+      = link_to (t 'views.users.forgot_password'), new_password_path(resource_name), id: 'login-forget-link', class: 'col-xs-6 pull-right'
+
+  .row
+    .col-xs-12
+      = content_tag :button, (t 'views.users.log_in'), type: :submit, class: 'btn btn-right-hand-column col-xs-12'

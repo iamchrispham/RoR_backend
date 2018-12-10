@@ -1,0 +1,158 @@
+<div class="row main-column">
+  <h3>Details</h3>
+  <table class="data table table-striped no-margin">
+    <tbody>
+    <tr>
+      <td class="title">Media</td>
+      <td> <%= image_tag(@event.media_item.present? ? @event.media_item.image.url(:small) : nil, class: 'full-width img-responsive') %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Host</td>
+      <td><%= link_to @event.user.name, user_path(@event.user) %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Title</td>
+      <td><%= @event.title %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Description</td>
+      <td><%= @event.description %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Bring</td>
+      <td><%= @event.bring %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Address</td>
+      <td><%= @event.public_address %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Categories</td>
+      <td><%= @event.categories %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Visibility</td>
+      <td><%= @event.private_event ? 'Private' : 'Public' %></td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2"><h4>Options</h4></td>
+    </tr>
+
+    <tr>
+      <td class="title">Maximum Attendees</td>
+      <td><%= @event.maximum_attendees.present? ? @event.maximum_attendees : 'Not Enabled' %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Chat Enabled</td>
+      <td><%= @event.attendance_acceptance_required ? 'Enabled' : 'Disabled' %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Eighten Plus</td>
+      <td><%= @event.eighteen_plus ? 'Enabled' : 'Disabled' %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Chat Enabled</td>
+      <td><%= @event.allow_chat ? 'Enabled' : 'Disabled' %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Timeline Enabled</td>
+      <td><%= @event.show_timeline ? 'Enabled' : 'Disabled' %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Forwarding Enabled</td>
+      <td><%= @event.event_forwarding ? 'Enabled' : 'Disabled' %></td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><h4>Attendees</h4></td>
+    </tr>
+
+    <tr>
+      <td class="title">Invited</td>
+      <td><%= @event.invited_users.count %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Attending</td>
+      <td><%= @event.attending_users.count %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Maybe Attending</td>
+      <td><%= @event.maybe_attending_users.count %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Not Attending</td>
+      <td><%= @event.not_attending_users.count %></td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><h4>Ticket Details</h4></td>
+    </tr>
+
+    <% if @event.event_ticket_detail.present? %>
+      <tr>
+        <td class="title">URL</td>
+        <td><%= link_to @event.event_ticket_detail.url, @event.event_ticket_detail.url%></td>
+      </tr>
+
+      <tr>
+        <td class="title">Clickthroughs</td>
+        <td><%= @event.event_ticket_detail.event_ticket_detail_views.count %></td>
+      </tr>
+
+      <tr>
+        <td class="title">Unique Users</td>
+        <td><%= @event.event_ticket_detail_viewed_users.uniq.count %></td>
+      </tr>
+    <% else %>
+    <tr>
+      <td colspan="2">No Ticket Details set on this Event</td>
+    </tr>
+    <% end %>
+
+    <tr>
+      <td colspan="2"><h4>Contribution Details</h4></td>
+    </tr>
+
+    <% if @event.event_contribution_detail.present? %>
+
+      <tr>
+        <td class="title">Amount</td>
+        <td><%= number_to_currency(@event.event_contribution_detail.amount_cents / 100, unit: @event.event_contribution_detail.amount.currency.symbol) %></td>
+      </tr>
+
+      <tr>
+        <td class="title">Total Contributions</td>
+        <td><%= @event.event_attendee_contributions.count %></td>
+      </tr>
+
+      <tr>
+        <td class="title">Value of Contributions</td>
+        <td><%= number_to_currency(@event.event_attendee_contributions.sum(:amount_cents) / 100, unit: @event.event_contribution_detail.amount.currency.symbol) %></td>
+      </tr>
+    <% else %>
+      <tr>
+        <td colspan="2">No Contribution Details set on this Event</td>
+      </tr>
+    <% end %>
+
+    </tbody>
+
+  </table>
+</div>

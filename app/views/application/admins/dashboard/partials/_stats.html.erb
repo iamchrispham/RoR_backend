@@ -1,0 +1,31 @@
+<div class="row top_tiles">
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id=""><%= User.active.count %></div>
+      <h3><%= t 'views.admins.dashboard.panels.users' %></h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id=""><%= Event.active.count %></div>
+      <h3><%= t 'views.admins.dashboard.panels.events' %></h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id=""><%= EventAttendeeContribution.paid.count %></div>
+      <h3></h3>
+      <h3><%= t 'views.admins.dashboard.panels.contributions' %></h3>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="count" id=""><%=  number_to_currency(EventAttendeeContribution.paid.sum(:amount_cents) / 100, unit: MoneyRails.default_currency.symbol) %></div>
+      <h3></h3>
+      <h3><%= t 'views.admins.dashboard.panels.contributions' %></h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+<%  content_for :page_title, (t 'views.navigation.menu.identifications') %>
+
+<div class="objects-details-view">
+  <div class="x_panel main-column">
+    <div class="x_title main-column">
+      <div class="x_title no-margin">
+        <h2 class="pull-left left-aligned-lg">
+          <%= t('views.navigation.menu.identifications') %>
+          <span class="white label label-<%= @identification.status_class %>"><%= @identification.status %></span>
+        </h2>
+        <div class="title_right">
+          <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+            <div class="pull-right" role="group">
+              <% if @identification.pending? %>
+                  <%= link_to (t 'views.identifications.actions.reject'),
+                              identification_reject_path(@identification),
+                              class: "btn btn-danger",
+                              data: {
+                                  title: (t 'views.identifications.actions.confirmations.reject.title'),
+                                  confirm: (t 'views.identifications.actions.confirmations.reject.title'),
+                                  commit: (t 'views.identifications.actions.confirmations.reject.confirm'),
+                                  cancel: (t 'views.identifications.actions.confirmations.reject.deny'),
+                                  "commit-class": 'btn-danger'
+                              },
+                              method: :put
+                  %>
+              <% end %>
+
+              <% if not @identification.pending? %>
+                  <%= link_to (t 'views.identifications.actions.pending'),
+                              identification_reset_path(@identification),
+                              class: "btn btn-warning",
+                              data: {
+                                  title: (t 'views.identifications.actions.confirmations.pending.title'),
+                                  confirm: (t 'views.identifications.actions.confirmations.pending.title'),
+                                  commit: (t 'views.identifications.actions.confirmations.pending.confirm'),
+                                  cancel: (t 'views.identifications.actions.confirmations.pending.deny'),
+                                  "commit-class": 'btn-warning'
+                              },
+                              method: :put
+                  %>
+              <% end %>
+
+              <% if not @identification.verified? %>
+                  <%= link_to (t 'views.identifications.actions.verify'),
+                              identification_verify_path(@identification),
+                              class: "btn btn-success",
+                              data: {
+                                  title: (t 'views.identifications.actions.confirmations.verify.title'),
+                                  confirm: (t 'views.identifications.actions.confirmations.verify.description'),
+                                  commit: (t 'views.identifications.actions.confirmations.verify.confirm'),
+                                  cancel: (t 'views.identifications.actions.confirmations.verify.deny'),
+                                  "commit-class": 'btn-primary'
+                              },
+                              method: :put
+                  %>
+              <% end %>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <% if @identification.pending? %>
+
+        <div class="row main-column m-t-20 m-l-20 m-r-20">
+          <div class="alert alert-warning fade in no-margin" role="alert">
+            <p class="center-block text-center"><%= t('views.identifications.content.titles.explanation').html_safe %></p>
+          </div>
+        </div>
+
+    <% else %>
+        <div class="col-md-12 col-sm-12 col-xs-12 profile_left">
+          <h3><%= t('views.identifications.content.titles.verification')%></h3>
+          <table class="data table table-striped no-margin">
+
+            <tr>
+              <td class="title"><%= @identification.rejected? ? t('views.identifications.content.verification.rejected_by') : t('views.identifications.content.verification.verified_by')  %></td>
+              <td><%= @identification.verifier.name %></td>
+            </tr>
+
+            <tr>
+              <td class="title"><%= @identification.rejected? ? t('views.identifications.content.verification.rejected_at') : t('views.identifications.content.verification.verified_at')  %></td>
+              <td><%= @identification.verified_at.strftime(Api::Emails::DEFAULT_TIME_FORMAT) %></td>
+            </tr>
+
+          </table>
+        </div>
+    <% end %>
+
+    <div class="col-md-6 col-sm-6 col-xs-12 profile_left">
+      <h3><%= t('views.identifications.content.titles.user')%></h3>
+      <table class="data table table-striped no-margin">
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.user.image' %></td>
+          <td class="profile_img"> <%=
+            image_tag(@user.image.url(:original), class: "full-width center-block img-responsive") %> </td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.user.name' %></td>
+          <td><%= @user.name %></td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.user.date_of_birth' %></td>
+          <td><%= @user.date_of_birth.strftime(Api::Emails::DEFAULT_DATE_FORMAT) if @user.date_of_birth.present? %></td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.user.gender' %></td>
+          <td><%= @user.gender.titleize if @user.gender.present? %></td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.user.country' %></td>
+          <td><%= @user.country.present? ? @user.country.name : t('views.defaults.unknown') %></td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div class="col-md-6 col-sm-6 col-xs-12 profile_right">
+      <h3><%= t('views.identifications.content.titles.identification')%></h3>
+
+
+      <table class="data table table-striped no-margin">
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.identification.front_image' %></td>
+          <td class="profile_img"> <%=
+            image_tag(@identification.front_image.url(:original), class: "full-width center-block img-responsive") %> </td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.identification.back_image' %></td>
+          <td class="profile_img"> <%=
+            image_tag(@identification.back_image.url(:original), class: "full-width center-block img-responsive") %> </td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.identification.number' %></td>
+          <td><%= @identification.identification_number %></td>
+        </tr>
+
+        <tr>
+          <td class="title"><%= t 'views.identifications.content.identification.type' %></td>
+          <td><%= @identification.identification_type.name %></td>
+        </tr>
+
+      </table>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+

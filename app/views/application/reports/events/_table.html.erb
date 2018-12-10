@@ -1,0 +1,36 @@
+<table class="table main-column" id="objects">
+  <thead>
+  <tr>
+    <th> <%= t('views.users.show.content.events.media') %></th>
+    <th> <%= t('views.users.show.content.events.user') %></th>
+    <th> <%= t('views.users.show.content.events.title') %></th>
+    <th> <%= t('views.users.show.content.events.description') %></th>
+    <th> <%= t('views.users.show.content.events.date') %></th>
+    <th> Total Reports</th>
+    <th> Reasons </th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @objects.each do |event| %>
+    <tr>
+      <td><%= event.media_item.present? ? image_tag(event.media_item.image.url(:small), class: 'profile_img') : image_tag(EventMediaItem.placeholder_url, class: 'profile_img') %></td>
+      <td><%= link_to event.user.name, user_path(event.user) %></td>
+      <td><%= event.title %></td>
+      <td><%= truncate(event.description, length: 50) %></td>
+      <td><%= "#{event.date.strftime(Api::Emails::DEFAULT_TIME_FORMAT)}" %></td>
+      <td><%= event.reports.unconsidered.count %></td>
+      <td class="wrapped"> <%= event.reports.unconsidered.map(&:reason).uniq.join(', ') %> </td>
+      <td>
+        <%= link_to "View Event", event_path(event), class: 'btn btn-success', target: '_blank' %><br/>
+        <%= link_to "View User", user_path(event.user), class: 'btn btn-success', target: '_blank' %><br/>
+        <% if event.active %>
+          <%= link_to "Deactivate Event", reports_event_deactivate_event_path(event), class: 'btn btn-danger', method: :delete %>
+        <% else %>
+          <%= link_to "Activate Event", reports_event_activate_event_path(event), class: 'btn btn-primary', method: :put %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,12 @@
+Description:
+    This will generate a model which is notifiable, and the necessary migrations.
+    If the model already exists, a migration will be created to extend the model.
+    The generated model implements the Notifiable concern.
+
+Example:
+    rails generate active_record:showoff:sns:notifiable MODEL_NAME [options]
+
+    This will create:
+        app/model/MODEL_NAME.rb
+        db/migrate/TIMESTAMP_showoff_sns_create_notifiable_MODEL_NAME.rb (If model is new)
+        db/migrate/TIMESTAMP_add_showoff_sns_notifiable_to_MODEL_NAME.rb (If model exists)

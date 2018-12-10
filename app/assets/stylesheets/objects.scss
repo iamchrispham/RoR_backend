@@ -1,0 +1,72 @@
+.objects-details-view {
+
+  .row {
+    overflow-y: scroll;
+  }
+
+  .nav-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: -webkit-box;
+    display: -moz-box;
+    margin: 0;
+    padding-top: 20px;
+    height: auto !important;
+
+  }
+
+  .nav-tabs>li {
+    float:none;
+  }
+
+  .profile_left,
+  .profile_right{
+    margin-top: 20px;
+  }
+
+  .profile_left {
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  .table-striped {
+    color: #000000;
+  }
+
+  .table > thead > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > th,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > th,
+  .table > tfoot > tr > td {
+    vertical-align: middle;
+  }
+
+  th {
+    color: #21d0bf;
+  }
+
+  td.title {
+    width: 90px;
+    font-weight: bold;
+    color: #21d0bf;
+  }
+
+  h3,
+  h4{
+    color: #21d0bf;
+  }
+
+  i {
+    color: #000000;
+  }
+
+  .list-unstyled {
+    color: #000000;
+  }
+
+  .x_title span.white {
+    color: #ffffff;
+  }
+}

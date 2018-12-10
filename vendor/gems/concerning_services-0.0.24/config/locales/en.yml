@@ -1,0 +1,4 @@
+en:
+  concerning_services:
+    facebook:
+      notifier: "Your Facebook friend, %{facebook_username}, has signed up to %{platform}, as %{username}."
