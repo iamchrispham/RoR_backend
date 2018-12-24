@@ -116,8 +116,11 @@ gem 'will_paginate-bootstrap'
 gem 'wkhtmltoimage-binary'
 gem 'wkhtmltopdf-binary'
 gem 'wkhtmltopdf-heroku'
-
 gem 'validate_url'
+
+group :development, :test do
+  gem 'dotenv-rails'
+end
 
 group :development do
   gem 'letter_opener'

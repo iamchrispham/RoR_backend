@@ -220,6 +220,10 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (4.2.6)
       railties (>= 4.2)
+    dotenv (2.5.0)
+    dotenv-rails (2.5.0)
+      dotenv (= 2.5.0)
+      railties (>= 3.2, < 6.0)
     dotiw (4.0.0)
       actionpack (>= 4)
       i18n
@@ -656,6 +660,7 @@ DEPENDENCIES
   devise_invitable
   doorkeeper
   doorkeeper-grants_assertion!
+  dotenv-rails
   dotiw
   factory_girl_rails
   figaro
@@ -766,4 +771,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.16.2
+   1.16.6

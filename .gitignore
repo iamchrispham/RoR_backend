@@ -11,6 +11,20 @@ capybara-*.html
 *.orig
 rerun.txt
 pickle-email-*.html
+*.DS_Store
+*.swo
+*.swp
+/.env.local
+/tags
+
+# Ignore figaro application configuration
+config/application.yml
+config/database.yml
+.idea
+*.rdb
+/erd.pdf
+.env
+*.dump
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
