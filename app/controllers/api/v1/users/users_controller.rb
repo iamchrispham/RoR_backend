@@ -10,9 +10,14 @@ module Api
           if User.find_by(email: user_params[:email])
             error_response((t 'api.responses.users.account_exists'), Showoff::ResponseCodes::INVALID_ARGUMENT)
           else
-
-            Time.zone = 'UTC'
-            user = User.new(user_params.except(:image_url, :image_data, :date_of_birth, :referral_code, :tags))
+            
+            Time.zone = 'UTC'            
+            user = User.new(
+              user_name: user_params[:user_name],
+              email: user_params[:email],
+              password: user_params[:password],
+              user_type: user_params[:user_type]
+            )
             user.date_of_birth = Time.zone.at(user_params[:date_of_birth].to_i) unless user_params[:date_of_birth].blank?
             user.tos_acceptance_ip = current_request.ip
             user.tos_acceptance_timestamp = Time.zone.now

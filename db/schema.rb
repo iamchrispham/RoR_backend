@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180629115052) do
+ActiveRecord::Schema.define(version: 20181224101022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "postgis"
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "user_id",                     null: false
@@ -1424,6 +1423,7 @@ ActiveRecord::Schema.define(version: 20180629115052) do
     t.boolean  "eighteen_plus",            default: false
     t.boolean  "save_events_to_calendar",  default: false, null: false
     t.integer  "user_age_range_id"
+    t.string   "user_name"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

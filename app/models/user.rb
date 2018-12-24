@@ -105,8 +105,15 @@ class User < ActiveRecord::Base
 
   after_report :deactivate_if_report_threshold_breached
 
-  validates :first_name, :last_name, presence: true
-  validates :first_name, :last_name, length: { minimum: 1 }
+  with_options unless: :user_name? do |user|
+    user.validates :first_name, :last_name, presence: true
+    user.validates :first_name, :last_name, length: { minimum: 1 }
+  end
+  
+  with_options unless: Proc.new { |u| u.first_name? || u.last_name? } do |user|
+    user.validates :user_name, presence: true
+    user.validates :user_name, length: { minimum: 1 }
+  end
 
   scope :today, -> {
     where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
@@ -189,7 +196,7 @@ class User < ActiveRecord::Base
     if business? && business_name
       business_name
     else
-      [first_name, last_name].join(' ')
+      user_name ? user_name : [first_name, last_name].join(' ')
     end
   end
 
