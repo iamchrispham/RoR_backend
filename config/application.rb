@@ -41,7 +41,7 @@ module GoAppApi
 
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins '*'
+        origins ENV.fetch('ALLOWED_CORS_ORIGINS')
         resource '*', headers: :any, methods: %i[get post options]
       end
     end
