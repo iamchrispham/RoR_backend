@@ -38,6 +38,13 @@ module GoAppApi
       Doorkeeper::AuthorizedApplicationsController.layout "application"
       Doorkeeper::ApplicationController.helper GoAppApi::Application.helpers
     end
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: %i[get post options]
+      end
+    end
   end
 end
 

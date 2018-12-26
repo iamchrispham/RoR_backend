@@ -117,6 +117,7 @@ gem 'wkhtmltoimage-binary'
 gem 'wkhtmltopdf-binary'
 gem 'wkhtmltopdf-heroku'
 gem 'validate_url'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   gem 'dotenv-rails'

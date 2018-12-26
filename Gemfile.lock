@@ -412,6 +412,7 @@ GEM
     rack-canonical-host (0.2.3)
       addressable (> 0, < 3)
       rack (>= 1.0.0, < 3)
+    rack-cors (1.0.2)
     rack-mini-profiler (0.10.5)
       rack (>= 1.2.0)
     rack-protection (1.5.3)
@@ -711,6 +712,7 @@ DEPENDENCIES
   quiet_assets
   rack-attack
   rack-canonical-host
+  rack-cors
   rack-mini-profiler
   rack-timeout
   rails (~> 4.2.0)
