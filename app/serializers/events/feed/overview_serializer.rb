@@ -3,7 +3,7 @@ module Events
     class OverviewSerializer < ApiSerializer
       attributes :id, :user, :title, :time, :date, :eighteen_plus, :event_forwarding, :allow_chat, :show_timeline,
                  :reported, :conversation, :attendance, :attendee_count, :mutual_attendee_count, :mutual_attendees,
-                 :maximum_attendees, :attendance_acceptance_required,
+                 :maximum_attendees, :attendance_acceptance_required, :price,
                  :location, :address, :private_event, :event_media_items, :updated_at
 
       def conversation

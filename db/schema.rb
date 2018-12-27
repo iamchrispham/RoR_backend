@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181224101022) do
+ActiveRecord::Schema.define(version: 20181227171540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -556,6 +556,7 @@ ActiveRecord::Schema.define(version: 20181224101022) do
     t.boolean  "attendance_acceptance_required", default: false
     t.text     "display_address"
     t.datetime "date_time"
+    t.integer  "price"
   end
 
   add_index "events", ["active"], name: "index_events_on_active", using: :btree
@@ -565,6 +566,7 @@ ActiveRecord::Schema.define(version: 20181224101022) do
   add_index "events", ["facebook_id"], name: "index_events_on_facebook_id", using: :btree
   add_index "events", ["inactive_at"], name: "index_events_on_inactive_at", using: :btree
   add_index "events", ["maximum_attendees"], name: "index_events_on_maximum_attendees", using: :btree
+  add_index "events", ["price"], name: "index_events_on_price", using: :btree
   add_index "events", ["title"], name: "index_events_on_title", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 

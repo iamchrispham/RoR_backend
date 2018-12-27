@@ -73,6 +73,7 @@ class Event < ActiveRecord::Base
 
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
+  validates :price, numericality: { only_integer: true, greater_than: 0 }, if: :price
 
   scope :order_to_now, -> {
     reorder("events.date_time < current_timestamp ASC, ABS(DATE_PART('day',events.date_time - current_timestamp)) ASC")
@@ -107,6 +108,10 @@ class Event < ActiveRecord::Base
 
   scope :ending_at_or_before, ->(end_at) {
     where('date <= ?', end_at)
+  }
+  
+  scope :budget_range, ->(low_price, top_price) {
+    where('price >= ? AND price <= ?', low_price, top_price)
   }
 
   scope :with_contribution_type, ->(slug) {

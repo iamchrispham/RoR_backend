@@ -148,11 +148,11 @@ module Api
         tags = filters[:tags].split('|').flatten
         objects = objects.with_tags(tags)
       end
-
+      
       if filters[:start_at]
         objects = objects.starting_at_or_after(Time.at(filters[:start_at].to_i))
       end
-
+      
       if filters[:end_at]
         objects = objects.ending_at_or_before(Time.at(filters[:end_at].to_i))
       end
@@ -161,6 +161,10 @@ module Api
         objects = objects.with_contribution_type(filters[:contribution_type])
       end
 
+      if filters[:low_price] && filters[:top_price]
+        objects = objects.budget_range(filters[:low_price], filters[:top_price])
+      end
+      
       objects
     end
   end
