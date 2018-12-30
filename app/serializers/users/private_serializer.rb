@@ -1,9 +1,10 @@
 module Users
-  class PrivateSerializer < PublicSerializer
+  class PrivateSerializer < PublicSerializer#
     attributes :id, :account_type, :email, :gender, :date_of_birth, :eighteen_plus, :phone_number,
                :verifications_required, :seller_verifications_required, :country, :address, :business_details,
                :notifications_enabled, :active, :suspended, :counts, :tags, :notification_settings,
-               :save_events_to_calendar
+               :save_events_to_calendar, :facebook_profile_link, :linkedin_profile_link, :instagram_profile_link,
+               :snapchat_profile_link
 
     def notification_settings
       serialized_resource(object.user_notification_setting, ::Users::NotificationSettings::OverviewSerializer)

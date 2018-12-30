@@ -3,7 +3,8 @@ module Users
     attributes :id, :name, :images, :cover_images, :first_name, :last_name, :description,
                :identification, :user_type, :business_name, :friend_count, :mutual_friends_count,
                :event_count, :attending_event_count, :friend, :friend_request_pending, :pending_friend_request,
-               :shared, :invited
+               :shared, :invited, :facebook_profile_link, :linkedin_profile_link, :instagram_profile_link,
+               :snapchat_profile_link
 
     def identification
       nil

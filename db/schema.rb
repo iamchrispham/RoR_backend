@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181227171540) do
+ActiveRecord::Schema.define(version: 20181230150009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1426,6 +1426,10 @@ ActiveRecord::Schema.define(version: 20181227171540) do
     t.boolean  "save_events_to_calendar",  default: false, null: false
     t.integer  "user_age_range_id"
     t.string   "user_name"
+    t.string   "facebook_profile_link"
+    t.string   "linkedin_profile_link"
+    t.string   "instagram_profile_link"
+    t.string   "snapchat_profile_link"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
