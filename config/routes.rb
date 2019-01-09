@@ -146,6 +146,8 @@ Rails.application.routes.draw do
         get :generic
       end
 
+      resources :companies, module: :companies
+
       scope :users, controller: :users, module: :users do
         post :reset_password
         get :email

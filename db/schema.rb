@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181230150009) do
+ActiveRecord::Schema.define(version: 20181230174747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,28 @@ ActiveRecord::Schema.define(version: 20181230150009) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "companies", force: :cascade do |t|
+    t.integer  "user_id",                null: false
+    t.string   "title",                  null: false
+    t.text     "description"
+    t.string   "phone_number"
+    t.string   "email"
+    t.string   "facebook_profile_link"
+    t.string   "linkedin_profile_link"
+    t.string   "instagram_profile_link"
+    t.string   "snapchat_profile_link"
+    t.string   "website_link"
+    t.string   "location"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "companies", ["title"], name: "index_companies_on_title", using: :btree
 
   create_table "contact_invites", force: :cascade do |t|
     t.integer  "user_id",      null: false

@@ -109,6 +109,9 @@ en:
           social:
             title: "Check out Go!"
             description: "Check out Go!. Sign up today and find awesome events near you!"
+      companies:
+        company_exists: "A company with that name already exists"
+        not_found: 'That company does not exist'
       users:
         no_currency_present: 'In order to proceed you must set the default currency on your profile. Please set your default currency and try again.'
         already_blocked: 'That user has already been blocked'

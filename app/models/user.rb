@@ -91,6 +91,8 @@ class User < ActiveRecord::Base
 
   has_many :user_facebook_event_imports, dependent: :destroy
   has_many :friend_events, through: :friends, class_name: 'Event', source: :events
+
+  has_many :companies
   
   after_create :subscribe_to_mailing_list
   after_create :ensure_user_notification_setting
