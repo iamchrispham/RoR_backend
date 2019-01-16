@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   include Users::Filterable
 
   include Conversations::Conversationable
+  include Currencyable
 
   enum user_type: [:personal, :business]
   enum account_type: %i[individual company]
@@ -63,8 +64,8 @@ class User < ActiveRecord::Base
   has_many :user_tags, dependent: :destroy
   has_many :tags, through: :user_tags
 
-  has_many :events
-  has_many :hosting_events, class_name: 'Event', foreign_key: :user_id
+  has_many :events, as: :event_ownerable
+  has_many :hosting_events, class_name: 'Event', as: :event_ownerable
 
   has_many :event_attendees
   has_many :attending_events, -> {where(event_attendees: {status: EventAttendee.statuses[:going]})}, through: :event_attendees, source: :event
@@ -216,20 +217,6 @@ class User < ActiveRecord::Base
     else
       true
     end
-  end
-
-  # country
-  def country_object
-    @county ||= ISO3166::Country.find_country_by_alpha2(country_code)
-  end
-
-  def currency
-    return MoneyRails.default_currency if country_object.blank?
-    country_object.currency
-  end
-
-  def currency_symbol
-    currency.symbol
   end
 
   # age
@@ -531,7 +518,7 @@ class User < ActiveRecord::Base
   def additional_cache_information(cached_user, user = nil, type: :feed)
     if %i[public private].include?(type)
       cached_user[:friend_count] = friends.count
-      cached_user[:attending_event_count] = attending_events.where.not(user: self).starting_at_or_after(Time.now).active.count
+      cached_user[:attending_event_count] = attending_events.where.not(event_ownerable: self).starting_at_or_after(Time.now).active.count
       cached_user[:event_count] = hosting_events.starting_at_or_after(Time.now).active.count
       cached_user[:mutual_friends_count] = mutual_friends(user).count if user
     end

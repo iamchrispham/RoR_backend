@@ -63,8 +63,8 @@ module Api
         private
 
         def process_images(company)
-          if company_params[:image_url] || user_params[:image_data]
-            Showoff::Workers::ImageWorker.perform_async('User', user.id, url: user_params[:image_url], data: user_params[:image_data])
+          if company_params[:image_url] || company_params[:image_data]
+            Showoff::Workers::ImageWorker.perform_async('Company', company.id, url: company_params[:image_url], data: company_params[:image_data])
           end
         end
 

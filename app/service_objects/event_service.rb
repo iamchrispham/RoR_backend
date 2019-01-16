@@ -2,8 +2,8 @@ class EventService < ApiService
   include Api::CacheHelper
   include ActionView::Helpers::NumberHelper
 
-  def create(params, current_api_user)
-    event = event_for_params(params, current_api_user)
+  def create(params, current_api_user, event_owner)
+    event = event_for_params(params, current_api_user, event_owner)
 
     contribution_details_params = params[:contribution_details]
     if contribution_details_params.present?
@@ -65,7 +65,7 @@ class EventService < ApiService
         event.destroy!
         return
       end
-
+      
       # save media items
       save_media_items(event, media_items)
 
@@ -250,12 +250,12 @@ class EventService < ApiService
     number_to_currency(total_amount_cents / 100, unit: user.currency.symbol)
   end
 
-  def event_for_params(params, current_api_user)
+  def event_for_params(params, current_api_user, event_owner)    
     attendees = params[:attendees]
 
     # set up event object
     base_params = params.except(:attendees, :media_items, :time, :date, :contribution_details, :invite_all_friends, :ticket_details)
-    event = current_api_user.events.new(base_params)
+    event = event_owner.events.new(base_params)
 
     event.time = Time.at(params[:time]) if params[:time].present?
     event.date = Time.at(params[:date]) if params[:date].present?
@@ -264,11 +264,9 @@ class EventService < ApiService
 
     # save attendees
     unless attendees.blank?
-      attendees.each do |attendee|
-        next if current_api_user.id == attendee
-        user = User.find_by(id: attendee)
-        next if user.blank?
-        event.event_attendees << EventAttendee.new(user: user, event: event, invited: true, status: EventAttendee.statuses[:invited])
+      User.where(id: attendees).each do |attendee|
+        next if current_api_user == attendee
+        event.event_attendees << EventAttendee.new(user: attendee, event: event, invited: true, status: EventAttendee.statuses[:invited])
       end
     end
 
