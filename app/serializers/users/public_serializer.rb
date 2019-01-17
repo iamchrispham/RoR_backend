@@ -35,7 +35,7 @@ module Users
     end
 
     def attending_event_count
-      object.attending_events.where.not(event_ownerable: object).starting_at_or_after(Time.now).active.count
+      object.attending_events.where.not(user: object).starting_at_or_after(Time.now).active.count
     end
 
     def event_count

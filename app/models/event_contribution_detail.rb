@@ -7,7 +7,7 @@ class EventContributionDetail < ActiveRecord::Base
   belongs_to :event
   belongs_to :event_contribution_type
 
-  monetize :amount_cents, with_currency: lambda {|obj| obj.event.event_ownerable.currency}
+  monetize :amount_cents, with_currency: lambda {|obj| obj.event.user.currency}
 
   validates :event, :event_contribution_type, presence: true
 
@@ -35,11 +35,11 @@ class EventContributionDetail < ActiveRecord::Base
   end
 
   def cta_description
-    I18n.t("api.responses.events.attendees.contributions.types.#{event_contribution_type.slug}.cta_description", total_amount: formatted_total_amount(total_amount_cents), host: event.event_ownerable.name)
+    I18n.t("api.responses.events.attendees.contributions.types.#{event_contribution_type.slug}.cta_description", total_amount: formatted_total_amount(total_amount_cents), host: event.user.name)
   end
 
   def cta_description_for_price(amount_cents)
-    I18n.t("api.responses.events.attendees.contributions.types.#{event_contribution_type.slug}.cta_description_optional", total_amount: formatted_total_amount(amount_cents), host: event.event_ownerable.name)
+    I18n.t("api.responses.events.attendees.contributions.types.#{event_contribution_type.slug}.cta_description_optional", total_amount: formatted_total_amount(amount_cents), host: event.user.name)
   end
 
   def formatted_total_amount(total_amount_cents)

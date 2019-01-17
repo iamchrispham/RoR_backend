@@ -3,7 +3,6 @@ module Api
     module Events
       class EventsController < EventsBaseController
         skip_before_action :set_event, only: [:index, :create]
-        before_action :set_event_owner, only: %i[create edit update destroy]
 
         def index
           success_response(
@@ -17,7 +16,7 @@ module Api
         end
 
         def create
-          event = events_service.create(event_params, current_api_user, @event_owner)
+          event = events_service.create(event_params, current_api_user)
           if events_service.errors.nil?
             success_response(event: event.cached(current_api_user, type: :overview))
           else
@@ -53,26 +52,6 @@ module Api
             end
           else
             error_response((t 'api.responses.events.cancelled'), Showoff::ResponseCodes::OBJECT_NOT_FOUND)
-          end
-        end
-
-        def set_event_owner
-          if params[:event_owner] && params[:event_owner][:owner_type] && params[:event_owner][:owner_id]
-            @event_owner = params[:event_owner][:owner_type].classify.constantize.find_by(id: params[:event_owner][:owner_id])
-            error_response((t 'api.responses.events.not_found'), Showoff::ResponseCodes::OBJECT_NOT_FOUND) unless @event_owner
-
-            action_authorised = case @event_owner
-            when User
-              %w[edit update destroy].include?(params[:action]) ? current_api_user == @event_owner : true
-            when Company#, Group
-              current_api_user.send(@event_owner.class.to_s.pluralize.downcase).include?(@event_owner)
-            else
-              false
-            end
-
-            error_response((t 'api.responses.events.invalid_event_owner'), Showoff::ResponseCodes::INVALID_ARGUMENT) unless action_authorised
-          else
-            error_response((t 'api.responses.events.no_event_owner'), Showoff::ResponseCodes::MISSING_ARGUMENT)
           end
         end
       end

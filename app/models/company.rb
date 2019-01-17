@@ -2,12 +2,8 @@ class Company < ActiveRecord::Base
   include Showoff::Concerns::Imagable
   include Api::CacheHelper
   include Showoff::Helpers::SerializationHelper
-  include Currencyable
-
-  alias_attribute :name, :title
 
   belongs_to :user
-  has_many :events, as: :event_ownerable
 
   validates :title, presence: true
 

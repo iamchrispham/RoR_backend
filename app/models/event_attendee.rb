@@ -90,8 +90,8 @@ class EventAttendee < ActiveRecord::Base
 
   # FeedActionable
   def can_create_feed_item?
-    ((going? || maybe_going?) && (user != event.event_ownerable) && !event.attendance_acceptance_required) ||
-      ((going? || maybe_going?) && (user != event.event_ownerable) && (event.attendance_acceptance_required && event_attendee_request.present? && event_attendee_request.accepted?))
+    ((going? || maybe_going?) && (user != event.user) && !event.attendance_acceptance_required) ||
+      ((going? || maybe_going?) && (user != event.user) && (event.attendance_acceptance_required && event_attendee_request.present? && event_attendee_request.accepted?))
   end
 
   def feed_item_action
@@ -117,7 +117,7 @@ class EventAttendee < ActiveRecord::Base
   private
 
   def send_notifications
-    return if user.eql?(event.event_ownerable) || event.blank? || (event.present? && !event.persisted?)
+    return if user.eql?(event.user) || event.blank? || (event.present? && !event.persisted?)
 
     if invited?
       create_event_invitation_notifier
@@ -137,7 +137,7 @@ class EventAttendee < ActiveRecord::Base
   end
 
   def check_requires_attendee_request
-    return if user.eql?(event.event_ownerable)
+    return if user.eql?(event.user)
 
     if event.attendance_acceptance_required && !invited? && going?
       pending!

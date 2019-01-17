@@ -80,7 +80,6 @@ en:
               not_found: 'Like not Found'
             comments:
               not_found: 'Comment not Found'
-        no_event_owner: 'Event owner was not provided'
       payments:
         pay_error: "An error has occurred: %{error}. Please try again"
         payment_sources_error: "An error has occurred: %{error}. Please try again"

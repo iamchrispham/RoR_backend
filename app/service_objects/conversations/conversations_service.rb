@@ -55,10 +55,10 @@ module Conversations
       register_error(Showoff::ResponseCodes::OBJECT_NOT_FOUND, I18n.t('api.responses.conversations.not_found'))
     end
 
-    def create_or_update_conversation_without_message(event_owner, conversation_params, event)
+    def create_or_update_conversation_without_message(current_api_user, conversation_params, event)
       sender = {
-        id: event_owner.id,
-        type: event_owner.class.to_s
+        id: current_api_user.id,
+        type: current_api_user.class.to_s
       }
 
       # set up params hashes
@@ -76,7 +76,7 @@ module Conversations
         conversation = Conversations::Conversation.new(meta_params)
         conversation.activated = true
         conversation.event = event
-        conversation.owner = event_owner
+        conversation.owner = current_api_user
         if conversation.save
           if image_url || image_data
             Showoff::Workers::ImageWorker.perform_async(conversation.class.to_s, conversation.id, url: image_url, data: image_data)

@@ -6,7 +6,7 @@ class EventInvitationNotifier < Showoff::SNS::Notifier::Base
   after_commit :send_notification, on: :create
 
   def set_owner
-    self.owner = event_attendee.event.event_ownerable
+    self.owner = event_attendee.event.user
   end
 
   def self.notification_type
