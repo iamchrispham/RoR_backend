@@ -83,3 +83,7 @@ module Showoff
     }.freeze
   end
 end
+
+module General
+  PHONE_FORMAT_REGEXP = /\A\+?\d+\z/.freeze
+end

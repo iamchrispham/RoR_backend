@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181230174747) do
+ActiveRecord::Schema.define(version: 20190116030531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "user_id",                     null: false
@@ -179,6 +180,9 @@ ActiveRecord::Schema.define(version: 20181230174747) do
   add_index "contact_invites", ["phone_number"], name: "index_contact_invites_on_phone_number", using: :btree
   add_index "contact_invites", ["user_id", "go_user_id", "event_id", "email", "phone_number"], name: "idx_contact_invite_unique", unique: true, using: :btree
   add_index "contact_invites", ["user_id"], name: "index_contact_invites_on_user_id", using: :btree
+
+# Could not dump table "contacts" because of following StandardError
+#   Unknown type 'contact_category' for column 'category'
 
   create_table "conversation_participants", force: :cascade do |t|
     t.string   "participant_type"
@@ -729,6 +733,9 @@ ActiveRecord::Schema.define(version: 20181230174747) do
   add_index "general_notifications", ["platform_id"], name: "index_general_notifications_on_platform_id", using: :btree
   add_index "general_notifications", ["status"], name: "index_general_notifications_on_status", using: :btree
 
+# Could not dump table "groups" because of following StandardError
+#   Unknown type 'group_category' for column 'category'
+
   create_table "identification_type_translations", force: :cascade do |t|
     t.integer  "identification_type_id", null: false
     t.string   "locale",                 null: false
@@ -801,6 +808,16 @@ ActiveRecord::Schema.define(version: 20181230174747) do
   end
 
   add_index "location_attachments", ["message_attachment_id"], name: "index_location_attachments_on_message_attachment_id", using: :btree
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "memberships", ["group_id", "user_id"], name: "index_memberships_on_group_id_and_user_id", using: :btree
+  add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", using: :btree
 
   create_table "mentioned_attributes", force: :cascade do |t|
     t.string   "attribute_name", null: false
@@ -972,6 +989,23 @@ ActiveRecord::Schema.define(version: 20181230174747) do
 
   add_index "platforms", ["email"], name: "index_platforms_on_email", unique: true, using: :btree
   add_index "platforms", ["reset_password_token"], name: "index_platforms_on_reset_password_token", unique: true, using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.citext   "title",                             null: false
+    t.citext   "details",                           null: false
+    t.integer  "postable_id"
+    t.string   "postable_type"
+    t.boolean  "active",             default: true, null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "posts", ["postable_type", "postable_id"], name: "index_posts_on_postable_type_and_postable_id", using: :btree
+  add_index "posts", ["title"], name: "index_posts_on_title", unique: true, using: :btree
 
   create_table "reports", force: :cascade do |t|
     t.integer  "reporter_id",     limit: 8,                 null: false
@@ -1541,10 +1575,13 @@ ActiveRecord::Schema.define(version: 20181230174747) do
   add_foreign_key "general_notification_users", "general_notifications"
   add_foreign_key "general_notification_users", "users"
   add_foreign_key "general_notifications", "platforms"
+  add_foreign_key "groups", "users", name: "groups_user_id_fk", on_delete: :cascade
   add_foreign_key "identifications", "identification_types"
   add_foreign_key "identifications", "users"
   add_foreign_key "image_attachments", "message_attachments"
   add_foreign_key "location_attachments", "message_attachments"
+  add_foreign_key "memberships", "groups", name: "memberships_group_id_fk", on_delete: :cascade
+  add_foreign_key "memberships", "users", name: "memberships_user_id_fk", on_delete: :cascade
   add_foreign_key "mentioned_users", "users", column: "mentioned_user_id"
   add_foreign_key "message_attachments", "messages"
   add_foreign_key "message_sent_notifiers", "showoff_sns_notifications"

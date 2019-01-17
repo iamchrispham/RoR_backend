@@ -147,6 +147,11 @@ Rails.application.routes.draw do
       end
 
       resources :companies, module: :companies
+      resources :groups, module: :groups, only: crud_w_index do
+        resources :subgroups, only: crud_w_index
+        resources :contacts, only: crud_w_index
+        resources :posts, only: crud_w_index
+      end
 
       scope :users, controller: :users, module: :users do
         post :reset_password

@@ -112,6 +112,14 @@ en:
       companies:
         company_exists: "A company with that name already exists"
         not_found: 'That company does not exist'
+      groups:
+        not_found: 'That group does not exist'
+      subgroups:
+        not_found: 'That subgroup does not exist'
+      contacts:
+        not_found: 'Contact(s) do not exist'
+      posts:
+        not_found: 'Post(s) do not exist'
       users:
         no_currency_present: 'In order to proceed you must set the default currency on your profile. Please set your default currency and try again.'
         already_blocked: 'That user has already been blocked'

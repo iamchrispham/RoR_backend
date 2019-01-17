@@ -93,7 +93,11 @@ class User < ActiveRecord::Base
   has_many :friend_events, through: :friends, class_name: 'Event', source: :events
 
   has_many :companies
-  
+
+  has_many :memberships, dependent: :destroy
+  has_many :groups, through: :memberships, source: :group
+  has_many :owned_groups, class_name: 'Group', inverse_of: :owner, dependent: :destroy
+
   after_create :subscribe_to_mailing_list
   after_create :ensure_user_notification_setting
 
@@ -111,7 +115,7 @@ class User < ActiveRecord::Base
     user.validates :first_name, :last_name, presence: true
     user.validates :first_name, :last_name, length: { minimum: 1 }
   end
-  
+
   with_options unless: Proc.new { |u| u.first_name? || u.last_name? } do |user|
     user.validates :user_name, presence: true
     user.validates :user_name, length: { minimum: 1 }

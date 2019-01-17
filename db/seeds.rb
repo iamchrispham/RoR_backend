@@ -121,3 +121,87 @@ FeedItemAction.find_or_create_by(
     action: I18n.t('models.feeds.actions.event_timeline_item_like'),
     slug: Api::Feeds::Items::Actions::EVENT_TIMELINE_ITEM_LIKE
 )
+
+puts '###################'
+puts 'Creating College group'
+file_io = File.new(Rails.root.join('spec/support/fixtures/image.png').to_s)
+
+if (user = User.find_by(email: 'syber@junkie.com')).blank?
+  user =
+    User.create!(
+      email: 'syber@junkie.com',
+      first_name: 'Syber',
+      last_name: 'Junkie',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+
+if (friend = User.find_by(email: 'syber-friend@junkie.com')).blank?
+  friend =
+    User.create!(
+      email: 'syber-friend@junkie.com',
+      first_name: 'Syber',
+      last_name: 'Junkie Friend',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+  user.friends << friend
+end
+
+group = Group.find_by(category: :college, name: 'Trinity College Dublin')
+
+if group.blank?
+  group =
+    Group.create!(
+      category: :college,
+      name: 'Trinity College Dublin',
+      about: 'Welcome to the official Trinity College Dublin page. Here you will have easy access to all our news, college events, clubs, societies and much more. You can also avail of special offers which may benefit you from companies.',
+      location: 'Location within central Dublin',
+      image: file_io,
+      owner: user
+    )
+end
+
+subgroup = Group.find_by(category: :society, name: 'Clinical Therapies Society')
+
+if Contact.find_by(category: :phone, details: '+1234567890').blank?
+  group.contacts << Contact.create!(category: :phone, details: '+1234567890', image: file_io)
+end
+
+if Contact.find_by(category: :url, details: 'https://facebook.com/blah').blank?
+  group.contacts << Contact.create!(category: :url, details: 'https://facebook.com/blah', image: file_io)
+end
+
+if Contact.find_by(category: :email, details: 'test-test@gmail.com').blank?
+  group.contacts << Contact.create!(category: :email, details: 'test-test@gmail.com', image: file_io)
+end
+
+group.active_members << user unless group.active_members.where('memberships.user_id = ?', user.id).exists?
+group.active_members << friend unless group.active_members.where('memberships.user_id = ?', friend.id).exists?
+
+if Post.find_by(title: 'Christmas tree lighting ceremony on 28 November at 5 pm').blank?
+  news = Post.create!(
+    title: 'Christmas tree lighting ceremony on 28 November at 5 pm',
+    details: 'The countdown to Christmas will start tomorrow evening with a Christmas Tree Lighting ceremony',
+    image: file_io
+  )
+  group.posts << news
+end
+
+if subgroup.blank?
+  subgroup =
+    Group.create!(
+      category: :society,
+      name: 'Clinical Therapies Society',
+      about: 'UCC society for Occupational Therapy (OT), Speech and Language Therapy (SLT), MSc Audiology, MSc Physiotherapy and MSc Diagnostic Radiography students.',
+      location: 'Location within central Dublin',
+      image: file_io,
+      owner: user,
+      parent: group
+    )
+end
+
+if subgroup.contacts.find_by(category: :url, details: 'https://facebook.com/blah').blank?
+  subgroup.contacts << Contact.create!(category: :url, details: 'https://facebook.com/blah', image: file_io)
+end

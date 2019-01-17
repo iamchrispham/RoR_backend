@@ -38,6 +38,7 @@ gem 'devise_invitable'
 gem 'doorkeeper'
 gem 'doorkeeper-grants_assertion', git: 'https://github.com/uniiverse/doorkeeper-grants_assertion.git'
 gem 'dotiw'
+gem 'email_address'
 gem 'figaro'
 gem 'filterrific'
 gem 'flutie'
@@ -141,7 +142,7 @@ group :development do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.4.0'
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.62.0', require: false
   gem 'thin'
 end
 

@@ -77,3 +77,4 @@ yarn-debug.log*
 # RVM config files
 .ruby-gemset
 .ruby-version
+.tool-versions
