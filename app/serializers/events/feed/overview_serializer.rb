@@ -1,7 +1,7 @@
 module Events
   module Feed
     class OverviewSerializer < ApiSerializer
-      attributes :id, :user, :title, :time, :date, :eighteen_plus, :event_forwarding, :allow_chat, :show_timeline,
+      attributes :id, :event_ownerable, :title, :time, :date, :eighteen_plus, :event_forwarding, :allow_chat, :show_timeline,
                  :reported, :conversation, :attendance, :attendee_count, :mutual_attendee_count, :mutual_attendees,
                  :maximum_attendees, :attendance_acceptance_required, :price,
                  :location, :address, :private_event, :event_media_items, :updated_at
@@ -30,8 +30,8 @@ module Events
         []
       end
 
-      def user
-        object.user.cached(instance_user, type: :feed)
+      def event_ownerable
+        object.event_ownerable.cached(instance_event_ownerable, type: :feed)
       end
 
       def event_media_items

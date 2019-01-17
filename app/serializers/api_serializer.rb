@@ -52,4 +52,7 @@ class ApiSerializer < ActiveModel::Serializer
     instance_options[:currency]
   end
 
+  def instance_event_ownerable
+    instance_options[:event_ownerable]
+  end
 end

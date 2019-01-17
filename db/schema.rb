@@ -556,7 +556,6 @@ ActiveRecord::Schema.define(version: 20190117141210) do
   add_index "event_timeline_items", ["user_id"], name: "index_event_timeline_items_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "title",                                          null: false
     t.text     "description"
     t.datetime "time",                                           null: false
@@ -586,18 +585,20 @@ ActiveRecord::Schema.define(version: 20190117141210) do
     t.text     "display_address"
     t.datetime "date_time"
     t.integer  "price"
+    t.integer  "event_ownerable_id"
+    t.string   "event_ownerable_type"
   end
 
   add_index "events", ["active"], name: "index_events_on_active", using: :btree
   add_index "events", ["attendance_acceptance_required"], name: "index_events_on_attendance_acceptance_required", using: :btree
   add_index "events", ["country_code"], name: "index_events_on_country_code", using: :btree
   add_index "events", ["eighteen_plus"], name: "index_events_on_eighteen_plus", using: :btree
+  add_index "events", ["event_ownerable_id", "event_ownerable_type"], name: "index_events_on_event_ownerable_id_and_event_ownerable_type", using: :btree
   add_index "events", ["facebook_id"], name: "index_events_on_facebook_id", using: :btree
   add_index "events", ["inactive_at"], name: "index_events_on_inactive_at", using: :btree
   add_index "events", ["maximum_attendees"], name: "index_events_on_maximum_attendees", using: :btree
   add_index "events", ["price"], name: "index_events_on_price", using: :btree
   add_index "events", ["title"], name: "index_events_on_title", using: :btree
-  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "feed_item_action_translations", force: :cascade do |t|
     t.integer  "feed_item_action_id", null: false
@@ -1564,7 +1565,6 @@ ActiveRecord::Schema.define(version: 20190117141210) do
   add_foreign_key "event_timeline_item_media_items", "event_timeline_items"
   add_foreign_key "event_timeline_items", "events"
   add_foreign_key "event_timeline_items", "users"
-  add_foreign_key "events", "users"
   add_foreign_key "feed_item_contexts", "feed_item_actions"
   add_foreign_key "feed_items", "feed_item_contexts"
   add_foreign_key "friend_request_notifiers", "friend_requests"

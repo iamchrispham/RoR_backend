@@ -11,7 +11,8 @@ class Event < ActiveRecord::Base
   include Showoff::Helpers::SerializationHelper
   include Currencyable
 
-  belongs_to :user
+  belongs_to :event_ownerable, polymorphic: true
+
   has_one :event_contribution_detail
   has_one :event_contribution_type, through: :event_contribution_detail
 
@@ -53,7 +54,7 @@ class Event < ActiveRecord::Base
 
 
   taggable_attributes :categories
-  taggable_owner :user
+  taggable_owner :event_ownerable
 
   after_create :create_conversation_if_required
 
@@ -70,19 +71,22 @@ class Event < ActiveRecord::Base
     end
   end
 
-  validates :user, :title, :description, :time, :date, :latitude, :longitude, :categories, presence: true
+  validates :title, :description, :time, :date, :latitude, :longitude, :categories, presence: true
 
   validates :latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
   validates :price, numericality: { only_integer: true, greater_than: 0 }, if: :price
+  validates :event_ownerable, presence: true
 
   scope :order_to_now, -> {
     reorder("events.date_time < current_timestamp ASC, ABS(DATE_PART('day',events.date_time - current_timestamp)) ASC")
   }
 
-  # scopes
-  scope :active, -> { joins(:user).where(active: true, users: { active: true, suspended: false }) }
-  scope :inactive, -> { joins(:user).where(active: false, users: { active: true, suspended: false }) }
+  # scopes #TODO change active and inactive scopes
+  # scope :active, -> { joins(:user).where(active: true, users: { active: true, suspended: false }) }
+  # scope :inactive, -> { joins(:user).where(active: false, users: { active: true, suspended: false }) }
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
   scope :eighteen_plus, -> { where(eighteen_plus: true) }
   scope :not_eighteen_plus, -> { where(eighteen_plus: false) }
   scope :not_private, -> { where(private_event: false) }
@@ -245,7 +249,7 @@ class Event < ActiveRecord::Base
   # Country Codes
   def sanitized_country_code(geo)
     if geo.country_code == 'GB'
-      united_kingdom_country_code_mappings[geo.state_code.to_sym]
+      united_kingdom_country_code_mappings[geo.state_code&.to_sym]
     else
       geo.country_code
     end
@@ -268,7 +272,7 @@ class Event < ActiveRecord::Base
   end
 
   def create_event_conversation
-    conversation_service.create_or_update_conversation_without_message(user, conversation_params, self)
+    conversation_service.create_or_update_conversation_without_message(event_ownerable, conversation_params, self)
   end
 
   def deactivate_conversation!
@@ -364,26 +368,26 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def cached(cache_user = nil, type: :feed)
-    key = "user_#{cache_user&.id}_#{cache_key(type)}"
+  def cached(cache_event_owner = nil, type: :feed)
+    key = "user_#{cache_event_owner&.id}_#{cache_key(type)}"
 
     cached_event = cached_object key do
       cached_event = cached_object cache_key(type) do
         serialized_resource(self, cache_serializer(type), user: nil)
       end
 
-      additional_cache_information(cached_event, cache_user, type: type)
+      additional_cache_information(cached_event, cache_event_owner, type: type)
     end
 
     cached_event
   end
 
-  def additional_cache_information(cached_event, cache_user = nil, type: :feed)
+  def additional_cache_information(cached_event, cache_event_owner = nil, type: :feed)
     if type.eql?(:overview)
-      if cache_user&.eql?(user)
-        cached_event[:attendee_count] = event_attendees.valid.count
-        cached_event[:attendees] = serialized_resource(event_attendees.valid.joins(:user).where.not(user: cache_user).order("users.business_name ASC, users.first_name || ' ' || users.last_name ASC").limit(10), ::Events::Attendees::OverviewSerializer, exclude_user: false, user: cache_user)
-      end
+      # if cache_user&.eql?(user)
+      #   cached_event[:attendee_count] = event_attendees.valid.count
+      #   cached_event[:attendees] = serialized_resource(event_attendees.valid.joins(:user).where.not(user: cache_user).order("users.business_name ASC, users.first_name || ' ' || users.last_name ASC").limit(10), ::Events::Attendees::OverviewSerializer, exclude_user: false, user: cache_user)
+      # end
 
       cached_event[:country] = serialized_resource(country_object, ::Countries::OverviewSerializer)
       cached_event[:currency] = serialized_resource(currency, ::Countries::Currencies::OverviewSerializer)
@@ -391,18 +395,18 @@ class Event < ActiveRecord::Base
       cached_event[:event_ticket_detail] = serialized_resource(event_ticket_detail, ::Events::Tickets::Details::OverviewSerializer) if event_ticket_detail&.active
     end
 
-    unless cache_user.nil?
-      cached_event[:mutual_attendee_count] = mutual_event_attendees(cache_user).count
-      cached_event[:mutual_attendees] = mutual_event_attendees(cache_user).limit(2).map { |user| user.cached(cache_user, type: :feed) }
-      cached_event[:reported] = Report.exists?(reporter: cache_user, reportable: self)
-      cached_event[:attendance] = serialized_resource(event_attendees.where(user: cache_user).first, ::Events::Attendees::OverviewSerializer, exclude_user: true, user: cache_user)
-    end
+    # unless cache_event_owner.nil?
+    #   cached_event[:mutual_attendee_count] = mutual_event_attendees(cache_user).count
+    #   cached_event[:mutual_attendees] = mutual_event_attendees(cache_user).limit(2).map { |user| user.cached(cache_user, type: :feed) }
+    #   cached_event[:reported] = Report.exists?(reporter: cache_user, reportable: self)
+    #   cached_event[:attendance] = serialized_resource(event_attendees.where(user: cache_user).first, ::Events::Attendees::OverviewSerializer, exclude_user: true, user: cache_user)
+    # end
 
     cached_event
   end
 
   def update_caches
-    user&.update_caches
+    event_ownerable&.update_caches
     remove_cached_object(cache_key(nil))
 
     %i[feed overview].each do |type|
