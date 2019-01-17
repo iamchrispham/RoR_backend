@@ -14,7 +14,7 @@ class EventOwnerAttendeeNotifier < Showoff::SNS::Notifier::Base
   end
 
   def subscribers
-    [event_attendee.event.user]
+    [event_attendee.event.user_from_event_owner]
   end
 
   def message(_target)

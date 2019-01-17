@@ -5,7 +5,7 @@ class Company < ActiveRecord::Base
 
   belongs_to :user
 
-  validates :title, presence: true
+  validates :title, :active, :suspended, presence: true
 
   after_save :update_caches
   before_destroy :update_caches

@@ -16,7 +16,7 @@ class EventCancelledNotifier < Showoff::SNS::Notifier::Base
   end
 
   def message(target)
-    I18n.t('notifiers.event_cancelled', name: event.title, user: event.user.name)
+    I18n.t('notifiers.event_cancelled', name: event.title, user: event.event_ownerable.name)
   end
 
   def extra_information(target)

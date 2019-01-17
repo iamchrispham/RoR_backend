@@ -1,7 +1,7 @@
 module Api
   module EventHelper
     def ensure_event_is_active(event)
-      ensure_user_is_active(event.user) do
+      ensure_event_owner_is_active(event.event_ownerable) do
         if event.active
           yield
         else
@@ -17,6 +17,16 @@ module Api
         else
           error_response((t 'api.responses.events.timelines.item.suspended'), Showoff::ResponseCodes::OBJECT_NOT_FOUND)
         end
+      end
+    end
+
+    def ensure_event_owner_is_active(event_owner)
+      if event_owner.active && !event_owner.suspended
+        yield
+      elsif !event_owner.active
+        error_response(t('api.responses.event_owner.inactive'), Showoff::ResponseCodes::INVALID_ARGUMENT)
+      elsif event_owner.suspended
+        error_response(t('api.responses.event_owner.suspended'), Showoff::ResponseCodes::INVALID_ARGUMENT)
       end
     end
 

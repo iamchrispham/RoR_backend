@@ -49,11 +49,11 @@ module Api
 
         private
 
-        def ensure_owner
-          if @event.user == current_api_user
-            error_response(I18n.t('api.responses.events.attendees.owner_error'), Showoff::ResponseCodes::INVALID_ARGUMENT)
-          end
-        end
+        # def ensure_owner #TODO Not used but should be
+        #   if @event.user == current_api_user
+        #     error_response(I18n.t('api.responses.events.attendees.owner_error'), Showoff::ResponseCodes::INVALID_ARGUMENT)
+        #   end
+        # end
 
         def check_existing_attendee
           @attendee = @event.event_attendees.find_by(user: current_api_user)
@@ -80,7 +80,7 @@ module Api
             return
           end
 
-          if @event.maximum_attendees.present? && @event.attending_users.where.not(event_attendees: {user: @event.user}).count >= @event.maximum_attendees && @event.maximum_attendees.positive?
+          if @event.maximum_attendees.present? && @event.attending_users.where.not(event_attendees: {user: @event.user_from_event_owner}).count >= @event.maximum_attendees && @event.maximum_attendees.positive?
             error_response(I18n.t('api.responses.events.attendees.maximum_attendees'), Showoff::ResponseCodes::INVALID_ARGUMENT)
 
           elsif @event.attendance_acceptance_required && @attendee.event_attendee_request.present? && @attendee.event_attendee_request.pending?

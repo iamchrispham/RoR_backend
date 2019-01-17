@@ -101,7 +101,7 @@ class EventService < ApiService
       event.time = Time.at(params[:time]) if params[:time].present?
       event.date = Time.at(params[:date]) if params[:date].present?
 
-      attendees = event.user.friends.active.pluck(:id) if params[:invite_all_friends]
+      attendees = event.user_from_event_owner.friends.active.pluck(:id) if params[:invite_all_friends]
 
       # save attendees
       unless attendees.blank?

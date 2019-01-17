@@ -117,7 +117,7 @@
                 <div class="col-xs-12 text-center">
                   Hi <b><%= @user.first_name %></b>,
                   <br>
-                  <b><%= @event.user.name %></b> has invited you to
+                  <b><%#= @event.user.name %></b> has invited you to
                   <br>
                   <strong class='event-name'><%= @event.title %></strong>
                   When: <strong><%= "#{@event.date.strftime("%b %d %Y")}" %></strong> at <strong><%= "#{@event.time.strftime("%I:%M%p")}" %></strong> in

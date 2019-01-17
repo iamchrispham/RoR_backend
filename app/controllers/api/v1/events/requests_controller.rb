@@ -28,7 +28,7 @@ module Api
             return
           end
 
-          if @attendee.event.user != current_api_user
+          if @attendee.event.user_from_event_owner != current_api_user
             error_response(I18n.t('api.responses.invalid_action'), Showoff::ResponseCodes::INVALID_ARGUMENT)
             return
           end

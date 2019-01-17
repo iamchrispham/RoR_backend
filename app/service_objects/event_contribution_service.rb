@@ -27,7 +27,7 @@ class EventContributionService < ApiService
 
     minimum_amount = ENV.fetch('EVENT_CONTRIBUTION_MINIMUM_AMOUNT', 1000).to_i
     if amount_cents < minimum_amount
-      register_error(Showoff::ResponseCodes::INVALID_ARGUMENT, I18n.t('api.responses.events.minimum_contribution', total_amount: formatted_total_amount(minimum_amount, attendee.event.user)))
+      register_error(Showoff::ResponseCodes::INVALID_ARGUMENT, I18n.t('api.responses.events.minimum_contribution', total_amount: formatted_total_amount(minimum_amount, attendee.event.event_owner)))
       return
     end
 
@@ -69,7 +69,7 @@ class EventContributionService < ApiService
 
     minimum_amount = ENV.fetch('EVENT_CONTRIBUTION_MINIMUM_AMOUNT', 1000).to_i
     if amount_cents < minimum_amount
-      register_error(Showoff::ResponseCodes::INVALID_ARGUMENT, I18n.t('api.responses.events.minimum_contribution', total_amount: formatted_total_amount(minimum_amount, attendee.event.user)))
+      register_error(Showoff::ResponseCodes::INVALID_ARGUMENT, I18n.t('api.responses.events.minimum_contribution', total_amount: formatted_total_amount(minimum_amount, attendee.event.event_owner)))
       return
     end
 
@@ -156,6 +156,6 @@ class EventContributionService < ApiService
   end
 
   def payment_service(attendee)
-    @payment_service ||= Showoff::Payments::Services::PaymentService.new(customer: attendee.user, vendor: attendee.event.user)
+    @payment_service ||= Showoff::Payments::Services::PaymentService.new(customer: attendee.user, vendor: attendee.event.event_owner)
   end
 end

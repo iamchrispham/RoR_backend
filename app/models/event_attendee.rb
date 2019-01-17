@@ -128,7 +128,7 @@ class EventAttendee < ActiveRecord::Base
   end
 
   def check_status
-    return if user.eql?(event.user)
+    return if user.eql?(event.user_from_event_owner)
 
     if status_changed? && ((!pending? && !event.attendance_acceptance_required) || (event.attendance_acceptance_required && event_attendee_request.present?))
       event_owner_attendee_notifier.destroy! if event_owner_attendee_notifier.present?

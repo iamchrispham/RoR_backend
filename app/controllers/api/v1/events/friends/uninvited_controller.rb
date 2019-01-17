@@ -9,7 +9,7 @@ module Api
             if @event
               friends = current_api_user.friends.where.not(id: current_api_user.friends.joins(:event_attendees).where(event_attendees: { event_id: @event.id }))
                                         .for_term(params[:term]).ordered_by_name
-              friends = friends.where.not(id: event.user.id) if params[:forward].present?
+              friends = friends.where.not(id: event.user_from_event_owner.id) if params[:forward].present?
               friends = friends.limit(params[:limit]).offset(params[:offset])
 
               success_response(friends: friends.limit(limit).offset(offset).map { |user| user.cached(current_api_user, type: :public, event: @event) })

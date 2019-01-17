@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190116030531) do
+ActiveRecord::Schema.define(version: 20190117141210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,8 +141,8 @@ ActiveRecord::Schema.define(version: 20190116030531) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.integer  "user_id",                null: false
-    t.string   "title",                  null: false
+    t.integer  "user_id",                                null: false
+    t.string   "title",                                  null: false
     t.text     "description"
     t.string   "phone_number"
     t.string   "email"
@@ -156,8 +156,11 @@ ActiveRecord::Schema.define(version: 20190116030531) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "country_code"
+    t.boolean  "active",                 default: true
+    t.boolean  "suspended",              default: false
   end
 
   add_index "companies", ["title"], name: "index_companies_on_title", using: :btree

@@ -19,7 +19,7 @@ class EventInvitationNotifier < Showoff::SNS::Notifier::Base
 
   def message(_target)
     I18n.t('notifiers.event_invitation.message',
-           user: event_attendee.event.user.name,
+           user: event_attendee.event.event_ownerable.name,
            event: event_attendee.event.title)
   end
 

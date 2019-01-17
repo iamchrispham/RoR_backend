@@ -24,7 +24,7 @@ module Api
               event = Event.active.find(params[:event_id])
 
               if event
-                friends = friends.where.not(id: event.user.id)
+                friends = friends.where.not(id: event.user_from_event_owner.id)
                 friends = friends.where.not(id: event.attending_users)
               end
             end

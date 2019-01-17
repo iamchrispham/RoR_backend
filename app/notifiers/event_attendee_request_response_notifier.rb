@@ -6,7 +6,7 @@ class EventAttendeeRequestResponseNotifier < Showoff::SNS::Notifier::Base
   after_commit :send_notification, on: :create
 
   def set_owner
-    self.owner = event_attendee_request.event_attendee.event.user
+    self.owner = event_attendee_request.event_attendee.event.user_from_event_owner
   end
 
   def self.notification_type
@@ -21,12 +21,12 @@ class EventAttendeeRequestResponseNotifier < Showoff::SNS::Notifier::Base
 
     if event_attendee_request.rejected?
       I18n.t('notifiers.event_attendee_request_response.rejected.message',
-             user: event_attendee_request.event_attendee.event.user.name,
+             user: event_attendee_request.event_attendee.event.user_from_event_owner.name,
              event: event_attendee_request.event_attendee.event.title,
              contribute: contribute)
     else
       I18n.t('notifiers.event_attendee_request_response.message',
-             user: event_attendee_request.event_attendee.event.user.name,
+             user: event_attendee_request.event_attendee.event.user_from_event_owner.name,
              event: event_attendee_request.event_attendee.event.title,
              response: event_attendee_request.status.to_s.humanize.downcase,
              contribute: contribute)

@@ -41,11 +41,11 @@ class UpcomingEventNotifier < Showoff::SNS::Notifier::Base
     attendee = event.event_attendees.find_by(user: target)
     if attendee.present?
       if attendee.invited?
-        I18n.t('notifiers.event_upcoming_invited', name: event.title, user: event.user.name)
+        I18n.t('notifiers.event_upcoming_invited', name: event.title, user: event.event_ownerable.name)
       elsif attendee.going?
-        I18n.t('notifiers.event_upcoming_going', name: event.title, user: event.user.name)
+        I18n.t('notifiers.event_upcoming_going', name: event.title, user: event.event_ownerable.name)
       elsif attendee.maybe_going?
-        I18n.t('notifiers.event_upcoming_maybe_going', name: event.title, user: event.user.name)
+        I18n.t('notifiers.event_upcoming_maybe_going', name: event.title, user: event.event_ownerable.name)
       end
     end
   end

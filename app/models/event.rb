@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
 
   include Api::CacheHelper
   include Showoff::Helpers::SerializationHelper
+  include Currencyable
 
   belongs_to :user
   has_one :event_contribution_detail
@@ -221,20 +222,7 @@ class Event < ActiveRecord::Base
         },
         radius: Api::Search::Events::DEFAULT_RADIUS
     }
-  end
-
-  def country_object
-    @county ||= ISO3166::Country.find_country_by_alpha2(country_code)
-  end
-
-  def currency
-    return MoneyRails.default_currency if country_object.blank?
-    country_object.currency
-  end
-
-  def currency_symbol
-    currency.symbol
-  end
+  end 
 
   # Attendees
   def mutual_event_attendees(user)
@@ -419,6 +407,15 @@ class Event < ActiveRecord::Base
 
     %i[feed overview].each do |type|
       cached(type: type)
+    end
+  end
+
+  def user_from_event_owner
+    case event_ownerable_type
+    when 'User'
+      event_ownerable
+    when 'Company'
+      event_ownerable.user
     end
   end
 
