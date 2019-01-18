@@ -9,6 +9,6 @@ class MakeEventsPolymorphic < ActiveRecord::Migration
       event.update(event_ownerable_id: event.user_id, event_ownerable_type: 'User')
     end
 
-    remove_column :events, :user_id
+    remove_column :events, :user_id, :integer
   end
 end
