@@ -205,3 +205,49 @@ end
 if subgroup.contacts.find_by(category: :url, details: 'https://facebook.com/blah').blank?
   subgroup.contacts << Contact.create!(category: :url, details: 'https://facebook.com/blah', image: file_io)
 end
+
+if SpecialOffer.find_by(title: 'Future Offer. 10 for £10 Kids Picture Books!').blank?
+  offer = SpecialOffer.create!(
+    title: 'Future Offer. 10 for £10 Kids Picture Books!',
+    details: 'Buy Kids Books online in our fantastic 10 for £10 offer!',
+    image: file_io,
+    starts_at: 2.days.from_now,
+    ends_at: 5.days.from_now,
+    publish_on: 1.day.from_now
+  )
+  ApprovedOffer.create!(special_offer: offer, user: user, group: group)
+end
+
+if SpecialOffer.find_by(title: 'Ongoing offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
+  SpecialOffer.create!(
+    title: 'Ongoing offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
+    details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+    image: file_io,
+    starts_at: 1.days.ago,
+    ends_at: 2.days.from_now,
+    publish_on: 2.day.ago
+  )
+end
+
+if SpecialOffer.find_by(title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
+  SpecialOffer.create!(
+    title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
+    details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+    image: file_io,
+    starts_at: 3.days.ago,
+    ends_at: 2.days.ago,
+    publish_on: 5.day.ago
+  )
+end
+
+if SpecialOffer.find_by(title: 'Past approved offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
+  past_offer = SpecialOffer.create!(
+    title: 'Past approved offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
+    details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+    image: file_io,
+    starts_at: 3.days.ago,
+    ends_at: 2.days.ago,
+    publish_on: 5.day.ago
+  )
+  ApprovedOffer.create!(special_offer: past_offer, user: user, group: group)
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190117141210) do
+ActiveRecord::Schema.define(version: 20190118083825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,17 @@ ActiveRecord::Schema.define(version: 20190117141210) do
   end
 
   add_index "admins_admin_roles", ["admin_id", "admin_role_id"], name: "index_admins_admin_roles_on_admin_id_and_admin_role_id", using: :btree
+
+  create_table "approved_offers", force: :cascade do |t|
+    t.integer  "special_offer_id", null: false
+    t.integer  "group_id",         null: false
+    t.integer  "user_id",          null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "approved_offers", ["group_id", "special_offer_id"], name: "index_approved_offers_on_group_id_and_special_offer_id", unique: true, using: :btree
+  add_index "approved_offers", ["user_id", "group_id", "special_offer_id"], name: "index_approved_offers_user_id_group_id_special_offer_id", using: :btree
 
   create_table "blazer_audits", force: :cascade do |t|
     t.integer  "user_id"
@@ -802,6 +813,16 @@ ActiveRecord::Schema.define(version: 20190117141210) do
 
   add_index "image_attachments", ["message_attachment_id"], name: "index_image_attachments_on_message_attachment_id", using: :btree
 
+  create_table "liked_offers", force: :cascade do |t|
+    t.integer  "special_offer_id", null: false
+    t.integer  "user_id",          null: false
+    t.integer  "group_id",         null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "liked_offers", ["user_id", "special_offer_id", "group_id"], name: "index_liked_offers_on_user_id_and_special_offer_id_and_group_id", unique: true, using: :btree
+
   create_table "location_attachments", force: :cascade do |t|
     t.integer  "message_attachment_id"
     t.float    "latitude",              null: false
@@ -1267,6 +1288,23 @@ ActiveRecord::Schema.define(version: 20190117141210) do
   add_index "showoff_sns_notified_objects", ["showoff_sns_notified_class_id"], name: "sns_notified_object_notified_class", using: :btree
   add_index "showoff_sns_notified_objects", ["status"], name: "sns_notified_object_status", using: :btree
 
+  create_table "special_offers", force: :cascade do |t|
+    t.citext   "title",                             null: false
+    t.citext   "details"
+    t.datetime "publish_on"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "active",             default: true, null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "special_offers", ["title"], name: "index_special_offers_on_title", unique: true, using: :btree
+
   create_table "tagged_attributes", force: :cascade do |t|
     t.string   "attribute_name", null: false
     t.datetime "created_at",     null: false
@@ -1527,6 +1565,9 @@ ActiveRecord::Schema.define(version: 20190117141210) do
   add_index "video_attachments", ["message_attachment_id"], name: "index_video_attachments_on_message_attachment_id", using: :btree
 
   add_foreign_key "addresses", "users"
+  add_foreign_key "approved_offers", "groups", name: "approved_offers_group_id_fk", on_delete: :cascade
+  add_foreign_key "approved_offers", "special_offers", name: "approved_offers_special_offer_fk", on_delete: :cascade
+  add_foreign_key "approved_offers", "users", name: "approved_offers_user_id_fk", on_delete: :cascade
   add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "conversations", "events"
   add_foreign_key "event_attendee_contributions", "event_attendees"
@@ -1582,6 +1623,9 @@ ActiveRecord::Schema.define(version: 20190117141210) do
   add_foreign_key "identifications", "identification_types"
   add_foreign_key "identifications", "users"
   add_foreign_key "image_attachments", "message_attachments"
+  add_foreign_key "liked_offers", "groups", name: "liked_offers_group_id_fk", on_delete: :cascade
+  add_foreign_key "liked_offers", "special_offers", name: "liked_offers_special_offer_fk", on_delete: :cascade
+  add_foreign_key "liked_offers", "users", name: "liked_offers_user_id_fk", on_delete: :cascade
   add_foreign_key "location_attachments", "message_attachments"
   add_foreign_key "memberships", "groups", name: "memberships_group_id_fk", on_delete: :cascade
   add_foreign_key "memberships", "users", name: "memberships_user_id_fk", on_delete: :cascade

@@ -122,6 +122,8 @@ en:
         not_found: 'Contact(s) do not exist'
       posts:
         not_found: 'Post(s) do not exist'
+      special_offers:
+        not_found: 'Special Offer(s) do not exist'
       users:
         no_currency_present: 'In order to proceed you must set the default currency on your profile. Please set your default currency and try again.'
         already_blocked: 'That user has already been blocked'

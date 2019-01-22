@@ -5,6 +5,7 @@ module Api
     module Groups
       class PostsController < ApiController
         before_action :check_group_presence
+        before_action :check_post_presence, only: %i[show update destroy]
         before_action :check_group_ownership, only: %i[create update destroy]
 
         def index
@@ -52,6 +53,10 @@ module Api
 
         def check_group_presence
           group_not_found_error if group.blank?
+        end
+
+        def check_post_presence
+          post_not_found_error if post.blank?
         end
 
         def check_group_ownership

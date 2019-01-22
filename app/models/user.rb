@@ -98,6 +98,8 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships, source: :group
   has_many :owned_groups, class_name: 'Group', inverse_of: :owner, dependent: :destroy
+  has_many :liked_offers, dependent: :destroy
+  has_many :liked_special_offers, class_name: 'SpecialOffer', through: :liked_offers, source: :special_offer
 
   after_create :subscribe_to_mailing_list
   after_create :ensure_user_notification_setting
@@ -165,6 +167,10 @@ class User < ActiveRecord::Base
   scope :hosting_facebook_events, -> {
     joins(:events).where.not(events: {facebook_id: nil})
   }
+
+  def unliked_active_offers
+    SpecialOffer.active.where.not(id: liked_special_offers.ids)
+  end
 
   def user_feed_items_for_friend(friend_id)
     user_feed_items.joins(:feed_item_context).joins(:actor).where(feed_item_contexts: {actor_id: friend_id})

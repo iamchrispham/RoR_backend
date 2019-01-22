@@ -151,6 +151,19 @@ Rails.application.routes.draw do
         resources :subgroups, only: crud_w_index
         resources :contacts, only: crud_w_index
         resources :posts, only: crud_w_index
+        resources :special_offers, only: crud do
+          collection do
+            get :approved
+            get :unapproved
+            get :active
+            get :past
+          end
+          post 'approve', to: 'special_offers#approve'
+          post 'disapprove', to: 'special_offers#disapprove'
+
+          post 'like', to: 'special_offers#like'
+          post 'unlike', to: 'special_offers#unlike'
+        end
       end
 
       scope :users, controller: :users, module: :users do

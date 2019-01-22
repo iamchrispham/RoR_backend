@@ -8,6 +8,7 @@ class Group < ActiveRecord::Base
     has_many :contacts, as: :contactable
     has_many :posts, as: :postable
     has_many :memberships
+    has_many :approved_offers
   end
 
   with_options class_name: 'Group' do
@@ -15,9 +16,14 @@ class Group < ActiveRecord::Base
     belongs_to :parent
   end
 
-  with_options through: :memberships, source: :user do |opts|
-    opts.has_many :active_members, -> { active }
-    opts.has_many :active_friends, -> { joins(:friendships).active }
+  with_options through: :memberships, source: :user do
+    has_many :active_members, -> { active }
+    has_many :active_friends, -> { joins(:friendships).active }
+  end
+
+  with_options through: :approved_offers, source: :special_offer do
+    has_many :approved_active_offers, -> { active }
+    has_many :approved_past_active_offers, -> { active.past }
   end
 
   belongs_to :owner, class_name: 'User', foreign_key: :user_id, inverse_of: :owned_groups
@@ -32,4 +38,8 @@ class Group < ActiveRecord::Base
     society: 'society',
     meetup: 'meetup'
   }
+
+  def unapproved_active_offers
+    SpecialOffer.active.where.not(id: approved_active_offers.ids)
+  end
 end
