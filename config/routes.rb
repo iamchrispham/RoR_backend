@@ -284,7 +284,7 @@ Rails.application.routes.draw do
           resources :statuses, only: [:index, :show, :update], controller: :message_statuses
         end
 
-        resources :participants, only: [:destroy, :index]
+        resources :participants, only: %i[index update destroy]
         post :mute
         delete :mute, action: :unmute
       end

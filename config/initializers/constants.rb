@@ -66,6 +66,7 @@ module Showoff
   end
   module ResponseCodes
     USER_NO_CREDIT_CARD_PRESENT = 10002
+    CREATED = 6
 
     STATUS = {
         SUCCESS => 200,
