@@ -21,7 +21,7 @@
   <% @objects.each do |event| %>
     <tr>
       <td><%= event.media_item.present? ? image_tag(event.media_item.image.url(:small), class: 'profile_img') : image_tag(EventMediaItem.placeholder_url, class: 'profile_img') %></td>
-      <td><%= link_to even.event_ownerable.name, user_path(event.event_ownerable) if event_ownerable_type == 'User' %></td>
+      <td><%= link_to even.event_ownerable.name, user_path(event.event_ownerable) if event.event_ownerable_type == 'User' %></td>
       <td><%= event.title %></td>
       <td><%= truncate(event.description, length: 50) %></td>
       <td><%= "#{event.date.strftime(Api::Emails::DEFAULT_TIME_FORMAT)}" %></td>

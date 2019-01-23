@@ -298,6 +298,10 @@ Rails.application.routes.draw do
       scope module: :feed do
         resources :feed, only: [:index]
       end
+
+      scope module: :files do
+        resources :files, only: :create
+      end
     end
   end
 end
