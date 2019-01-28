@@ -4,8 +4,13 @@ class SpecialOffer < ActiveRecord::Base
   include Showoff::Concerns::Imagable
   include Indestructable
 
-  has_many :liked_offers, dependent: :destroy
-  has_many :approved_offers, dependent: :destroy
+  with_options dependent: :destroy, inverse_of: :special_offer do
+    has_many :liked_offers
+    with_options class_name: 'OfferApproval' do
+      has_many :approved_offers, -> { active }
+      has_many :unapproved_offers, -> { inactive }
+    end
+  end
 
   validates :title, presence: true, uniqueness: true
 

@@ -215,7 +215,7 @@ if SpecialOffer.find_by(title: 'Future Offer. 10 for £10 Kids Picture Books!').
     ends_at: 5.days.from_now,
     publish_on: 1.day.from_now
   )
-  ApprovedOffer.create!(special_offer: offer, user: user, group: group)
+  OfferApproval.create!(special_offer: offer, user: user, group: group)
 end
 
 if SpecialOffer.find_by(title: 'Ongoing offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
@@ -249,5 +249,5 @@ if SpecialOffer.find_by(title: 'Past approved offer. Great value Easter Crafts f
     ends_at: 2.days.ago,
     publish_on: 5.day.ago
   )
-  ApprovedOffer.create!(special_offer: past_offer, user: user, group: group)
+  OfferApproval.create!(special_offer: past_offer, user: user, group: group)
 end

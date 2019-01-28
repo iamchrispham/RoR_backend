@@ -60,12 +60,13 @@ module Api
         end
 
         def approve
-          if unpproved_special_offer.approved_offers.build(user: group.owner, group: group).save
+          offer_approval = unpproved_special_offer.approved_offers.build(user: group.owner, group: group, active: true)
+          if offer_approval.save
             success_response(
               special_offers: serialized_resource(group.approved_active_offers, ::SpecialOffers::OverviewSerializer)
             )
           else
-            active_record_error_response(offer)
+            active_record_error_response(offer_approval)
           end
         end
 
@@ -75,7 +76,7 @@ module Api
               special_offers: serialized_resource(group.approved_active_offers, ::SpecialOffers::OverviewSerializer)
             )
           else
-            active_record_error_response(offer)
+            active_record_error_response(approved_special_offer)
           end
         end
 

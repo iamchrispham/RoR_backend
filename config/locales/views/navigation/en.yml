@@ -21,4 +21,5 @@ en:
         objects:
           title: 'Objects'
           applications: 'Applications'
-
+        colleges: 'Colleges'
+        offer_approvals: 'Special Offer Approvals'

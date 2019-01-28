@@ -8,8 +8,23 @@ class Group < ActiveRecord::Base
     has_many :contacts, as: :contactable
     has_many :posts, as: :postable
     has_many :memberships
-    has_many :approved_offers
+
+    with_options class_name: 'OfferApproval', inverse_of: :group do
+      has_many :offer_approvals
+      has_many :approved_offers, -> { active }
+      has_many :unapproved_offers, -> { inactive }
+    end
   end
+
+  with_options through: :approved_offers, source: :special_offer do
+    has_many :approved_active_offers, -> { active }
+    has_many :approved_past_active_offers, -> { active.past }
+  end
+
+  has_many :unapproved_active_offers,
+           -> { where(offer_approvals: { active: false }).active },
+           through: :offer_approvals,
+           source: :special_offer
 
   with_options class_name: 'Group' do
     has_many :subgroups, foreign_key: :parent_id, dependent: :nullify, inverse_of: :parent
@@ -19,11 +34,6 @@ class Group < ActiveRecord::Base
   with_options through: :memberships, source: :user do
     has_many :active_members, -> { active }
     has_many :active_friends, -> { joins(:friendships).active }
-  end
-
-  with_options through: :approved_offers, source: :special_offer do
-    has_many :approved_active_offers, -> { active }
-    has_many :approved_past_active_offers, -> { active.past }
   end
 
   belongs_to :owner, class_name: 'User', foreign_key: :user_id, inverse_of: :owned_groups
@@ -39,7 +49,20 @@ class Group < ActiveRecord::Base
     meetup: 'meetup'
   }
 
-  def unapproved_active_offers
-    SpecialOffer.active.where.not(id: approved_active_offers.ids)
+  scope :colleges, -> { where(category: :college) }
+
+  def status
+    active ? :active : :deactivated
+  end
+
+  def status_class
+    case status
+    when :deactivated
+      'danger'
+    when :active
+      'success'
+    else
+      'warning'
+    end
   end
 end

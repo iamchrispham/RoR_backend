@@ -37,6 +37,15 @@ Rails.application.routes.draw do
                    passwords: 'application/developers/developers/passwords',
                }
 
+    namespace :admins do
+      resources :colleges, only: :index do
+        resources :offer_approvals, only: :index do
+          put :approve
+          put :disapprove
+        end
+      end
+    end
+
     scope :admins, module: :admins do
       get 'dashboard', as: :admin_dashboard, controller: :dashboard, action: :index
     end
@@ -45,12 +54,12 @@ Rails.application.routes.draw do
       get 'dashboard', as: :developer_dashboard, controller: :dashboard, action: :index
     end
 
-    #settings
+    # settings
     namespace :settings, only: [] do
-      resource :profile, only: [:edit, :update]
+      resource :profile, only: %i[edit update]
     end
 
-    #admins
+    # admins
     scope module: :admins do
       resources :admins do
         put :activate
@@ -81,9 +90,9 @@ Rails.application.routes.draw do
       end
     end
 
-    #admins
+    # admins
     scope module: :general_notifications do
-      resources :general_notifications, path: :notifications, except: [:edit, :update] do
+      resources :general_notifications, path: :notifications, except: %i[edit update] do
         put :send_notification
       end
     end

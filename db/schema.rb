@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190118083825) do
+ActiveRecord::Schema.define(version: 20190125105453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,17 +93,6 @@ ActiveRecord::Schema.define(version: 20190118083825) do
   end
 
   add_index "admins_admin_roles", ["admin_id", "admin_role_id"], name: "index_admins_admin_roles_on_admin_id_and_admin_role_id", using: :btree
-
-  create_table "approved_offers", force: :cascade do |t|
-    t.integer  "special_offer_id", null: false
-    t.integer  "group_id",         null: false
-    t.integer  "user_id",          null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-  end
-
-  add_index "approved_offers", ["group_id", "special_offer_id"], name: "index_approved_offers_on_group_id_and_special_offer_id", unique: true, using: :btree
-  add_index "approved_offers", ["user_id", "group_id", "special_offer_id"], name: "index_approved_offers_user_id_group_id_special_offer_id", using: :btree
 
   create_table "blazer_audits", force: :cascade do |t|
     t.integer  "user_id"
@@ -982,6 +971,18 @@ ActiveRecord::Schema.define(version: 20190118083825) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
+  create_table "offer_approvals", force: :cascade do |t|
+    t.integer  "special_offer_id",                 null: false
+    t.integer  "group_id",                         null: false
+    t.integer  "user_id",                          null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "active",           default: false, null: false
+  end
+
+  add_index "offer_approvals", ["group_id", "special_offer_id"], name: "index_offer_approvals_on_group_id_and_special_offer_id", unique: true, using: :btree
+  add_index "offer_approvals", ["user_id", "group_id", "special_offer_id"], name: "index_approved_offers_user_id_group_id_special_offer_id", using: :btree
+
   create_table "platform_translations", force: :cascade do |t|
     t.integer  "platform_id", null: false
     t.string   "locale",      null: false
@@ -1565,9 +1566,6 @@ ActiveRecord::Schema.define(version: 20190118083825) do
   add_index "video_attachments", ["message_attachment_id"], name: "index_video_attachments_on_message_attachment_id", using: :btree
 
   add_foreign_key "addresses", "users"
-  add_foreign_key "approved_offers", "groups", name: "approved_offers_group_id_fk", on_delete: :cascade
-  add_foreign_key "approved_offers", "special_offers", name: "approved_offers_special_offer_fk", on_delete: :cascade
-  add_foreign_key "approved_offers", "users", name: "approved_offers_user_id_fk", on_delete: :cascade
   add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "conversations", "events"
   add_foreign_key "event_attendee_contributions", "event_attendees"
@@ -1638,6 +1636,9 @@ ActiveRecord::Schema.define(version: 20190118083825) do
   add_foreign_key "notification_setting_user_notification_settings", "user_notification_settings"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "offer_approvals", "groups", name: "approved_offers_group_id_fk", on_delete: :cascade
+  add_foreign_key "offer_approvals", "special_offers", name: "approved_offers_special_offer_fk", on_delete: :cascade
+  add_foreign_key "offer_approvals", "users", name: "approved_offers_user_id_fk", on_delete: :cascade
   add_foreign_key "showoff_facebook_friend_notifiers", "showoff_sns_notifications"
   add_foreign_key "showoff_sns_notified_objects", "showoff_sns_notifications"
   add_foreign_key "upcoming_event_notifiers", "showoff_sns_notifications"

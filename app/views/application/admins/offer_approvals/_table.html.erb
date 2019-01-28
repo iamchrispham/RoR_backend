@@ -1,0 +1,40 @@
+
+<table class="table main-column">
+  <thead>
+  <tr>
+    <th></th>
+    <th> <%= t('views.admins.offer_approvals.table.title') %></th>
+    <th> <%= t('views.admins.offer_approvals.table.details') %></th>
+    <th> <%= t('views.admins.offer_approvals.table.publish_on') %></th>
+    <th> <%= t('views.admins.offer_approvals.table.starts_at') %></th>
+    <th> <%= t('views.admins.offer_approvals.table.ends_at') %></th>
+    <th> <%= t('views.admins.offer_approvals.table.status') %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @objects.each do |object|%>
+      <tr>
+        <td class="profile_img"> <%= image_tag(object.special_offer.image.url(:large), class: "profile_img") %> </td>
+        <td class="wrapped"> <%= object.special_offer.title %> </td>
+        <td class="wrapped wrapped-lg"> <%= object.special_offer.details %> </td>
+        <td class="wrapped"> <%= object.special_offer.publish_on %> </td>
+        <td class="wrapped"> <%= object.special_offer.starts_at %> </td>
+        <td class="wrapped"> <%= object.special_offer.ends_at %> </td>
+        <td class="wrapped"> <span class="label label-<%= object.status_class %>"><%= object.status %></span> </td>
+        <td class="pull-right bottom-align">
+          <% if object.active %>
+            <%= link_to t('views.admins.offer_approvals.actions.disapprove'),
+                        admins_college_offer_approval_disapprove_path(@group, object),
+                        class: 'btn btn-success bottom', method: :put %>
+          <% else %>
+            <%= link_to t('views.admins.offer_approvals.actions.approve'),
+                        admins_college_offer_approval_approve_path(@group, object),
+                        class: 'btn btn-success bottom', method: :put %>
+          <% end %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>

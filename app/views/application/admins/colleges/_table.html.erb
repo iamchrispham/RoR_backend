@@ -1,0 +1,31 @@
+
+<table class="table main-column">
+  <thead>
+  <tr>
+    <th></th>
+    <th> <%= t('views.admins.colleges.table.name') %></th>
+    <th> <%= t('views.admins.colleges.table.location') %></th>
+    <th> <%= t('views.admins.colleges.table.admin') %></th>
+    <th> <%= t('views.admins.colleges.table.status') %></th>
+    <th> <%= t('views.admins.colleges.table.unapproved_offers_count') %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @objects.each do |object|%>
+      <tr>
+        <td class="profile_img"> <%= image_tag(object.image.url(:large), class: "profile_img") %> </td>
+        <td class="wrapped"> <%= object.name %> </td>
+        <td class="wrapped wrapped-lg"> <%= object.location %> </td>
+        <td class="wrapped"> <%= object.owner&.name %> </td>
+        <td class="wrapped"> <span class="label label-<%= object.status_class %>"><%= object.status %></span> </td>
+        <td class="wrapped"> <%= object.unapproved_offers.count %> </td>
+        <td class="pull-right bottom-align">
+            <%= link_to t('views.admins.colleges.actions.view_offer_approvals'), admins_college_offer_approvals_path(object),
+                class: 'btn btn-success bottom', method: :get %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>

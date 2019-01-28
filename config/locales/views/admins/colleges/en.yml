@@ -1,0 +1,12 @@
+en:
+  views:
+    admins:
+      colleges:
+        actions:
+          view_offer_approvals: 'View Special Offer Approvals'
+        table:
+          name: 'Name'
+          location: 'Location'
+          admin: 'College Admin'
+          status: 'Status'
+          unapproved_offers_count: 'Unapproved Special Offers'

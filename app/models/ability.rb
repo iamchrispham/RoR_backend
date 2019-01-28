@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ability
   include CanCan::Ability
 
@@ -20,6 +22,10 @@ class Ability
       can :read, Event
 
       can :read, Report
+
+      can :read, SpecialOffer
+
+      can :read, Group
     end
 
     if user.has_role? :admin
@@ -35,7 +41,11 @@ class Ability
 
       can :read, :revenues
 
-      can [:read, :manage], Report
+      can %i[read manage], Report
+
+      can :manage, SpecialOffer
+
+      can :manage, Group
 
     elsif user.has_role? :sales
       not_super_admin_user_permissions(user)

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class ApprovedOffer < ActiveRecord::Base
+class OfferApproval < ActiveRecord::Base
+  include Indestructable
+
   belongs_to :user
   belongs_to :special_offer
   belongs_to :group
@@ -12,4 +14,19 @@ class ApprovedOffer < ActiveRecord::Base
               scope: :group_id,
               message: 'already approved'
             }
+
+  def status
+    active ? :approved : :unapproved
+  end
+
+  def status_class
+    case status
+    when :unapproved
+      'warning'
+    when :approved
+      'success'
+    else
+      'danger'
+    end
+  end
 end

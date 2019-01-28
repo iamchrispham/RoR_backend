@@ -1,0 +1,17 @@
+en:
+  views:
+    admins:
+      offer_approvals:
+        status:
+          approved: 'Special offer approved.'
+          disapproved: 'Special offer disapproved.'
+        actions:
+          approve: 'Approve'
+          disapprove: 'Disapprove'
+        table:
+          title: 'Title'
+          details: 'Details'
+          publish_on: 'Publish on'
+          starts_at: 'Starts at'
+          ends_at: 'Ends at'
+          status: 'Status'

@@ -25,3 +25,10 @@
   <%= menu_item title: (t 'views.navigation.menu.reported_events'), path: reports_events_path, controller: :application_reports_events %>
   <%= menu_item title: (t 'views.navigation.menu.reported_users'), path: reports_users_path, controller: :application_reports_users %>
 <% end %>
+
+<% if can? :manage, Group %>
+  <%= menu_item(
+    title: (t 'views.navigation.menu.colleges'),
+    path: admins_colleges_path,
+    controller: :application_admins_colleges) %>
+<% end %>
