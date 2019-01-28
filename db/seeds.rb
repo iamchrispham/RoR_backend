@@ -251,3 +251,41 @@ if SpecialOffer.find_by(title: 'Past approved offer. Great value Easter Crafts f
   )
   OfferApproval.create!(special_offer: past_offer, user: user, group: group)
 end
+
+### Adding developers to a group
+
+if (dev1 = User.find_by(email: 'shovon54@gmail.com')).blank?
+  dev1 =
+    User.create!(
+      email: 'shovon54@gmail.com',
+      first_name: 'Tasnim',
+      last_name: 'Shovon',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+group.active_members << dev1 unless group.active_members.where('memberships.user_id = ?', dev1.id).exists?
+
+if (dev2 = User.find_by(email: 'sajid.sust.cse@gmail.com')).blank?
+  dev2 =
+    User.create!(
+      email: 'sajid.sust.cse@gmail.com',
+      first_name: 'Sajid',
+      last_name: 'Sust',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+group.active_members << dev2 unless group.active_members.where('memberships.user_id = ?', dev2.id).exists?
+
+if (dev3 = User.find_by(email: 'sharker.ratul.08@gmail.com')).blank?
+  dev3 =
+    User.create!(
+      email: 'sharker.ratul.08@gmail.com',
+      first_name: 'Sharker',
+      last_name: 'Ratul',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+group.active_members << dev3 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?

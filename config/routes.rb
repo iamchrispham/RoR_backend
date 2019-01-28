@@ -182,7 +182,12 @@ Rails.application.routes.draw do
         post :merge
       end
 
-      #users routes
+      # current api user routes
+      namespace :current_user do
+        resources :groups, only: :index
+      end
+
+      # users routes
       resources :users, module: :users, only: (crud - [:destroy]) do
         collection do
           resources :tags, only: :index
