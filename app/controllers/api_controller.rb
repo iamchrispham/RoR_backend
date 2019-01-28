@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ApiController < ActionController::Base
-  # protect_from_forgery with: :null_session
-  skip_before_filter :verify_authenticity_token
+  protect_from_forgery with: :null_session
 
   include Showoff::Helpers::SerializationHelper
   include Showoff::Helpers::CurrentAPIUserHelper
