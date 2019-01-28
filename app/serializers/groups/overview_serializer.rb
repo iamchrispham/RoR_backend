@@ -4,6 +4,7 @@ module Groups
   class OverviewSerializer < ApiSerializer
     attributes :id,
                :name,
+               :category,
                :active,
                :location,
                :about,
