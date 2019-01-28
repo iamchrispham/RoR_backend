@@ -159,7 +159,11 @@ if group.blank?
       about: 'Welcome to the official Trinity College Dublin page. Here you will have easy access to all our news, college events, clubs, societies and much more. You can also avail of special offers which may benefit you from companies.',
       location: 'Location within central Dublin',
       image: file_io,
-      owner: user
+      owner: user,
+      phone: '+1234567890',
+      email: 'test-test@gmail.com',
+      website: 'https://example.com/blah',
+      facebook_profile_link: 'https://facebook.com/blah'
     )
 end
 

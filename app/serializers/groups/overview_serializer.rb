@@ -14,7 +14,13 @@ module Groups
                :active_friends_count,
                :created_at,
                :images,
-               :contacts
+               :facebook_profile_link,
+               :linkedin_profile_link,
+               :instagram_profile_link,
+               :snapchat_profile_link,
+               :phone,
+               :email,
+               :website
 
     def active_members_count
       object.active_members.count

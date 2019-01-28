@@ -42,6 +42,21 @@ class Group < ActiveRecord::Base
             presence: true,
             uniqueness: true
 
+  validates :phone,
+            format: { with: General::PHONE_FORMAT_REGEXP },
+            length: { minimum: 7, maximum: 13 },
+            allow_blank: true
+
+  validates :facebook_profile_link,
+            :linkedin_profile_link,
+            :instagram_profile_link,
+            :snapchat_profile_link,
+            :website,
+            url: { allow_blank: true }
+
+  validates_with EmailAddress::ActiveRecordValidator,
+                 field: :details
+
   enum category: {
     college: 'college',
     normal: 'normal',
