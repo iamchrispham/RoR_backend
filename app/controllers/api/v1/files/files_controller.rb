@@ -4,8 +4,6 @@ module Api
   module V1
     module Files
       class FilesController < ApiController
-        protect_from_forgery with: :null_session
-
         def create
           aws_response = AwsS3Service.get_presigned_url(params[:file_name], folder_name: params[:folder_name])
           upload_url, service_info = aws_response.split('?')
