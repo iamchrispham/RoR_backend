@@ -228,51 +228,45 @@ if subgroup.contacts.find_by(category: :url, details: 'https://facebook.com/blah
   subgroup.contacts << Contact.create!(category: :url, details: 'https://facebook.com/blah', image: file_io)
 end
 
-if SpecialOffer.find_by(title: 'Future Offer. 10 for £10 Kids Picture Books!').blank?
-  offer = SpecialOffer.create!(
-    title: 'Future Offer. 10 for £10 Kids Picture Books!',
-    details: 'Buy Kids Books online in our fantastic 10 for £10 offer!',
-    image: file_io,
-    starts_at: 2.days.from_now,
-    ends_at: 5.days.from_now,
-    publish_on: 1.day.from_now
-  )
-  OfferApproval.create!(special_offer: offer, user: user, group: group)
-end
+SpecialOffer.delete_all
+future_offer = SpecialOffer.create!(
+  title: 'Approved Future Offer. 10 for £10 Kids Picture Books!',
+  details: 'Buy Kids Books online in our fantastic 10 for £10 offer!',
+  image: file_io,
+  starts_at: 2.days.from_now,
+  ends_at: 5.days.from_now,
+  publish_on: 1.day.from_now
+)
+OfferApproval.create!(special_offer: future_offer, user: user, group: group, active: true)
 
-if SpecialOffer.find_by(title: 'Ongoing offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
-  SpecialOffer.create!(
-    title: 'Ongoing offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
-    details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
-    image: file_io,
-    starts_at: 1.days.ago,
-    ends_at: 2.days.from_now,
-    publish_on: 2.day.ago
-  )
-end
+ongoing_offer = SpecialOffer.create!(
+  title: 'Approved Ongoing Offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
+  details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+  image: file_io,
+  starts_at: 1.days.ago,
+  ends_at: 2.days.from_now,
+  publish_on: 2.day.ago
+)
+OfferApproval.create!(special_offer: ongoing_offer, user: user, group: group, active: true)
 
-if SpecialOffer.find_by(title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
-  SpecialOffer.create!(
-    title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
-    details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
-    image: file_io,
-    starts_at: 3.days.ago,
-    ends_at: 2.days.ago,
-    publish_on: 5.day.ago
-  )
-end
+SpecialOffer.create!(
+  title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
+  details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+  image: file_io,
+  starts_at: 3.days.ago,
+  ends_at: 2.days.ago,
+  publish_on: 5.day.ago
+)
 
-if SpecialOffer.find_by(title: 'Past approved offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits').blank?
-  past_offer = SpecialOffer.create!(
-    title: 'Past approved offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
-    details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
-    image: file_io,
-    starts_at: 3.days.ago,
-    ends_at: 2.days.ago,
-    publish_on: 5.day.ago
-  )
-  OfferApproval.create!(special_offer: past_offer, user: user, group: group)
-end
+past_offer = SpecialOffer.create!(
+  title: 'Past approved offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
+  details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+  image: file_io,
+  starts_at: 3.days.ago,
+  ends_at: 2.days.ago,
+  publish_on: 5.day.ago
+)
+OfferApproval.create!(special_offer: past_offer, user: user, group: group, active: true)
 
 ### Adding developers to a group
 
@@ -336,3 +330,8 @@ end
 normal_group.active_members << dev1 unless normal_group.active_members.where('memberships.user_id = ?', dev1.id).exists?
 normal_group.active_members << dev2 unless normal_group.active_members.where('memberships.user_id = ?', dev2.id).exists?
 normal_group.active_members << dev3 unless normal_group.active_members.where('memberships.user_id = ?', dev3.id).exists?
+
+LikedOffer.delete_all
+LikedOffer.create!(special_offer: future_offer, user: dev1, group: group)
+LikedOffer.create!(special_offer: future_offer, user: dev2, group: group)
+LikedOffer.create!(special_offer: ongoing_offer, user: dev1, group: group)

@@ -8,6 +8,7 @@ class Group < ActiveRecord::Base
     has_many :contacts, as: :contactable
     has_many :posts, -> { order(id: :desc) }, as: :postable
     has_many :memberships
+    has_many :liked_offers
 
     with_options class_name: 'OfferApproval', inverse_of: :group do
       has_many :offer_approvals
@@ -35,6 +36,10 @@ class Group < ActiveRecord::Base
     has_many :active_members, -> { active }
     has_many :active_friends, -> { joins(:friendships).active }
   end
+
+  has_many :liked_special_offers,
+           through: :liked_offers,
+           source: :special_offer
 
   belongs_to :owner, class_name: 'User', foreign_key: :user_id, inverse_of: :owned_groups
 

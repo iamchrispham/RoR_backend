@@ -166,6 +166,9 @@ Rails.application.routes.draw do
             get :unapproved
             get :active
             get :past
+            get :active_today
+            get :upcoming
+            get :most_liked
           end
           post 'approve', to: 'special_offers#approve'
           post 'disapprove', to: 'special_offers#disapprove'

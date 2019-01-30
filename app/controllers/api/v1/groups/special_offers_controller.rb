@@ -36,6 +36,30 @@ module Api
           )
         end
 
+        def active_today
+          offers = group.approved_active_offers.active_today.limit(limit).offset(offset)
+
+          success_response(
+            special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
+          )
+        end
+
+        def upcoming
+          offers = group.approved_active_offers.upcoming.limit(limit).offset(offset)
+
+          success_response(
+            special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
+          )
+        end
+
+        def most_liked
+          offers = SpecialOffer.most_liked(group.id).limit(limit).offset(offset)
+
+          success_response(
+            special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
+          )
+        end
+
         def show
           success_response(
             special_offer: serialized_resource(approved_special_offer, ::SpecialOffers::OverviewSerializer)
