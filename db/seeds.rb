@@ -184,14 +184,32 @@ end
 group.active_members << user unless group.active_members.where('memberships.user_id = ?', user.id).exists?
 group.active_members << friend unless group.active_members.where('memberships.user_id = ?', friend.id).exists?
 
-if Post.find_by(title: 'Christmas tree lighting ceremony on 28 November at 5 pm').blank?
-  news = Post.create!(
+if (news1 = Post.find_by(title: 'Christmas tree lighting ceremony on 28 November at 5 pm')).blank?
+  news1 = Post.create!(
     title: 'Christmas tree lighting ceremony on 28 November at 5 pm',
     details: 'The countdown to Christmas will start tomorrow evening with a Christmas Tree Lighting ceremony',
     image: file_io
   )
-  group.posts << news
 end
+group.posts << news1 unless group.posts.include?(news1)
+
+if (news2 = Post.find_by(title: 'Christmas tree lighting ceremony on 29 November at 5 pm')).blank?
+  news2 = Post.create!(
+    title: 'Christmas tree lighting ceremony on 29 November at 5 pm',
+    details: 'The countdown to Christmas will start tomorrow evening with a Christmas Tree Lighting ceremony',
+    image: file_io
+  )
+end
+group.posts << news2 unless group.posts.include?(news2)
+
+if (news3 = Post.find_by(title: 'Christmas tree lighting ceremony on 30 November at 5 pm')).blank?
+  news3 = Post.create!(
+    title: 'Christmas tree lighting ceremony on 30 November at 5 pm',
+    details: 'The countdown to Christmas will start tomorrow evening with a Christmas Tree Lighting ceremony',
+    image: file_io
+  )
+end
+group.posts << news3 unless group.posts.include?(news3)
 
 if subgroup.blank?
   subgroup =

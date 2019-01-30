@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
 
   with_options dependent: :destroy do
     has_many :contacts, as: :contactable
-    has_many :posts, as: :postable
+    has_many :posts, -> { order(id: :desc) }, as: :postable
     has_many :memberships
 
     with_options class_name: 'OfferApproval', inverse_of: :group do
