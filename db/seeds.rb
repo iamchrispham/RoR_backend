@@ -293,3 +293,28 @@ if (dev3 = User.find_by(email: 'sharker.ratul.08@gmail.com')).blank?
     )
 end
 group.active_members << dev3 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
+
+normal_group = Group.find_by(category: :normal, name: 'Normal Group Example')
+
+if normal_group.blank?
+  normal_group =
+    Group.create!(
+      category: :normal,
+      name: 'Normal Group Example',
+      about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      location: 'Location within central Dublin',
+      image: file_io,
+      owner: user,
+      phone: '+1234567890',
+      email: 'test-test@gmail.com',
+      website: 'https://example.com/blah',
+      facebook_profile_link: 'https://facebook.com/blah',
+      linkedin_profile_link: 'https://example.com/blah',
+      instagram_profile_link: 'https://example.com/blah',
+      snapchat_profile_link: 'https://example.com/blah'
+    )
+end
+
+normal_group.active_members << dev1 unless normal_group.active_members.where('memberships.user_id = ?', dev1.id).exists?
+normal_group.active_members << dev2 unless normal_group.active_members.where('memberships.user_id = ?', dev2.id).exists?
+normal_group.active_members << dev3 unless normal_group.active_members.where('memberships.user_id = ?', dev3.id).exists?
