@@ -5,6 +5,8 @@ module SpecialOffers
     attributes :id,
                :active,
                :title,
+               :location,
+               :advertiser,
                :publish_on,
                :starts_at,
                :ends_at,

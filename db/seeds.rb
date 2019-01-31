@@ -270,17 +270,21 @@ future_offer = SpecialOffer.create!(
   image: file_io,
   starts_at: 2.days.from_now,
   ends_at: 5.days.from_now,
-  publish_on: 1.day.from_now
+  publish_on: 1.day.from_now,
+  advertiser: 'Easter Crafts',
+  location: 'Location within central Dublin'
 )
 OfferApproval.create!(special_offer: future_offer, user: user, group: group, active: true)
 
 ongoing_offer = SpecialOffer.create!(
   title: 'Approved Ongoing Offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
   details: 'Buy cheap Easter Crafts online at The Works, all Easter crafting materials are available to buy at The Works.',
+  advertiser: 'Easter Crafts',
+  location: 'Location within central Dublin',
   image: file_io,
-  starts_at: 1.days.ago,
+  starts_at: 1.day.ago,
   ends_at: 2.days.from_now,
-  publish_on: 2.day.ago
+  publish_on: 2.days.ago
 )
 OfferApproval.create!(special_offer: ongoing_offer, user: user, group: group, active: true)
 
@@ -290,7 +294,9 @@ SpecialOffer.create!(
   image: file_io,
   starts_at: 3.days.ago,
   ends_at: 2.days.ago,
-  publish_on: 5.day.ago
+  publish_on: 5.days.ago,
+  advertiser: 'Easter Crafts',
+  location: 'Location within central Dublin'
 )
 
 past_offer = SpecialOffer.create!(
@@ -299,7 +305,9 @@ past_offer = SpecialOffer.create!(
   image: file_io,
   starts_at: 3.days.ago,
   ends_at: 2.days.ago,
-  publish_on: 5.day.ago
+  publish_on: 5.days.ago,
+  advertiser: 'Easter Crafts',
+  location: 'Location within central Dublin'
 )
 OfferApproval.create!(special_offer: past_offer, user: user, group: group, active: true)
 

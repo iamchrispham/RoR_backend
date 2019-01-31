@@ -12,7 +12,13 @@ class SpecialOffer < ActiveRecord::Base
     end
   end
 
-  validates :title, presence: true, uniqueness: true
+  validates :title,
+            :advertiser,
+            :publish_on,
+            :starts_at,
+            :ends_at,
+            presence: true
+  validates :title, uniqueness: true
 
   validate :start_end_timestamps
   validate :publish_end_timestamps
