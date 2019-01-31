@@ -7,6 +7,8 @@ en:
       error_deactivate: 'Cannot deactivate this Event as an internal error has occurred. Please try again. If this problem persists please contact support'
       activated: 'Event activated successfully'
       error_activate: 'Cannot activate this Event as an internal error has occurred. Please try again. If this problem persists please contact support'
+      review_status_changed: 'Event review status was changed'
+      review_status_absent: 'Wrong event review status!'
 
       timeline_items:
         activated: 'Timeline Item Activated'

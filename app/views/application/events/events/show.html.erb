@@ -41,10 +41,21 @@
       <div class="x_title no-margin">
         <h2 class="pull-left left-aligned-lg">
           <%= @event.title %>
-          <span class="white label label-<%= @event.status_class %>"><%= @event.status %></span>
+          <span class="white label label-<%= @event.status_class %>"><%= @event.status %></span>  
         </h2>
         <div class="title_right">
           <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+            <% if @event.active? && @event.event_ownerable_type == 'Company' %>
+              <div class="pull-left" role="group">
+                Current review status: <%= @event.review_status %></br>
+                  <%= link_to @event.review_status == 'approved' ? 'Decline' : 'Approve', 
+                    event_change_review_status_path(@event, review_status: @event.review_status == 'approved' ? :declined : :approved), 
+                    class: "btn btn-#{@event.review_status == 'approved' ? 'danger' : 'success'}",
+                    method: :put 
+                  %>
+              </div>
+            <% end %>
+
             <div class="pull-right" role="group">
               <% if can? :manage, @event %>
                   <% if @event.active? %>

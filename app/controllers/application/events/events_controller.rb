@@ -55,6 +55,15 @@ module Application
         end
       end
 
+      def change_review_status
+        if Event.review_statuses.include?(params[:review_status])
+          @event.send(params[:review_status] + '!')
+          redirect_to event_path(@event), notice: t('views.events.review_status_changed')
+        else
+          redirect_with_error(event_path(@event), t('views.events.review_status_absent'))
+        end
+      end
+
       private
 
       def set_event

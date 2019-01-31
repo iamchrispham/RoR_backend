@@ -257,6 +257,7 @@ class EventService < ApiService
     base_params = params.except(:attendees, :media_items, :time, :date, :contribution_details, :invite_all_friends, :ticket_details)
     event = event_owner.events.new(base_params)
 
+    event.review_status = :pending
     event.time = Time.at(params[:time]) if params[:time].present?
     event.date = Time.at(params[:date]) if params[:date].present?
 

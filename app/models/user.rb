@@ -204,7 +204,7 @@ class User < ActiveRecord::Base
   end
 
   def applicable_events
-    all_events = Event.not_private
+    all_events = Event.not_private.business_and_approved
     all_events = Event.where(id: all_events + hosting_events + friend_events.not_private + attending_events + maybe_attending_events + invited_events + shared_with_events).active.order(created_at: :desc)
     all_events = all_events.not_eighteen_plus unless self.eighteen_plus
     all_events

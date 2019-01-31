@@ -11,6 +11,8 @@ class Event < ActiveRecord::Base
   include Showoff::Helpers::SerializationHelper
   include Currencyable
 
+  enum review_status: {pending: 0, approved: 1, declined: 2}
+
   belongs_to :event_ownerable, polymorphic: true
 
   has_one :event_contribution_detail
@@ -77,6 +79,7 @@ class Event < ActiveRecord::Base
   validates :longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
   validates :price, numericality: { only_integer: true, greater_than: 0 }, if: :price
   validates :event_ownerable, presence: true
+  validates :review_status, presence: true, if: :business_event
 
   scope :order_to_now, -> {
     reorder("events.date_time < current_timestamp ASC, ABS(DATE_PART('day',events.date_time - current_timestamp)) ASC")
@@ -90,6 +93,7 @@ class Event < ActiveRecord::Base
   scope :eighteen_plus, -> { where(eighteen_plus: true) }
   scope :not_eighteen_plus, -> { where(eighteen_plus: false) }
   scope :not_private, -> { where(private_event: false) }
+  scope :business_and_approved, -> { where.not(event_ownerable_type: 'Company').or(Event.where(event_ownerable_type: 'Company').approved) }
 
   scope :title_matching, ->(text) { where('title ILIKE ?', "%#{text}%") }
   scope :description_matching, ->(text) { where('description ILIKE ?', "%#{text}%") }
@@ -296,6 +300,10 @@ class Event < ActiveRecord::Base
       },
       participants: participants
     }
+  end
+
+  def business_event
+    self.event_ownerable_type == 'Company'
   end
 
   # status helpers

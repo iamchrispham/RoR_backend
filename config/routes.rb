@@ -124,6 +124,7 @@ Rails.application.routes.draw do
       resources :events do
         put :activate
         put :deactivate
+        put :change_review_status
       end
     end
 
