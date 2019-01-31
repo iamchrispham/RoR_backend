@@ -149,8 +149,42 @@ if (friend = User.find_by(email: 'syber-friend@junkie.com')).blank?
   user.friends << friend
 end
 
-group = Group.find_by(category: :college, name: 'Trinity College Dublin')
+if (dev1 = User.find_by(email: 'shovon54@gmail.com')).blank?
+  dev1 =
+    User.create!(
+      email: 'shovon54@gmail.com',
+      first_name: 'Tasnim',
+      last_name: 'Shovon',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
 
+if (dev2 = User.find_by(email: 'sajid.sust.cse@gmail.com')).blank?
+  dev2 =
+    User.create!(
+      email: 'sajid.sust.cse@gmail.com',
+      first_name: 'Sajid',
+      last_name: 'Sust',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+
+if (dev3 = User.find_by(email: 'sharker.ratul.08@gmail.com')).blank?
+  dev3 =
+    User.create!(
+      email: 'sharker.ratul.08@gmail.com',
+      first_name: 'Sharker',
+      last_name: 'Ratul',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+
+Group.delete_all
+
+group = Group.find_by(category: :college, name: 'Trinity College Dublin')
 if group.blank?
   group =
     Group.create!(
@@ -159,11 +193,12 @@ if group.blank?
       about: 'Welcome to the official Trinity College Dublin page. Here you will have easy access to all our news, college events, clubs, societies and much more. You can also avail of special offers which may benefit you from companies.',
       location: 'Location within central Dublin',
       image: file_io,
-      owner: user,
+      owner: dev1,
       phone: '+1234567890',
       email: 'test-test@gmail.com',
       website: 'https://example.com/blah',
-      facebook_profile_link: 'https://facebook.com/blah'
+      facebook_profile_link: 'https://facebook.com/blah',
+      email_domain: 'gmail.com'
     )
 end
 
@@ -219,7 +254,7 @@ if subgroup.blank?
       about: 'UCC society for Occupational Therapy (OT), Speech and Language Therapy (SLT), MSc Audiology, MSc Physiotherapy and MSc Diagnostic Radiography students.',
       location: 'Location within central Dublin',
       image: file_io,
-      owner: user,
+      owner: dev1,
       parent: group
     )
 end
@@ -269,41 +304,8 @@ past_offer = SpecialOffer.create!(
 OfferApproval.create!(special_offer: past_offer, user: user, group: group, active: true)
 
 ### Adding developers to a group
-
-if (dev1 = User.find_by(email: 'shovon54@gmail.com')).blank?
-  dev1 =
-    User.create!(
-      email: 'shovon54@gmail.com',
-      first_name: 'Tasnim',
-      last_name: 'Shovon',
-      password: 'password',
-      password_confirmation: 'password'
-    )
-end
 group.active_members << dev1 unless group.active_members.where('memberships.user_id = ?', dev1.id).exists?
-
-if (dev2 = User.find_by(email: 'sajid.sust.cse@gmail.com')).blank?
-  dev2 =
-    User.create!(
-      email: 'sajid.sust.cse@gmail.com',
-      first_name: 'Sajid',
-      last_name: 'Sust',
-      password: 'password',
-      password_confirmation: 'password'
-    )
-end
 group.active_members << dev2 unless group.active_members.where('memberships.user_id = ?', dev2.id).exists?
-
-if (dev3 = User.find_by(email: 'sharker.ratul.08@gmail.com')).blank?
-  dev3 =
-    User.create!(
-      email: 'sharker.ratul.08@gmail.com',
-      first_name: 'Sharker',
-      last_name: 'Ratul',
-      password: 'password',
-      password_confirmation: 'password'
-    )
-end
 group.active_members << dev3 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
 
 normal_group = Group.find_by(category: :normal, name: 'Normal Group Example')
@@ -316,7 +318,7 @@ if normal_group.blank?
       about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       location: 'Location within central Dublin',
       image: file_io,
-      owner: user,
+      owner: dev1,
       phone: '+1234567890',
       email: 'test-test@gmail.com',
       website: 'https://example.com/blah',

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190128181857) do
+ActiveRecord::Schema.define(version: 20190131151036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -826,12 +826,13 @@ ActiveRecord::Schema.define(version: 20190128181857) do
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "active",     default: false, null: false
   end
 
   add_index "memberships", ["group_id", "user_id"], name: "index_memberships_on_group_id_and_user_id", using: :btree
-  add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", using: :btree
+  add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
 
   create_table "mentioned_attributes", force: :cascade do |t|
     t.string   "attribute_name", null: false

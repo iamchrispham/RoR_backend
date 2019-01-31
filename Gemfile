@@ -13,6 +13,7 @@ gem 'showoff_serializable', path: 'vendor/gems/showoff_serializable-0.0.3'
 gem 'showoff_sns', path: 'vendor/gems/showoff_sns-1.0.3'
 
 gem 'actioncable'
+gem 'active_interaction', '~> 3.6'
 gem 'active_model_serializers'
 gem 'activerecord-postgis-adapter'
 gem 'apipie-rails'

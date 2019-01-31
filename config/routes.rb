@@ -157,6 +157,14 @@ Rails.application.routes.draw do
 
       resources :companies, module: :companies
       resources :groups, module: :groups, only: crud_w_index do
+        resources :memberships, only: %i[index create] do
+          collection do
+            get :approved
+            get :unapproved
+          end
+        end
+        post 'memberships/:user_id/approve', to: 'memberships#approve'
+        post 'memberships/:user_id/disapprove', to: 'memberships#disapprove'
         resources :subgroups, only: crud_w_index
         resources :contacts, only: crud_w_index
         resources :posts, only: crud_w_index

@@ -95,8 +95,13 @@ class User < ActiveRecord::Base
 
   has_many :companies
 
-  has_many :memberships, dependent: :destroy
+  with_options class_name: 'Membership', inverse_of: :user, dependent: :destroy do
+    has_many :memberships
+    has_many :approved_memberships, -> { active }
+    has_many :unapproved_memberships, -> { inactive }
+  end
   has_many :groups, through: :memberships, source: :group
+
   has_many :owned_groups, class_name: 'Group', inverse_of: :owner, dependent: :destroy
   has_many :liked_offers, dependent: :destroy
   has_many :liked_special_offers, class_name: 'SpecialOffer', through: :liked_offers, source: :special_offer

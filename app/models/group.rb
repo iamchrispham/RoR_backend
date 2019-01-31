@@ -7,7 +7,6 @@ class Group < ActiveRecord::Base
   with_options dependent: :destroy do
     has_many :contacts, as: :contactable
     has_many :posts, -> { order(id: :desc) }, as: :postable
-    has_many :memberships
     has_many :liked_offers
 
     with_options class_name: 'OfferApproval', inverse_of: :group do
@@ -15,6 +14,20 @@ class Group < ActiveRecord::Base
       has_many :approved_offers, -> { active }
       has_many :unapproved_offers, -> { inactive }
     end
+
+    with_options class_name: 'Membership', inverse_of: :group do
+      has_many :memberships
+      has_many :approved_memberships, -> { active }
+      has_many :unapproved_memberships, -> { inactive }
+    end
+  end
+
+  with_options through: :approved_memberships, source: :user do
+    has_many :approved_active_members, -> { active }
+  end
+
+  with_options through: :unapproved_memberships, source: :user do
+    has_many :unapproved_active_members, -> { active }
   end
 
   with_options through: :approved_offers, source: :special_offer do
@@ -62,11 +75,20 @@ class Group < ActiveRecord::Base
   validates_with EmailAddress::ActiveRecordValidator,
                  field: :details
 
+  validates :email_domain,
+            presence: true,
+            if: ->(group) { group.college? }
+
   enum category: {
     college: 'college',
     normal: 'normal',
     society: 'society',
     meetup: 'meetup'
+  }
+
+  enum acceptance_mode: {
+    automatic: 'automatic',
+    manual: 'manual'
   }
 
   scope :colleges, -> { where(category: :college) }
@@ -84,5 +106,9 @@ class Group < ActiveRecord::Base
     else
       'warning'
     end
+  end
+
+  def college?
+    category == 'college'
   end
 end
