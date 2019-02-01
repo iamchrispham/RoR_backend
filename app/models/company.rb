@@ -9,7 +9,10 @@ class Company < ActiveRecord::Base
   belongs_to :user
   has_many :events, as: :event_ownerable
 
-  validates :title, :active, :suspended, presence: true
+  validates :title, presence: true
+
+  scope :active, -> {where(active: true, suspended: false)}
+  scope :inactive, -> {where(arel_table[:active].eq(false).or(arel_table[:suspended].eq(true)))}
 
   after_save :update_caches
   before_destroy :update_caches
