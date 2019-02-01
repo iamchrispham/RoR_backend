@@ -157,7 +157,13 @@ Rails.application.routes.draw do
       end
 
       resources :companies, module: :companies
+
       resources :groups, module: :groups, only: crud_w_index do
+        get :societies
+        collection do
+          get :colleges
+        end
+
         resources :memberships, only: %i[index create] do
           collection do
             get :approved

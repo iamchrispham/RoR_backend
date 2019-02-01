@@ -44,6 +44,16 @@ module Api
           end
         end
 
+        def societies
+          groups = Group.where(parent_id: group.id, category: :society)
+          success_response(groups: serialized_resource(groups, ::Groups::OverviewSerializer))
+        end
+
+        def colleges
+          groups = Group.where(category: :college)
+          success_response(groups: serialized_resource(groups, ::Groups::OverviewSerializer))
+        end
+
         private
 
         def check_group_presence

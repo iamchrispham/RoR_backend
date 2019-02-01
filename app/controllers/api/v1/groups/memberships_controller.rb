@@ -72,10 +72,6 @@ module Api
           error_response(t('api.responses.groups.not_found'), Showoff::ResponseCodes::OBJECT_NOT_FOUND)
         end
 
-        def membership_params
-          params.require(:membership).permit!
-        end
-
         def check_approved_member_presence
           member_not_found_error if approved_member.blank?
         end
