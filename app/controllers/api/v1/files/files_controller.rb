@@ -7,10 +7,9 @@ module Api
         
         def create
           aws_response = AwsS3Service.get_presigned_url(params[:file_name], folder_name: params[:folder_name])
-          upload_url, service_info = aws_response.split('?')
           
           if upload_url
-            success_response(upload_url: upload_url, service_info: service_info)
+            success_response(upload_url: aws_response)
           else
             error_response(t('api.responses.internal_error'), Showoff::ResponseCodes::INTERNAL_ERROR)
           end
