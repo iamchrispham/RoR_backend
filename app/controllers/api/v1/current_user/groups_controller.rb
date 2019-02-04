@@ -4,9 +4,36 @@ module Api
   module V1
     module CurrentUser
       class GroupsController < ApiController
-        def index
-          groups = current_api_user.groups.active.limit(limit).offset(offset)
-          success_response(groups: serialized_resource(groups, ::Groups::OverviewSerializer))
+        def normal
+          groups =
+            current_api_user
+            .groups
+            .active
+            .where(category: :normal)
+            .order(:name)
+            .limit(limit)
+            .offset(offset)
+
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
+        end
+
+        def meetups
+          groups =
+            current_api_user
+            .groups
+            .active
+            .where(category: :meetup)
+            .order(:name)
+            .limit(limit)
+            .offset(offset)
+
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
         end
       end
     end

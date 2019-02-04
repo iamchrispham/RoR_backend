@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
   include Indestructable
 
   with_options dependent: :destroy do
+    has_many :events, as: :event_ownerable
     has_many :contacts, as: :contactable
     has_many :posts, -> { order(id: :desc) }, as: :postable
     has_many :liked_offers

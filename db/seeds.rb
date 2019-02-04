@@ -182,8 +182,6 @@ if (dev3 = User.find_by(email: 'sharker.ratul.08@gmail.com')).blank?
     )
 end
 
-Group.delete_all
-
 group = Group.find_by(category: :college, name: 'Trinity College Dublin')
 if group.blank?
   group =
@@ -202,7 +200,97 @@ if group.blank?
     )
 end
 
+college = Group.find_by(category: :college, name: 'University of Dublin')
+if college.blank?
+  college =
+    Group.create!(
+      category: :college,
+      name: 'University of Dublin',
+      about: 'The University of Dublin, corporately designated the Chancellor, Doctors and Masters of the University of Dublin, is a university located in Dublin, Ireland. It is the degree awarding body for Trinity College Dublin.',
+      location: 'Dublin, Ireland',
+      image: file_io,
+      owner: dev1,
+      phone: '+1234567890',
+      email: 'dublin-univ@gmail.com',
+      website: 'https://www.tcd.ie',
+      facebook_profile_link: 'https://facebook.com/blah',
+      email_domain: 'gmail.com'
+    )
+end
+
+meetup1 = Group.find_by(category: :meetup, name: 'Meetup brings people together in thousands of cities')
+if meetup1.blank?
+  meetup1 =
+    Group.create!(
+      category: :meetup,
+      name: 'WooCommerce Meetups',
+      about: 'Local Meetups, organized by our amazing community.',
+      location: 'Dublin, Ireland',
+      image: file_io,
+      owner: dev1,
+      phone: '+1234567890',
+      email: 'dublin-univ@gmail.com',
+      website: 'https://www.tcd.ie',
+      facebook_profile_link: 'https://facebook.com/blah',
+      email_domain: 'gmail.com'
+    )
+end
+
+meetup2 = Group.find_by(category: :meetup, name: 'Meetup brings people together in thousands of cities')
+if meetup2.blank?
+  meetup2 =
+    Group.create!(
+      category: :meetup,
+      name: 'Meetup brings people together in thousands of cities',
+      about: 'Meetup is a service used to organize online groups that host in-person events for people with similar interests.',
+      location: 'Dublin, Ireland',
+      image: file_io,
+      owner: dev1,
+      phone: '+1234567890',
+      email: 'dublin-univ@gmail.com',
+      website: 'https://www.tcd.ie',
+      facebook_profile_link: 'https://facebook.com/blah',
+      email_domain: 'gmail.com'
+    )
+end
+
+meetup1.active_members << dev1 unless meetup1.active_members.where('memberships.user_id = ?', dev1.id).exists?
+meetup1.active_members << dev2 unless meetup1.active_members.where('memberships.user_id = ?', dev2.id).exists?
+meetup1.active_members << dev3 unless meetup1.active_members.where('memberships.user_id = ?', dev3.id).exists?
+
+meetup2.active_members << dev1 unless meetup2.active_members.where('memberships.user_id = ?', dev1.id).exists?
+meetup2.active_members << dev2 unless meetup2.active_members.where('memberships.user_id = ?', dev2.id).exists?
+meetup2.active_members << dev3 unless meetup2.active_members.where('memberships.user_id = ?', dev3.id).exists?
+
 subgroup = Group.find_by(category: :society, name: 'Clinical Therapies Society')
+
+if subgroup.blank?
+  subgroup =
+    Group.create!(
+      category: :society,
+      name: 'Clinical Therapies Society',
+      about: 'UCC society for Occupational Therapy (OT), Speech and Language Therapy (SLT), MSc Audiology, MSc Physiotherapy and MSc Diagnostic Radiography students.',
+      location: 'Location within central Dublin',
+      image: file_io,
+      owner: dev1,
+      parent: group
+    )
+end
+
+society = Group.find_by(category: :society, name: 'Dead Poets Society')
+
+if society.blank?
+  society =
+    Group.create!(
+      category: :society,
+      name: 'Dead Poets Society',
+      about: 'Dead Poets Society is a 1989 American drama film directed by Peter Weir, written by Tom Schulman, and starring Robin Williams. Set in 1959 at the fictional elite conservative Vermont boarding school Welton Academy, it tells the story of an English teacher who inspires his students through his teaching of poetry.',
+      location: 'Location within central Dublin',
+      image: file_io,
+      owner: dev1,
+      parent: group
+    )
+end
 
 if Contact.find_by(category: :phone, details: '+1234567890').blank?
   group.contacts << Contact.create!(category: :phone, details: '+1234567890', image: file_io)
@@ -245,19 +333,6 @@ if (news3 = Post.find_by(title: 'Christmas tree lighting ceremony on 30 November
   )
 end
 group.posts << news3 unless group.posts.include?(news3)
-
-if subgroup.blank?
-  subgroup =
-    Group.create!(
-      category: :society,
-      name: 'Clinical Therapies Society',
-      about: 'UCC society for Occupational Therapy (OT), Speech and Language Therapy (SLT), MSc Audiology, MSc Physiotherapy and MSc Diagnostic Radiography students.',
-      location: 'Location within central Dublin',
-      image: file_io,
-      owner: dev1,
-      parent: group
-    )
-end
 
 if subgroup.contacts.find_by(category: :url, details: 'https://facebook.com/blah').blank?
   subgroup.contacts << Contact.create!(category: :url, details: 'https://facebook.com/blah', image: file_io)

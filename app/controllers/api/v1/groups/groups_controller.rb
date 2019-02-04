@@ -4,12 +4,32 @@ module Api
   module V1
     module Groups
       class GroupsController < ApiController
-        before_action :check_group_presence, only: %i[show update destroy]
+        before_action :check_group_presence, only: %i[show update destroy societies]
         before_action :check_ownership, only: %i[update destroy]
 
         def index
-          groups = current_api_user.groups.active.limit(limit).offset(offset)
-          success_response(groups: serialized_resource(groups, ::Groups::OverviewSerializer))
+          groups = current_api_user.groups.active.order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
+        end
+
+        def societies
+          groups =
+            Group.where(parent: group, category: :society).active.order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
+        end
+
+        def colleges
+          groups = Group.where(category: :college).active.order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
         end
 
         def create
@@ -42,16 +62,6 @@ module Api
           else
             active_record_error_response(groups)
           end
-        end
-
-        def societies
-          groups = Group.where(parent_id: group.id, category: :society)
-          success_response(groups: serialized_resource(groups, ::Groups::OverviewSerializer))
-        end
-
-        def colleges
-          groups = Group.where(category: :college)
-          success_response(groups: serialized_resource(groups, ::Groups::OverviewSerializer))
         end
 
         private

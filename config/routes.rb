@@ -163,7 +163,7 @@ Rails.application.routes.draw do
         collection do
           get :colleges
         end
-
+        resources :events, only: crud_w_index
         resources :memberships, only: %i[index create] do
           collection do
             get :approved
@@ -202,7 +202,12 @@ Rails.application.routes.draw do
 
       # current api user routes
       namespace :current_user do
-        resources :groups, only: :index
+        resources :groups, only: [] do
+          collection do
+            get :normal
+            get :meetups
+          end
+        end
       end
 
       # users routes
