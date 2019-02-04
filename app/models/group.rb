@@ -4,8 +4,22 @@ class Group < ActiveRecord::Base
   include Showoff::Concerns::Imagable
   include Indestructable
 
+  scope :most_liked, lambda { |group_id|
+    select('special_offers.*, counter.count')
+      .joins("inner join (select special_offer_id, count(*) as count from liked_offers where liked_offers.group_id = #{group_id} group by liked_offers.special_offer_id) counter on counter.special_offer_id = special_offers.id")
+      .active
+      .order('counter.count desc')
+  }
+
+  scope :subevents, lambda { |group_id|
+    connection.execute(
+      "select events.* from events where event_ownerable_id in (
+        select id from groups where parent_id = #{group_id}
+      ) and event_ownerable_type = 'Group'"
+    )
+  }
+
   with_options dependent: :destroy do
-    has_many :events, as: :event_ownerable
     has_many :contacts, as: :contactable
     has_many :posts, -> { order(id: :desc) }, as: :postable
     has_many :liked_offers
