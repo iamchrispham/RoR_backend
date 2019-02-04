@@ -9,9 +9,10 @@ module Api
         before_action :check_group_ownership, only: %i[create update destroy]
 
         def index
-          posts = group.posts.active.limit(limit).offset(offset)
+          posts = group.posts.active.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: posts.count,
             posts: serialized_resource(posts, ::Posts::OverviewSerializer)
           )
         end
@@ -64,7 +65,7 @@ module Api
         end
 
         def group
-          @group ||= Group.find_by(id: params[:group_id])
+          @group ||= Group.active.find_by(id: params[:group_id])
         end
 
         def group_not_found_error
@@ -73,7 +74,7 @@ module Api
         end
 
         def post
-          @post ||= group.posts.where(id: params[:post_id] || params[:id]).first
+          @post ||= group.posts.active.where(id: params[:post_id] || params[:id]).first
         end
 
         def post_not_found_error

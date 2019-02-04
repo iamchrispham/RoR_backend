@@ -12,7 +12,10 @@ module Api
 
         def index
           subgroups = parent_group.subgroups.includes(:contacts).active.limit(limit).offset(offset)
-          success_response(subgroups: serialized_resource(subgroups, ::Subgroups::OverviewSerializer))
+          success_response(
+            count: subgroups.count,
+            subgroups: serialized_resource(subgroups, ::Subgroups::OverviewSerializer)
+          )
         end
 
         def create

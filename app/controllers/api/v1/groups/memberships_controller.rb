@@ -10,18 +10,38 @@ module Api
         before_action :check_unapproved_member_presence, only: :approve
 
         def index
-          members = User.joins(:memberships).where(memberships: { group: group })
-          success_response(members: serialized_resource(members, ::Users::PublicSerializer))
+          members =
+            User.joins(:memberships).where(memberships: { group: group }).order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: members.count,
+            members: serialized_resource(members, ::Users::PublicSerializer)
+          )
         end
 
         def approved
-          members = User.joins(:approved_memberships).where(memberships: { group: group })
-          success_response(members: serialized_resource(members, ::Users::PublicSerializer))
+          members =
+            User.joins(:approved_memberships)
+                .where(memberships: { group: group })
+                .order(id: :desc)
+                .limit(limit)
+                .offset(offset)
+          success_response(
+            count: members.count,
+            members: serialized_resource(members, ::Users::PublicSerializer)
+          )
         end
 
         def unapproved
-          members = User.joins(:unapproved_memberships).where(memberships: { group: group })
-          success_response(members: serialized_resource(members, ::Users::PublicSerializer))
+          members =
+            User.joins(:unapproved_memberships)
+                .where(memberships: { group: group })
+                .order(id: :desc)
+                .limit(limit)
+                .offset(offset)
+          success_response(
+            count: members.count,
+            members: serialized_resource(members, ::Users::PublicSerializer)
+          )
         end
 
         def create
@@ -65,7 +85,7 @@ module Api
         end
 
         def group
-          @group ||= Group.find_by(id: params[:group_id] || params[:id])
+          @group ||= Group.active.find_by(id: params[:group_id] || params[:id])
         end
 
         def not_found_error

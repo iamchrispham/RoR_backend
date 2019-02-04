@@ -8,9 +8,10 @@ module Api
         before_action :check_group_ownership, only: %i[create update destroy]
 
         def index
-          contacts = group.contacts.active.limit(limit).offset(offset)
+          contacts = group.contacts.active.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: contacts.count,
             contacts: serialized_resource(contacts, ::Contacts::OverviewSerializer)
           )
         end
@@ -59,7 +60,7 @@ module Api
         end
 
         def group
-          @group ||= Group.find_by(id: params[:group_id])
+          @group ||= Group.active.find_by(id: params[:group_id])
         end
 
         def group_not_found_error
@@ -68,7 +69,7 @@ module Api
         end
 
         def contact
-          @contact ||= group.contacts.where(id: params[:contact_id] || params[:id]).first
+          @contact ||= group.contacts.active.where(id: params[:contact_id] || params[:id]).first
         end
 
         def contact_not_found_error

@@ -29,6 +29,7 @@ class SpecialOffer < ActiveRecord::Base
   scope :most_liked, lambda { |group_id|
     select('special_offers.*, counter.count')
       .joins("inner join (select special_offer_id, count(*) as count from liked_offers where liked_offers.group_id = #{group_id} group by liked_offers.special_offer_id) counter on counter.special_offer_id = special_offers.id")
+      .active
       .order('counter.count desc')
   }
 

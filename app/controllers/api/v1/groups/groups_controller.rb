@@ -75,7 +75,7 @@ module Api
         end
 
         def group
-          @group ||= Group.find_by(id: params[:group_id] || params[:id])
+          @group ||= Group.active.find_by(id: params[:group_id] || params[:id])
         end
 
         def not_found_error

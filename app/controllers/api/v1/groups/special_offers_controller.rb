@@ -13,41 +13,46 @@ module Api
         before_action :check_special_offer_presence, only: %i[like unlike update]
 
         def approved
-          offers = group.approved_active_offers.limit(limit).offset(offset)
+          offers = group.approved_active_offers.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: offers.count,
             special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
           )
         end
 
         def past
-          offers = group.approved_past_active_offers.limit(limit).offset(offset)
+          offers = group.approved_past_active_offers.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: offers.count,
             special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
           )
         end
 
         def unapproved
-          offers = group.unapproved_active_offers.limit(limit).offset(offset)
+          offers = group.unapproved_active_offers.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: offers.count,
             special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
           )
         end
 
         def active_today
-          offers = group.approved_active_offers.active_today.limit(limit).offset(offset)
+          offers = group.approved_active_offers.active_today.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: offers.count,
             special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
           )
         end
 
         def upcoming
-          offers = group.approved_active_offers.upcoming.limit(limit).offset(offset)
+          offers = group.approved_active_offers.upcoming.order(id: :desc).limit(limit).offset(offset)
 
           success_response(
+            count: offers.count,
             special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
           )
         end
@@ -56,6 +61,7 @@ module Api
           offers = SpecialOffer.most_liked(group.id).limit(limit).offset(offset)
 
           success_response(
+            count: offers.count,
             special_offers: serialized_resource(offers, ::SpecialOffers::OverviewSerializer)
           )
         end
@@ -151,7 +157,7 @@ module Api
         end
 
         def group
-          @group ||= Group.find_by(id: params[:group_id])
+          @group ||= Group.active.find_by(id: params[:group_id])
         end
 
         def group_not_found_error
@@ -181,7 +187,7 @@ module Api
         end
 
         def special_offer
-          @special_offer ||= SpecialOffer.find_by(id: params[:special_offer_id] || params[:id])
+          @special_offer ||= SpecialOffer.active.find_by(id: params[:special_offer_id] || params[:id])
         end
 
         def special_offers_not_found_error
