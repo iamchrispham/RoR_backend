@@ -11,4 +11,10 @@ class Membership < ActiveRecord::Base
               scope: %i[group_id],
               message: 'has group membership'
             }
+
+  def status
+    return :active if active
+
+    :pending
+  end
 end

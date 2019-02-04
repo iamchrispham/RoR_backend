@@ -74,6 +74,11 @@ module Api
           end
         end
 
+        def status
+          membership = Membership.where(group: group, user: current_api_user).first
+          success_response(membership: serialized_resource(membership, ::Groups::MembershipSerializer))
+        end
+
         private
 
         def check_group_presence

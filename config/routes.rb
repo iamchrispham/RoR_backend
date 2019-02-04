@@ -168,6 +168,7 @@ Rails.application.routes.draw do
           collection do
             get :approved
             get :unapproved
+            get :status
           end
         end
         post 'memberships/:user_id/approve', to: 'memberships#approve'
