@@ -5,14 +5,14 @@ module Api
         def index
           success_response(
             count: current_api_user.companies.count,
-            companies: current_api_user.companies.limit(limit).offset(offset).order(created_at: :desc).map { |company| company.cached(current_api_user) }
+            companies: current_api_user.companies.limit(limit).offset(offset).order(created_at: :desc).map { |company| company.cached(current_api_user, type: :feed) }
           )
         end
 
         def show
           show_company = Company.find_by(id: params[:id])
           if show_company
-            success_response(company: show_company.cached(current_api_user, type: :overview))
+            success_response(company: show_company.cached(current_api_user, type: :public))
           else
             error_response((t 'api.responses.companies.not_found'), Showoff::ResponseCodes::INVALID_ARGUMENT)
           end
@@ -24,8 +24,7 @@ module Api
           else
             company = current_api_user.companies.new(company_params.except(:media_items))
             if company.save
-              # process_images(company)
-              success_response(company: company.cached(current_api_user, type: :overview))              
+              success_response(company: company.cached(current_api_user, type: :public))              
             else
               active_record_error_response(company)
             end
@@ -36,9 +35,8 @@ module Api
           update_company = current_api_user.companies.find_by(id: params[:id])
           
           if update_company
-          #   process_images(update_user)
             if update_company.update_attributes(company_params.except(:image_url, :image_data))
-              success_response(company: update_company.cached(current_api_user, type: :overview))              
+              success_response(company: update_company.cached(current_api_user, type: :public))              
             else
               active_record_error_response(update_company)
             end
