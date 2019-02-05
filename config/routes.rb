@@ -160,8 +160,10 @@ Rails.application.routes.draw do
 
       resources :groups, module: :groups, only: crud_w_index do
         get :societies
+        get :own_societies
         collection do
           get :colleges
+          get :own_colleges
         end
         resources :events, only: crud_w_index
         resources :memberships, only: %i[index create] do

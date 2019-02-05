@@ -24,8 +24,28 @@ module Api
           )
         end
 
+        def own_societies
+          groups =
+            Group.where(parent: group, category: :society, owner: current_api_user)
+                 .active.order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
+        end
+
         def colleges
           groups = Group.where(category: :college).active.order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
+        end
+
+        def own_colleges
+          groups =
+            Group.where(category: :college, owner: current_api_user)
+                 .active.order(id: :desc).limit(limit).offset(offset)
           success_response(
             count: groups.count,
             groups: serialized_resource(groups, ::Groups::OverviewSerializer)
