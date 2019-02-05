@@ -24,9 +24,19 @@ module Api
           )
         end
 
-        def own_societies
+        def own_societies_by_parent
           groups =
             Group.where(parent: group, category: :society, owner: current_api_user)
+                 .active.order(id: :desc).limit(limit).offset(offset)
+          success_response(
+            count: groups.count,
+            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+          )
+        end
+
+        def own_societies
+          groups =
+            Group.where(category: :society, owner: current_api_user)
                  .active.order(id: :desc).limit(limit).offset(offset)
           success_response(
             count: groups.count,
