@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event < ActiveRecord::Base
   default_scope { includes(:event_attendees) }
 
@@ -11,7 +13,12 @@ class Event < ActiveRecord::Base
   include Showoff::Helpers::SerializationHelper
   include Currencyable
 
-  enum review_status: {pending: 0, approved: 1, declined: 2}
+  enum review_status: { pending: 0, approved: 1, declined: 2 }
+  enum viewable_in_parent_owner: {
+    undecided: 'undecided',
+    confirmed: 'confirmed',
+    rejected: 'rejected'
+  }
 
   belongs_to :event_ownerable, polymorphic: true
 
@@ -118,7 +125,7 @@ class Event < ActiveRecord::Base
   scope :ending_at_or_before, ->(end_at) {
     where('date <= ?', end_at)
   }
-  
+
   scope :budget_range, ->(low_price, top_price) {
     where('price >= ? AND price <= ?', low_price, top_price)
   }
@@ -181,6 +188,9 @@ class Event < ActiveRecord::Base
         .reorder('reports_count DESC')
   }
 
+  scope :viewable_in_parent_owner, -> { where(viewable_in_parent_owner: 'confirmed') }
+  scope :undecided_if_viewable_in_parent_owner, -> { where(viewable_in_parent_owner: 'undecided') }
+
   # media
   def media_item
     event_media_items.first
@@ -230,7 +240,7 @@ class Event < ActiveRecord::Base
         },
         radius: Api::Search::Events::DEFAULT_RADIUS
     }
-  end 
+  end
 
   # Attendees
   def mutual_event_attendees(user)
