@@ -207,8 +207,7 @@ Rails.application.routes.draw do
       namespace :current_user do
         resources :groups, only: [] do
           collection do
-            get :normal
-            get :meetups
+            get ':category', to: 'groups#index'
           end
         end
       end
