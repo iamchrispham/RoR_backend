@@ -14,11 +14,6 @@ class Event < ActiveRecord::Base
   include Currencyable
 
   enum review_status: { pending: 0, approved: 1, declined: 2 }
-  enum viewable_in_parent_owner: {
-    undecided: 'undecided',
-    confirmed: 'confirmed',
-    rejected: 'rejected'
-  }
 
   belongs_to :event_ownerable, polymorphic: true
 
@@ -61,6 +56,11 @@ class Event < ActiveRecord::Base
 
   has_many :event_attendee_requests, through: :event_attendees
 
+  with_options class_name: 'SubgroupEventsApproval', inverse_of: :event, dependent: :destroy do
+    has_many :subgroup_events_approvals
+    has_many :subgroup_events_approved, -> { active }
+    has_many :subgroup_events_pending, -> { inactive }
+  end
 
   taggable_attributes :categories
   taggable_owner :event_ownerable
@@ -187,9 +187,6 @@ class Event < ActiveRecord::Base
         .group('events.id')
         .reorder('reports_count DESC')
   }
-
-  scope :viewable_in_parent_owner, -> { where(viewable_in_parent_owner: 'confirmed') }
-  scope :undecided_if_viewable_in_parent_owner, -> { where(viewable_in_parent_owner: 'undecided') }
 
   # media
   def media_item

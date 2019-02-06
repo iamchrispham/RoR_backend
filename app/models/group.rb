@@ -20,6 +20,12 @@ class Group < ActiveRecord::Base
       has_many :approved_memberships, -> { active }
       has_many :unapproved_memberships, -> { inactive }
     end
+
+    with_options class_name: 'SubgroupEventsApproval', inverse_of: :subgroup do
+      has_many :subgroup_events_approvals
+      has_many :subgroup_events_approved, -> { active }
+      has_many :subgroup_events_pending, -> { inactive }
+    end
   end
 
   with_options through: :approved_memberships, source: :user do
@@ -49,6 +55,8 @@ class Group < ActiveRecord::Base
     has_many :active_members, -> { active }
     has_many :active_friends, -> { joins(:friendships).active }
   end
+
+  has_many :events, as: :event_ownerable
 
   has_many :liked_special_offers,
            through: :liked_offers,
@@ -99,6 +107,14 @@ class Group < ActiveRecord::Base
       .where(event_ownerable_type: 'Group')
   end
 
+  def subgroups_events_approved
+    subgroups_events.joins(:subgroup_events_approved)
+  end
+
+  def subgroups_events_pending
+    subgroups_events.joins(:subgroup_events_pending)
+  end
+
   def status
     active ? :active : :deactivated
   end
@@ -113,4 +129,8 @@ class Group < ActiveRecord::Base
       'warning'
     end
   end
+
+  def update_caches; end
+
+  def cached(_, _); end
 end

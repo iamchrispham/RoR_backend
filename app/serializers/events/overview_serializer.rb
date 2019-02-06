@@ -1,6 +1,6 @@
 module Events
   class OverviewSerializer < ApiSerializer
-    attributes :id, :event_ownerable, :title, :description, :time, :date, :eighteen_plus, :price,
+    attributes :id, :event_ownerable_id, :event_ownerable_type, :title, :description, :time, :date, :eighteen_plus, :price,
                :reported, :attendance, :attendee_count, :mutual_attendee_count, :mutual_attendees, :conversation,
                :location, :categories, :bring, :address, :country, :private_event,
                :tags, :categories, :event_forwarding, :allow_chat, :show_timeline, :maximum_attendees, :attendance_acceptance_required,

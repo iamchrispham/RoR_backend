@@ -420,3 +420,64 @@ LikedOffer.delete_all
 LikedOffer.create!(special_offer: future_offer, user: dev1, group: group)
 LikedOffer.create!(special_offer: future_offer, user: dev2, group: group)
 LikedOffer.create!(special_offer: ongoing_offer, user: dev1, group: group)
+
+society_event = Event.find_by(title: 'Poetry evening')
+
+if society_event.blank?
+  Event.create!(
+    title: 'Poetry evening',
+    description: 'Poetry Evening. Set in the historic grade II listed Old Westminster Library; The Cinnamon Club will play host to its first poetry event on Monday 12th May',
+    time: '11:13',
+    date: 'Monday 12th May',
+    latitude: '13.67',
+    longitude: '12.67',
+    categories: '#dead_poets',
+    event_ownerable: society
+  )
+end
+
+society_event1 = Event.find_by(title: 'Poetry club meeting')
+
+if society_event1.blank?
+  Event.create!(
+    title: 'Poetry club meeting',
+    description: 'Poetry club meeting. Set in the historic grade II listed Old Westminster Library; The Cinnamon Club will play host to its first poetry event on Monday 12th May',
+    time: '11:13',
+    date: 'Monday 12th May',
+    latitude: '13.67',
+    longitude: '12.67',
+    categories: '#dead_poets, #dead_society',
+    event_ownerable: society
+  )
+end
+
+group_event = Event.find_by(title: 'WHAM Lunch & Learn: The Vaping Epidemic on College Campuses - To rip a JUUL')
+
+if group_event.blank?
+  Event.create!(
+    title: 'WHAM Lunch & Learn: The Vaping Epidemic on College Campuses - To rip a JUUL',
+    description: 'WHAM Lunch & Learn: The Vaping Epidemic on College Campuses - To rip a JUUL',
+    time: '11:13',
+    date: 'Monday 12th May',
+    latitude: '13.67',
+    longitude: '12.67',
+    categories: '#WHAM',
+    event_ownerable: group
+  )
+end
+
+group_event1 = Event.find_by(title: 'Drop-in appointments in the Olin-Rice Hub')
+
+if group_event1.blank?
+  Event.create!(
+    title: 'Drop-in appointments in the Olin-Rice Hub',
+    description: 'Drop-in appointments in the Olin-Rice Hub',
+    time: '11:13',
+    date: 'Monday 12th May',
+    latitude: '13.67',
+    longitude: '12.67',
+    categories: '#Olin_Rice',
+    event_ownerable: group
+  )
+end
+

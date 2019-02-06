@@ -166,7 +166,6 @@ Rails.application.routes.draw do
           get :own_colleges
           get :own_societies
         end
-        resources :events, only: crud_w_index
         resources :memberships, only: %i[index create] do
           collection do
             get :approved
@@ -176,7 +175,24 @@ Rails.application.routes.draw do
         end
         post 'memberships/:user_id/approve', to: 'memberships#approve'
         post 'memberships/:user_id/disapprove', to: 'memberships#disapprove'
-        resources :subgroups, only: crud_w_index
+        resources :subgroups, only: crud_w_index do
+          resources :events, only: [] do
+            resources :subgroup_event_approvals, only: [] do
+              collection do
+                post :request_approval
+                post :approve
+                post :revoke
+                get :status
+              end
+            end
+          end
+        end
+        resources :subgroups_events, only: [] do
+          collection do
+            get :approved
+            get :pending
+          end
+        end
         resources :contacts, only: crud_w_index
         resources :posts, only: crud_w_index
         resources :special_offers, only: crud do
@@ -195,6 +211,7 @@ Rails.application.routes.draw do
           post 'like', to: 'special_offers#like'
           post 'unlike', to: 'special_offers#unlike'
         end
+        resources :events, only: :index
       end
 
       scope :users, controller: :users, module: :users do

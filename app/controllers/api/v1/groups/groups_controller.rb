@@ -4,7 +4,7 @@ module Api
   module V1
     module Groups
       class GroupsController < ApiController
-        before_action :check_group_presence, only: %i[show update destroy societies]
+        before_action :check_group_presence, only: %i[show update destroy societies own_societies_by_parent]
         before_action :check_ownership, only: %i[update destroy]
 
         def index

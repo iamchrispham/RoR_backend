@@ -8,10 +8,24 @@ module Api
         before_action :check_group_ownership, only: %i[]
 
         def index
-          group.events.active
+          events =
+            if subgroup?
+              group.events.order(id: :desc).limit(limit).offset(offset)
+            else
+              group.events + group.subgroups_events_approved
+            end
+
+          success_response(
+            count: events.count,
+            events: serialized_resource(events, ::Events::OverviewSerializer)
+          )
         end
 
         private
+
+        def subgroup?
+          group.parent_id.present?
+        end
 
         def check_group_presence
           group_not_found_error if group.blank?

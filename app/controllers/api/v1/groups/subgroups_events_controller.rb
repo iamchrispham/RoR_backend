@@ -5,28 +5,27 @@ module Api
     module Groups
       class SubgroupsEventsController < ApiController
         before_action :check_group_presence
-        before_action :check_group_ownership
+        before_action :check_group_ownership, only: %i[approved pending]
 
-        def confirmed
+        def approved
           events =
-            group.subgroups_events.active.viewable_in_parent_owner
+            group.subgroups_events_approved
                  .order(id: :desc).limit(limit).offset(offset)
           success_response(
             count: events.count,
-            events: serialized_resource(subgroups, ::Events::OverviewSerializer)
+            events: serialized_resource(events, ::Events::OverviewSerializer)
           )
         end
 
-        def undecided
+        def pending
           events =
-            group.subgroups_events.active.undecided_if_viewable_in_parent_owner
+            group.subgroups_events_pending
                  .order(id: :desc).limit(limit).offset(offset)
           success_response(
             count: events.count,
-            events: serialized_resource(subgroups, ::Events::OverviewSerializer)
+            events: serialized_resource(events, ::Events::OverviewSerializer)
           )
         end
-
 
         private
 
@@ -46,16 +45,7 @@ module Api
           @group_not_found_error ||=
             error_response(t('api.responses.groups.not_found'), Showoff::ResponseCodes::OBJECT_NOT_FOUND)
         end
-
       end
     end
   end
-end
-
-def index
-  subgroups = parent_group.subgroups.includes(:contacts).active.limit(limit).offset(offset)
-  success_response(
-    count: subgroups.count,
-    subgroups: serialized_resource(subgroups, ::Subgroups::OverviewSerializer)
-  )
 end
