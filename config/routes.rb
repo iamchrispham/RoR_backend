@@ -193,6 +193,16 @@ Rails.application.routes.draw do
             get :pending
           end
         end
+        resources :subgroup_approvals do
+          collection do
+            get :approved
+            get :pending
+            post :request_approval
+            post :approve
+            post :revoke
+            get :status
+          end
+        end
         resources :contacts, only: crud_w_index
         resources :posts, only: crud_w_index
         resources :special_offers, only: crud do
