@@ -124,6 +124,8 @@ FeedItemAction.find_or_create_by(
 
 puts '###################'
 puts 'Creating College group'
+RequestStore.write(:current_api_user, User.find_by(email: 'shovon54@gmail.com'))
+
 file_io = File.new(Rails.root.join('spec/support/fixtures/image.png').to_s)
 
 if (user = User.find_by(email: 'syber@junkie.com')).blank?
