@@ -273,6 +273,8 @@ Rails.application.routes.draw do
       end
 
       scope module: :events do
+        resources :list_events, only: :index
+
         resources :events, only: [:index, :create, :show, :destroy, :update] do
           resource :tickets, module: :tickets, only: [] do
             get :view
