@@ -13,6 +13,7 @@ class Company < ActiveRecord::Base
 
   scope :active, -> {where(active: true, suspended: false)}
   scope :inactive, -> {where(arel_table[:active].eq(false).or(arel_table[:suspended].eq(true)))}
+  scope :search_by_title, ->(text) { where("title ILIKE ?", "%#{text}%") }
 
   after_save :update_caches
   before_destroy :update_caches

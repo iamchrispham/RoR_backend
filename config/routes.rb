@@ -272,7 +272,7 @@ Rails.application.routes.draw do
       end
 
       #search routes
-      scope :search, module: :search do
+      resource :search, module: :search, only: :show do
         resource :locations, controller: :locations, only: [:create]
         resource :lookup, controller: :lookups, only: [:create]
         resource :tags, only: [:create]

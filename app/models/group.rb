@@ -100,6 +100,8 @@ class Group < ActiveRecord::Base
   }
 
   scope :colleges, -> { where(category: :college) }
+  scope :active, -> { where(active: true) }
+  scope :search_by_name, ->(text) { where("name ILIKE ?", "%#{text}%") }
 
   def subgroups_events
     Event

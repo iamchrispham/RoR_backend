@@ -1305,22 +1305,10 @@ ActiveRecord::Schema.define(version: 20190205182222) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "advertiser",         default: "",   null: false
-    t.string   "location",           default: "",   null: false
+    t.string   "location"
   end
 
   add_index "special_offers", ["title"], name: "index_special_offers_on_title", unique: true, using: :btree
-
-  create_table "subgroup_approvals", force: :cascade do |t|
-    t.boolean  "active",          default: false, null: false
-    t.integer  "parent_group_id",                 null: false
-    t.integer  "group_id",                        null: false
-    t.integer  "user_id",                         null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "subgroup_approvals", ["group_id", "parent_group_id"], name: "index_subgroup_approvals_on_group_id_and_parent_group_id", unique: true, using: :btree
-  add_index "subgroup_approvals", ["user_id", "group_id", "parent_group_id"], name: "index_subgroup_approvals_parent_group_group_user", using: :btree
 
   create_table "subgroup_events_approvals", force: :cascade do |t|
     t.boolean  "active",      default: false, null: false
@@ -1670,8 +1658,6 @@ ActiveRecord::Schema.define(version: 20190205182222) do
   add_foreign_key "offer_approvals", "users", name: "approved_offers_user_id_fk", on_delete: :cascade
   add_foreign_key "showoff_facebook_friend_notifiers", "showoff_sns_notifications"
   add_foreign_key "showoff_sns_notified_objects", "showoff_sns_notifications"
-  add_foreign_key "subgroup_approvals", "groups", name: "subgroup_approvals_group_id_fk", on_delete: :cascade
-  add_foreign_key "subgroup_approvals", "users", name: "subgroup_approvals_user_id_fk", on_delete: :cascade
   add_foreign_key "upcoming_event_notifiers", "showoff_sns_notifications"
   add_foreign_key "user_businesses", "users"
   add_foreign_key "user_facebook_event_import_notifiers", "showoff_sns_notifications"
