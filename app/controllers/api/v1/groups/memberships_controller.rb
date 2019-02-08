@@ -11,10 +11,12 @@ module Api
 
         def index
           members =
-            User.joins(:memberships).where(memberships: { group: group }).order(id: :desc).limit(limit).offset(offset)
+            User.joins(:memberships).where(memberships: { group: group })
           success_response(
             count: members.count,
-            members: serialized_resource(members, ::Users::PublicSerializer)
+            members: serialized_resource(
+              members.order(id: :desc).limit(limit).offset(offset), ::Users::PublicSerializer
+            )
           )
         end
 

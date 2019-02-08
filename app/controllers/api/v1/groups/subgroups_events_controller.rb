@@ -8,22 +8,24 @@ module Api
         before_action :check_group_ownership, only: %i[approved pending]
 
         def approved
-          events =
-            group.subgroups_events_approved
-                 .order(id: :desc).limit(limit).offset(offset)
+          events = group.subgroups_events_approved
+
           success_response(
             count: events.count,
-            events: serialized_resource(events, ::Events::OverviewSerializer)
+            events: serialized_resource(
+              events.order(id: :desc).limit(limit).offset(offset), ::Events::OverviewSerializer
+            )
           )
         end
 
         def pending
-          events =
-            group.subgroups_events_pending
-                 .order(id: :desc).limit(limit).offset(offset)
+          events = group.subgroups_events_pending
+
           success_response(
             count: events.count,
-            events: serialized_resource(events, ::Events::OverviewSerializer)
+            events: serialized_resource(
+              events.order(id: :desc).limit(limit).offset(offset), ::Events::OverviewSerializer
+            )
           )
         end
 

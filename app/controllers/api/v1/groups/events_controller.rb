@@ -10,14 +10,16 @@ module Api
         def index
           events =
             if subgroup?
-              group.events.order(id: :desc).limit(limit).offset(offset)
+              group.events
             else
-              group.events + group.subgroups_events_approved
+              Event.unscoped.where(id: (group.events.ids + group.subgroups_events_approved.ids))
             end
 
           success_response(
             count: events.count,
-            events: serialized_resource(events, ::Events::OverviewSerializer)
+            events: serialized_resource(
+              events.order(id: :desc).limit(limit).offset(offset), ::Events::OverviewSerializer
+            )
           )
         end
 

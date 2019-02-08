@@ -9,11 +9,11 @@ module Api
         before_action :check_group_ownership, only: %i[create update destroy]
 
         def index
-          posts = group.posts.active.order(id: :desc).limit(limit).offset(offset)
+          posts = group.posts.active
 
           success_response(
             count: posts.count,
-            posts: serialized_resource(posts, ::Posts::OverviewSerializer)
+            posts: serialized_resource(posts.order(id: :desc).limit(limit).offset(offset), ::Posts::OverviewSerializer)
           )
         end
 

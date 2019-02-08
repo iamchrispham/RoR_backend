@@ -8,57 +8,62 @@ module Api
         before_action :check_ownership, only: %i[update destroy]
 
         def index
-          groups = current_api_user.groups.active.order(id: :desc).limit(limit).offset(offset)
+          groups = current_api_user.groups.active
           success_response(
             count: groups.count,
-            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+            groups: serialized_resource(
+              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+            )
           )
         end
 
         def societies
-          groups =
-            Group.where(parent: group, category: :society).active.order(id: :desc).limit(limit).offset(offset)
+          groups = Group.where(parent: group, category: :society).active
           success_response(
             count: groups.count,
-            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+            groups: serialized_resource(
+              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+            )
           )
         end
 
         def own_societies_by_parent
-          groups =
-            Group.where(parent: group, category: :society, owner: current_api_user)
-                 .active.order(id: :desc).limit(limit).offset(offset)
+          groups = Group.where(parent: group, category: :society, owner: current_api_user).active
           success_response(
             count: groups.count,
-            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+            groups: serialized_resource(
+              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+            )
           )
         end
 
         def own_societies
-          groups =
-            Group.where(category: :society, owner: current_api_user)
-                 .active.order(id: :desc).limit(limit).offset(offset)
+          groups = Group.where(category: :society, owner: current_api_user).active
           success_response(
             count: groups.count,
-            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+            groups: serialized_resource(
+              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+            )
           )
         end
 
         def colleges
-          groups = Group.where(category: :college).active.order(id: :desc).limit(limit).offset(offset)
+          groups = Group.where(category: :college).active
           success_response(
             count: groups.count,
-            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+            groups: serialized_resource(
+              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+            )
           )
         end
 
         def own_colleges
-          groups =
-            Group.where(category: :college, owner: current_api_user)
-                 .active.order(id: :desc).limit(limit).offset(offset)
+          groups = Group.where(category: :college, owner: current_api_user).active
           success_response(
             count: groups.count,
-            groups: serialized_resource(groups, ::Groups::OverviewSerializer)
+            groups: serialized_resource(
+              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+            )
           )
         end
 
