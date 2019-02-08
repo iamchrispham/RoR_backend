@@ -25,17 +25,9 @@ module Api
         end
 
         def revoke
-          result = Group.transaction do
-            subgroup.update(parent: nil) && subgroup_approval.update(active: false)
-          end
+          Group.transaction { subgroup.update(parent: nil) && subgroup_approval.delete }
 
-          if result.present?
-            success_response(
-              approval: serialized_resource(subgroup_approval, ::Groups::GroupSubgroupApprovalSerializer)
-            )
-          else
-            active_record_error_response(subgroup_approval)
-          end
+          head :no_content
         end
 
         def request_approval
