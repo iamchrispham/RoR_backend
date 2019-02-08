@@ -130,6 +130,8 @@ en:
         not_found: 'Member(s) do not exist'
       subgroup_event_approvals:
         not_found: 'Subgroup Event approval(s) do not exist'
+      group_subgroup_approval:
+        not_found: 'Group Subgroup approval(s) do not exist'
       users:
         no_currency_present: 'In order to proceed you must set the default currency on your profile. Please set your default currency and try again.'
         already_blocked: 'That user has already been blocked'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190205182222) do
+ActiveRecord::Schema.define(version: 20190208063055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -737,6 +737,18 @@ ActiveRecord::Schema.define(version: 20190205182222) do
   add_index "general_notifications", ["owner_type", "owner_id"], name: "index_general_notifications_on_owner_type_and_owner_id", using: :btree
   add_index "general_notifications", ["platform_id"], name: "index_general_notifications_on_platform_id", using: :btree
   add_index "general_notifications", ["status"], name: "index_general_notifications_on_status", using: :btree
+
+  create_table "group_subgroup_approvals", force: :cascade do |t|
+    t.boolean  "active",      default: false, null: false
+    t.integer  "group_id",                    null: false
+    t.integer  "subgroup_id",                 null: false
+    t.integer  "user_id",                     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "group_subgroup_approvals", ["group_id", "subgroup_id"], name: "index_group_subgroup_uniq", unique: true, using: :btree
+  add_index "group_subgroup_approvals", ["user_id", "group_id", "subgroup_id"], name: "index_group_subgroup_user", using: :btree
 
 # Could not dump table "groups" because of following StandardError
 #   Unknown type 'group_category' for column 'category'

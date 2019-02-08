@@ -176,6 +176,18 @@ Rails.application.routes.draw do
         post 'memberships/:user_id/approve', to: 'memberships#approve'
         post 'memberships/:user_id/disapprove', to: 'memberships#disapprove'
         resources :subgroups, only: crud_w_index do
+          collection do
+            get :approved
+            get :pending
+          end
+          resources :group_subgroup_approvals, only: [] do
+            collection do
+              post :request_approval
+              post :approve
+              post :revoke
+              get :status
+            end
+          end
           resources :events, only: [] do
             resources :subgroup_event_approvals, only: [] do
               collection do
@@ -191,16 +203,6 @@ Rails.application.routes.draw do
           collection do
             get :approved
             get :pending
-          end
-        end
-        resources :subgroup_approvals do
-          collection do
-            get :approved
-            get :pending
-            post :request_approval
-            post :approve
-            post :revoke
-            get :status
           end
         end
         resources :contacts, only: crud_w_index

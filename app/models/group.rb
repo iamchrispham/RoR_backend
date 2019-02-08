@@ -46,6 +46,18 @@ class Group < ActiveRecord::Base
            through: :offer_approvals,
            source: :special_offer
 
+  has_many :group_subgroup_approvals, dependent: :destroy
+
+  with_options source: :subgroup do
+    has_many :approved_subgroups,
+             -> { where(group_subgroup_approvals: { active: true }) },
+             through: :group_subgroup_approvals
+    has_many :pending_subgroups,
+             -> { where(group_subgroup_approvals: { active: false }) },
+             through: :group_subgroup_approvals
+  end
+
+  # use only for quickly lookup subgroups
   with_options class_name: 'Group' do
     has_many :subgroups, foreign_key: :parent_id, dependent: :nullify, inverse_of: :parent
     belongs_to :parent

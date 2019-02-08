@@ -6,10 +6,10 @@ module Api
       class SubgroupEventApprovalsController < ApiController
         before_action :check_group_presence
         before_action :check_subgroup_presence
-        before_action :check_event_presence, only: %i[request_approval status]
-        before_action :check_group_ownership, only: %i[approve revoke]
-        before_action :check_subgroup_ownership, only: :request_approval
-        before_action :check_event_approval_presence, only: %i[approve revoke]
+        before_action :check_event_presence,          only: %i[request_approval status]
+        before_action :check_event_approval_presence, only: %i[approve revoke status]
+        before_action :check_group_ownership,         only: %i[approve revoke]
+        before_action :check_subgroup_ownership,      only: :request_approval
 
         def approve
           if event_approval.update(active: true)
@@ -49,13 +49,9 @@ module Api
         end
 
         def status
-          approval =
-            SubgroupEventsApproval.where(
-              event: event,
-              group: group,
-              subgroup: subgroup
-            ).last
-          success_response(approval: serialized_resource(approval, ::Groups::SubgroupEventApprovalSerializer))
+          success_response(
+            approval: serialized_resource(event_approval, ::Groups::SubgroupEventApprovalSerializer)
+          )
         end
 
         private
@@ -105,12 +101,12 @@ module Api
         end
 
         def event_approval
-          @event_approval ||= SubgroupEventsApproval.where(
+          @event_approval ||= SubgroupEventsApproval.find_by(
             event: event,
             group: group,
             subgroup: subgroup,
             user: subgroup.owner
-          ).first
+          )
         end
 
         def group_not_found_error
