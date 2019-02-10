@@ -13,6 +13,8 @@ class Event < ActiveRecord::Base
   include Showoff::Helpers::SerializationHelper
   include Currencyable
 
+  alias_attribute :name, :title
+
   enum review_status: { pending: 0, approved: 1, declined: 2 }
 
   belongs_to :event_ownerable, polymorphic: true
