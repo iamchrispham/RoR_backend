@@ -2,7 +2,7 @@ module Api
   module V1
     module Search
       class SearchesController < ApiController
-        def show
+        def create
           allowed_object_types = %w[users companies events groups]
           response = (search_params[:object_types_for_search] & allowed_object_types).each_with_object({}) do |object_type, response|
             response[object_type] = serialize_search_results(search(object_type))
