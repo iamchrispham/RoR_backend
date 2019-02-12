@@ -137,6 +137,10 @@ class User < ActiveRecord::Base
     reorder("users.business_name ASC, users.first_name || ' ' || users.last_name ASC")
   }
 
+  scope :ordered_by_friendships, -> {
+    includes(:friendships).reorder('friendships.created_at')
+  }
+
   scope :ordered_by_number_attending, -> {
     joins('LEFT OUTER JOIN event_attendees ON event_attendees.user_id = users.id')
     .where(event_attendees: {status: EventAttendee.statuses[:maybe_going]})

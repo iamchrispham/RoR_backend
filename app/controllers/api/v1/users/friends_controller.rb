@@ -28,8 +28,7 @@ module Api
                 friends = friends.where.not(id: event.attending_users)
               end
             end
-
-            success_response(friends: friends.ordered_by_name.limit(limit).offset(offset).map {|user| user.cached(current_api_user, type: :public, event: event)})
+            success_response(friends: friends.ordered_by_friendships.limit(limit).offset(offset).map {|user| user.cached(current_api_user, type: :public, event: event)})
           else
             error_response(I18n.t('api.responses.users.not_found'), Showoff::ResponseCodes::OBJECT_NOT_FOUND)
           end
