@@ -71,7 +71,8 @@ module Api
           offers = SpecialOffer.most_liked(group.id)
 
           success_response(
-            count: offers.count,
+            # FIXME: fix the counter
+            # count: offers.count,
             special_offers: serialized_resource(offers.limit(limit).offset(offset), ::SpecialOffers::OverviewSerializer)
           )
         end
