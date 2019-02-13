@@ -5,7 +5,7 @@ module Api
         def index
           success_response(
             count: current_api_user.companies.count,
-            companies: current_api_user.companies.limit(limit).offset(offset).order(created_at: :desc).map { |company| company.cached(current_api_user, type: :feed) }
+            companies: current_api_user.companies.ordered_by_name.limit(limit).offset(offset).map { |company| company.cached(current_api_user, type: :feed) }
           )
         end
 
@@ -24,19 +24,19 @@ module Api
           else
             company = current_api_user.companies.new(company_params.except(:media_items))
             if company.save
-              success_response(company: company.cached(current_api_user, type: :public))              
+              success_response(company: company.cached(current_api_user, type: :public))
             else
               active_record_error_response(company)
             end
           end
         end
-        
+
         def update
           update_company = current_api_user.companies.find_by(id: params[:id])
-          
+
           if update_company
             if update_company.update_attributes(company_params.except(:image_url, :image_data))
-              success_response(company: update_company.cached(current_api_user, type: :public))              
+              success_response(company: update_company.cached(current_api_user, type: :public))
             else
               active_record_error_response(update_company)
             end
@@ -67,7 +67,7 @@ module Api
         end
 
         def company_params
-          params.require(:company).permit(:title, :description, :phone_number, :email, :facebook_profile_link, 
+          params.require(:company).permit(:title, :description, :phone_number, :email, :facebook_profile_link,
             :linkedin_profile_link, :instagram_profile_link, :snapchat_profile_link, :website_link, :location,
             :categories)
         end
