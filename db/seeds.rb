@@ -184,6 +184,17 @@ if (dev3 = User.find_by(email: 'sharker.ratul.08@gmail.com')).blank?
     )
 end
 
+if (dev4 = User.find_by(email: 'akhouad@yahoo.fr')).blank?
+  dev4 =
+    User.create!(
+      email: 'akhouad@yahoo.fr',
+      first_name: 'Amine',
+      last_name: 'Akhouad',
+      password: 'password',
+      password_confirmation: 'password'
+    )
+end
+
 group = Group.find_by(category: :college, name: 'Trinity College Dublin')
 if group.blank?
   group =
@@ -202,6 +213,24 @@ if group.blank?
     )
 end
 
+group1 = Group.find_by(category: :college, name: "Trinity College Dublin #{dev4.name}")
+if group1.blank?
+  group1 =
+    Group.create!(
+      category: :college,
+      name: "Trinity College Dublin #{dev4.name}",
+      about: 'Welcome to the official Trinity College Dublin page. Here you will have easy access to all our news, college events, clubs, societies and much more. You can also avail of special offers which may benefit you from companies.',
+      location: 'Location within central Dublin',
+      image: file_io,
+      owner: dev4,
+      phone: '+1234567890',
+      email: 'test-test@gmail.com',
+      website: 'https://example.com/blah',
+      facebook_profile_link: 'https://facebook.com/blah',
+      email_domain: 'gmail.com'
+    )
+end
+
 college = Group.find_by(category: :college, name: 'University of Dublin')
 if college.blank?
   college =
@@ -212,6 +241,24 @@ if college.blank?
       location: 'Dublin, Ireland',
       image: file_io,
       owner: dev1,
+      phone: '+1234567890',
+      email: 'dublin-univ@gmail.com',
+      website: 'https://www.tcd.ie',
+      facebook_profile_link: 'https://facebook.com/blah',
+      email_domain: 'gmail.com'
+    )
+end
+
+college1 = Group.find_by(category: :college, name: "University of Dublin #{dev4.name}")
+if college1.blank?
+  college1 =
+    Group.create!(
+      category: :college,
+      name: "University of Dublin #{dev4.name}",
+      about: 'The University of Dublin, corporately designated the Chancellor, Doctors and Masters of the University of Dublin, is a university located in Dublin, Ireland. It is the degree awarding body for Trinity College Dublin.',
+      location: 'Dublin, Ireland',
+      image: file_io,
+      owner: dev4,
       phone: '+1234567890',
       email: 'dublin-univ@gmail.com',
       website: 'https://www.tcd.ie',
@@ -259,10 +306,12 @@ end
 meetup1.active_members << dev1 unless meetup1.active_members.where('memberships.user_id = ?', dev1.id).exists?
 meetup1.active_members << dev2 unless meetup1.active_members.where('memberships.user_id = ?', dev2.id).exists?
 meetup1.active_members << dev3 unless meetup1.active_members.where('memberships.user_id = ?', dev3.id).exists?
+meetup1.active_members << dev4 unless meetup1.active_members.where('memberships.user_id = ?', dev3.id).exists?
 
 meetup2.active_members << dev1 unless meetup2.active_members.where('memberships.user_id = ?', dev1.id).exists?
 meetup2.active_members << dev2 unless meetup2.active_members.where('memberships.user_id = ?', dev2.id).exists?
 meetup2.active_members << dev3 unless meetup2.active_members.where('memberships.user_id = ?', dev3.id).exists?
+meetup2.active_members << dev4 unless meetup2.active_members.where('memberships.user_id = ?', dev3.id).exists?
 
 subgroup = Group.find_by(category: :society, name: 'Clinical Therapies Society')
 
@@ -308,6 +357,7 @@ end
 
 group.active_members << user unless group.active_members.where('memberships.user_id = ?', user.id).exists?
 group.active_members << friend unless group.active_members.where('memberships.user_id = ?', friend.id).exists?
+group.active_members << dev4 unless group.active_members.where('memberships.user_id = ?', dev4.id).exists?
 
 if (news1 = Post.find_by(title: 'Christmas tree lighting ceremony on 28 November at 5 pm')).blank?
   news1 = Post.create!(
@@ -351,7 +401,7 @@ future_offer = SpecialOffer.create!(
   advertiser: 'Easter Crafts',
   location: 'Location within central Dublin'
 )
-OfferApproval.create!(special_offer: future_offer, user: user, group: group, active: true)
+OfferApproval.create!(special_offer: future_offer, user: dev4, group: group, active: true)
 
 ongoing_offer = SpecialOffer.create!(
   title: 'Approved Ongoing Offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
@@ -363,7 +413,7 @@ ongoing_offer = SpecialOffer.create!(
   ends_at: 2.days.from_now,
   publish_on: 2.days.ago
 )
-OfferApproval.create!(special_offer: ongoing_offer, user: user, group: group, active: true)
+OfferApproval.create!(special_offer: ongoing_offer, user: dev4, group: group, active: true)
 
 SpecialOffer.create!(
   title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
@@ -386,12 +436,13 @@ past_offer = SpecialOffer.create!(
   advertiser: 'Easter Crafts',
   location: 'Location within central Dublin'
 )
-OfferApproval.create!(special_offer: past_offer, user: user, group: group, active: true)
+OfferApproval.create!(special_offer: past_offer, user: dev4, group: group, active: true)
 
 ### Adding developers to a group
 group.active_members << dev1 unless group.active_members.where('memberships.user_id = ?', dev1.id).exists?
 group.active_members << dev2 unless group.active_members.where('memberships.user_id = ?', dev2.id).exists?
 group.active_members << dev3 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
+group.active_members << dev4 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
 
 normal_group = Group.find_by(category: :normal, name: 'Normal Group Example')
 
@@ -419,9 +470,9 @@ normal_group.active_members << dev2 unless normal_group.active_members.where('me
 normal_group.active_members << dev3 unless normal_group.active_members.where('memberships.user_id = ?', dev3.id).exists?
 
 LikedOffer.delete_all
+LikedOffer.create!(special_offer: future_offer, user: dev4, group: group)
 LikedOffer.create!(special_offer: future_offer, user: dev1, group: group)
-LikedOffer.create!(special_offer: future_offer, user: dev2, group: group)
-LikedOffer.create!(special_offer: ongoing_offer, user: dev1, group: group)
+LikedOffer.create!(special_offer: ongoing_offer, user: dev4, group: group)
 
 society_event = Event.find_by(title: 'Poetry evening')
 
