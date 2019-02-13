@@ -3,6 +3,7 @@
 class Group < ActiveRecord::Base
   include Showoff::Concerns::Imagable
   include Indestructable
+  include Taggable
 
   with_options dependent: :destroy do
     has_many :contacts, as: :contactable
@@ -69,6 +70,10 @@ class Group < ActiveRecord::Base
   end
 
   has_many :events, as: :event_ownerable
+  has_many :tagged_groups, -> { uniq! }, through: :tagged_objects, source: :taggable, source_type: Group
+
+  taggable_attributes :group_tags
+  taggable_owner :owner
 
   has_many :liked_special_offers,
            through: :liked_offers,

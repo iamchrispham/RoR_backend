@@ -22,7 +22,8 @@ module Groups
                :snapchat_profile_link,
                :phone,
                :email,
-               :website
+               :website,
+               :group_tags
 
     def active_members_count
       object.active_members.count
