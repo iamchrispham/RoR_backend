@@ -252,6 +252,7 @@ Rails.application.routes.draw do
       resources :users, module: :users, only: (crud - [:destroy]) do
         collection do
           resources :tags, only: :index
+          resources :followed_companies
         end
 
         post :password

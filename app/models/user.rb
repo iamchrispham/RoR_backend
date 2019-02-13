@@ -94,6 +94,8 @@ class User < ActiveRecord::Base
   has_many :friend_events, through: :friends, class_name: 'Event', source: :events
 
   has_many :companies
+  has_many :users_followed_companies
+  has_many :followed_companies, through: :users_followed_companies, dependent: :destroy, source: :company
 
   with_options class_name: 'Membership', inverse_of: :user, dependent: :destroy do
     has_many :memberships
