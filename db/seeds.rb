@@ -401,7 +401,7 @@ future_offer = SpecialOffer.create!(
   advertiser: 'Easter Crafts',
   location: 'Location within central Dublin'
 )
-OfferApproval.create!(special_offer: future_offer, user: dev4, group: group, active: true)
+OfferApproval.create!(special_offer: future_offer, user: dev4, group: group1, active: true)
 
 ongoing_offer = SpecialOffer.create!(
   title: 'Approved Ongoing Offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
@@ -413,7 +413,7 @@ ongoing_offer = SpecialOffer.create!(
   ends_at: 2.days.from_now,
   publish_on: 2.days.ago
 )
-OfferApproval.create!(special_offer: ongoing_offer, user: dev4, group: group, active: true)
+OfferApproval.create!(special_offer: ongoing_offer, user: dev4, group: group1, active: true)
 
 SpecialOffer.create!(
   title: 'Past offer. Great value Easter Crafts from Easter Bonnet making to Easter Egg Hunt kits',
@@ -436,13 +436,19 @@ past_offer = SpecialOffer.create!(
   advertiser: 'Easter Crafts',
   location: 'Location within central Dublin'
 )
-OfferApproval.create!(special_offer: past_offer, user: dev4, group: group, active: true)
+OfferApproval.create!(special_offer: past_offer, user: dev4, group: group1, active: true)
 
 ### Adding developers to a group
 group.active_members << dev1 unless group.active_members.where('memberships.user_id = ?', dev1.id).exists?
 group.active_members << dev2 unless group.active_members.where('memberships.user_id = ?', dev2.id).exists?
 group.active_members << dev3 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
 group.active_members << dev4 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
+
+group1.active_members << dev1 unless group.active_members.where('memberships.user_id = ?', dev1.id).exists?
+group1.active_members << dev2 unless group.active_members.where('memberships.user_id = ?', dev2.id).exists?
+group1.active_members << dev3 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
+group1.active_members << dev4 unless group.active_members.where('memberships.user_id = ?', dev3.id).exists?
+
 
 normal_group = Group.find_by(category: :normal, name: 'Normal Group Example')
 
