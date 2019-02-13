@@ -117,6 +117,11 @@ class Group < ActiveRecord::Base
     manual: 'manual'
   }
 
+  enum accessibility: {
+    publicly_accessible: 'publicly_accessible',
+    privately_accessible: 'privately_accessible'
+  }
+
   scope :colleges, -> { where(category: :college) }
   scope :active, -> { where(active: true) }
   scope :search_by_name, ->(text) { where("name ILIKE ?", "%#{text}%") }
