@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190208063055) do
+ActiveRecord::Schema.define(version: 20190211223908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20190208063055) do
     t.string   "country_code"
     t.boolean  "active",                 default: true,  null: false
     t.boolean  "suspended",              default: false, null: false
+    t.text     "categories"
   end
 
   add_index "companies", ["title"], name: "index_companies_on_title", using: :btree

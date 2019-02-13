@@ -68,7 +68,8 @@ module Api
 
         def company_params
           params.require(:company).permit(:title, :description, :phone_number, :email, :facebook_profile_link, 
-            :linkedin_profile_link, :instagram_profile_link, :snapchat_profile_link, :website_link, :location)
+            :linkedin_profile_link, :instagram_profile_link, :snapchat_profile_link, :website_link, :location,
+            :categories)
         end
       end
     end

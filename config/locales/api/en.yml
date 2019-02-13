@@ -200,5 +200,7 @@ en:
         requests:
           not_found: 'Friend Request Not Found'
           invalid_scope: 'Invalid Scope Found'
+      searches:
+        empty_request: 'Please, provide text for search and choose filters'
 
 

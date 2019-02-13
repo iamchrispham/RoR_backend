@@ -3,18 +3,21 @@ module Api
     module Search
       class SearchesController < ApiController
         def create
-          allowed_object_types = %w[users companies events groups]
-          response = (search_params[:object_types_for_search] & allowed_object_types).each_with_object({}) do |object_type, response|
-            response[object_type] = serialize_search_results(search(object_type))
+          if search_params[:object_types_for_search].present? && search_params[:term].present?
+            allowed_object_types = %w[users companies events groups]
+            response = (search_params[:object_types_for_search] & allowed_object_types).each_with_object({}) do |object_type, response|
+              response[object_type] = serialize_search_results(search(object_type))
+            end
+            success_response(response)
+          else
+            error_response((t 'api.responses.searches.empty_request'), Showoff::ResponseCodes::MISSING_ARGUMENT)
           end
-                  
-          success_response(response)
         end
 
         private
 
         def search_params
-          params.require(:search).permit(:term, object_types_for_search: [])
+          params.require(:search).permit!
         end
 
         def search(object_type)

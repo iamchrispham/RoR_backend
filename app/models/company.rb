@@ -3,16 +3,21 @@ class Company < ActiveRecord::Base
   include Api::CacheHelper
   include Showoff::Helpers::SerializationHelper
   include Currencyable
+  include Taggable
 
   alias_attribute :name, :title
 
   belongs_to :user
   has_many :events, as: :event_ownerable
+  has_many :tagged_companies, -> { uniq! }, through: :tagged_objects, source: :taggable, source_type: Company
 
   validates :title, presence: true
 
-  scope :active, -> {where(active: true, suspended: false)}
-  scope :inactive, -> {where(arel_table[:active].eq(false).or(arel_table[:suspended].eq(true)))}
+  taggable_attributes :categories
+  taggable_owner :user
+
+  scope :active, -> { where(active: true, suspended: false) }
+  scope :inactive, -> { where(arel_table[:active].eq(false).or(arel_table[:suspended].eq(true))) }
   scope :search_by_title, ->(text) { where("title ILIKE ?", "%#{text}%") }
 
   after_save :update_caches
