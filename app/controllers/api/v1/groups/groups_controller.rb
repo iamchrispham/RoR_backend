@@ -12,7 +12,7 @@ module Api
           success_response(
             count: groups.count,
             groups: serialized_resource(
-              groups.order(id: :desc).limit(limit).offset(offset), ::Groups::OverviewSerializer
+              groups.ordered_by_name.limit(limit).offset(offset), ::Groups::OverviewSerializer
             )
           )
         end
