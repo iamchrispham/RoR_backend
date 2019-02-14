@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   include Showoff::Concerns::Imagable
   include Indestructable
   include Taggable
+  include Currencyable
 
   with_options dependent: :destroy do
     has_many :contacts, as: :contactable
