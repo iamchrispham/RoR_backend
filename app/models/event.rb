@@ -102,7 +102,7 @@ class Event < ActiveRecord::Base
   scope :eighteen_plus, -> { where(eighteen_plus: true) }
   scope :not_eighteen_plus, -> { where(eighteen_plus: false) }
   scope :not_private, -> { where(private_event: false) }
-  scope :business_and_approved, -> { where.not(event_ownerable_type: 'Company').or(Event.where(event_ownerable_type: 'Company').approved) }
+  scope :approved_business_events, -> { where(event_ownerable_type: 'Company').approved }
 
   scope :title_matching, ->(text) { where('title ILIKE ?', "%#{text}%") }
   scope :description_matching, ->(text) { where('description ILIKE ?', "%#{text}%") }

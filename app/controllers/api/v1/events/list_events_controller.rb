@@ -13,7 +13,7 @@ module Api
             when 'User'
               event_owner.events.not_private.active
             when 'Company'
-              event_owner.events.business_and_approved.not_private.active
+              event_owner.events.where.not(event_ownerable_type: 'Company').or(Event.where(event_ownerable_type: 'Company').approved).not_private.active
             when 'Group'
               event_owner.events.not_private.active
             end

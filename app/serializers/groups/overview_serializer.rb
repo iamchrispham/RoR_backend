@@ -3,6 +3,7 @@
 module Groups
   class OverviewSerializer < ApiSerializer
     attributes :id,
+               :type,
                :name,
                :category,
                :acceptance_mode,
@@ -35,6 +36,10 @@ module Groups
 
     def contacts
       serialized_resource(object.contacts, ::Contacts::OverviewSerializer)
+    end
+
+    def type
+      object.class.name
     end
   end
 end
