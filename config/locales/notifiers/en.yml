@@ -46,3 +46,5 @@ en:
         message: 'No new events were found during this import. Any existing events found were reactivated and are now visible on your profile.'
       generic:
         message: 'Your Facebook Event Import has completed.'
+    group_invitation:
+      message: '%{user} has invited you to group %{group}'

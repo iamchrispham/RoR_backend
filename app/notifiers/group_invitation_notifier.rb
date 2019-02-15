@@ -18,7 +18,7 @@ class GroupInvitationNotifier < Showoff::SNS::Notifier::Base
   end
 
   def message(_target)
-    I18n.t('notifiers.event_invitation.message',
+    I18n.t('notifiers.group_invitation.message',
            user: group_invitation.user.name,
            group: group_invitation.group.name)
   end
@@ -37,8 +37,8 @@ class GroupInvitationNotifier < Showoff::SNS::Notifier::Base
 
   def resources(target)
     {
-      # group_invitation: serialized_resource(group_invitation, ::Group::Invitation::OverviewSerializer, user: target),
-      # group: group_invitation.group.cached(target, type: :feed)
+      group_invitation: serialized_resource(group_invitation, ::Group::Invitation::OverviewSerializer, user: target),
+      group: group_invitation.group.cached(target, type: :feed)
     }
   end
 end
