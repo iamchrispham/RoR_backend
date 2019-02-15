@@ -49,6 +49,7 @@ class Group < ActiveRecord::Base
            source: :special_offer
 
   has_many :group_subgroup_approvals, dependent: :destroy
+  has_many :group_invitations, dependent: :destroy
 
   with_options source: :subgroup do
     has_many :approved_subgroups,

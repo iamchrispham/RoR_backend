@@ -166,6 +166,12 @@ Rails.application.routes.draw do
           get :own_colleges
           get :own_societies
         end
+
+        resources :invitations do
+          patch :accept
+          delete :reject
+        end
+
         resources :memberships, only: %i[index create] do
           collection do
             get :approved

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190212131510) do
+ActiveRecord::Schema.define(version: 20190215091904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
   enable_extension "citext"
 
   create_table "addresses", force: :cascade do |t|
@@ -739,12 +740,28 @@ ActiveRecord::Schema.define(version: 20190212131510) do
   add_index "general_notifications", ["platform_id"], name: "index_general_notifications_on_platform_id", using: :btree
   add_index "general_notifications", ["status"], name: "index_general_notifications_on_status", using: :btree
 
+  create_table "group_invitation_notifiers", force: :cascade do |t|
+    t.integer  "showoff_sns_notification_id",           null: false
+    t.integer  "group_invitation_id",                   null: false
+    t.string   "owner_type",                            null: false
+    t.integer  "owner_id",                    limit: 8, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "group_invitation_notifiers", ["group_invitation_id"], name: "index_group_invitation_notifiers_on_group_invitation_id", using: :btree
+  add_index "group_invitation_notifiers", ["owner_id", "owner_type"], name: "index_group_invitation_notifiers_on_owner_id_and_owner_type", using: :btree
+  add_index "group_invitation_notifiers", ["owner_id"], name: "index_group_invitation_notifiers_on_owner_id", using: :btree
+  add_index "group_invitation_notifiers", ["owner_type"], name: "index_group_invitation_notifiers_on_owner_type", using: :btree
+  add_index "group_invitation_notifiers", ["showoff_sns_notification_id"], name: "index_group_invitation_notifiers_on_notification", using: :btree
+
   create_table "group_invitations", force: :cascade do |t|
     t.integer  "group_id",                   null: false
     t.integer  "user_id",                    null: false
     t.boolean  "active",     default: false, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "status",     default: 0
   end
 
   add_index "group_invitations", ["group_id", "user_id"], name: "index_group_invitations_on_group_id_and_user_id", unique: true, using: :btree
@@ -1328,10 +1345,22 @@ ActiveRecord::Schema.define(version: 20190212131510) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "advertiser",         default: "",   null: false
-    t.string   "location"
+    t.string   "location",           default: "",   null: false
   end
 
   add_index "special_offers", ["title"], name: "index_special_offers_on_title", unique: true, using: :btree
+
+  create_table "subgroup_approvals", force: :cascade do |t|
+    t.boolean  "active",          default: false, null: false
+    t.integer  "parent_group_id",                 null: false
+    t.integer  "group_id",                        null: false
+    t.integer  "user_id",                         null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "subgroup_approvals", ["group_id", "parent_group_id"], name: "index_subgroup_approvals_on_group_id_and_parent_group_id", unique: true, using: :btree
+  add_index "subgroup_approvals", ["user_id", "group_id", "parent_group_id"], name: "index_subgroup_approvals_parent_group_group_user", using: :btree
 
   create_table "subgroup_events_approvals", force: :cascade do |t|
     t.boolean  "active",      default: false, null: false
@@ -1581,6 +1610,14 @@ ActiveRecord::Schema.define(version: 20190212131510) do
   add_index "users", ["suspended_at"], name: "index_users_on_suspended_at", using: :btree
   add_index "users", ["user_age_range_id"], name: "index_users_on_user_age_range_id", using: :btree
 
+  create_table "users_followed_companies", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "company_id"
+  end
+
+  add_index "users_followed_companies", ["company_id"], name: "index_users_followed_companies_on_company_id", using: :btree
+  add_index "users_followed_companies", ["user_id"], name: "index_users_followed_companies_on_user_id", using: :btree
+
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",  null: false
     t.integer  "item_id",    null: false
@@ -1657,6 +1694,8 @@ ActiveRecord::Schema.define(version: 20190212131510) do
   add_foreign_key "general_notification_users", "general_notifications"
   add_foreign_key "general_notification_users", "users"
   add_foreign_key "general_notifications", "platforms"
+  add_foreign_key "group_invitation_notifiers", "group_invitations"
+  add_foreign_key "group_invitation_notifiers", "showoff_sns_notifications"
   add_foreign_key "group_invitations", "groups"
   add_foreign_key "group_invitations", "users"
   add_foreign_key "groups", "users", name: "groups_user_id_fk", on_delete: :cascade
@@ -1683,6 +1722,8 @@ ActiveRecord::Schema.define(version: 20190212131510) do
   add_foreign_key "offer_approvals", "users", name: "approved_offers_user_id_fk", on_delete: :cascade
   add_foreign_key "showoff_facebook_friend_notifiers", "showoff_sns_notifications"
   add_foreign_key "showoff_sns_notified_objects", "showoff_sns_notifications"
+  add_foreign_key "subgroup_approvals", "groups", name: "subgroup_approvals_group_id_fk", on_delete: :cascade
+  add_foreign_key "subgroup_approvals", "users", name: "subgroup_approvals_user_id_fk", on_delete: :cascade
   add_foreign_key "upcoming_event_notifiers", "showoff_sns_notifications"
   add_foreign_key "user_businesses", "users"
   add_foreign_key "user_facebook_event_import_notifiers", "showoff_sns_notifications"
