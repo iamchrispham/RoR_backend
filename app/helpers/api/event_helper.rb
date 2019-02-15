@@ -143,7 +143,7 @@ module Api
       #   objects = objects.not_eighteen_plus unless user.eighteen_plus
       #   attending_events = current_api_user.possible_attending_events
       # end
-      objects = objects.where(private_event: false).or(objects.where(id: attending_events))
+      # objects = objects.where(private_event: false).or(objects.where(id: attending_events))
 
       objects = objects.klass.where(id: objects.uniq.map(&:id))
       objects = objects.order_to_now
