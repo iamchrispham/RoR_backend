@@ -19,7 +19,7 @@ class GroupInvitation < ActiveRecord::Base
 
   def accept!
     accepted!
-    group.memberships.create(user_id: user_id)
+    group.memberships.create(user_id: user_id).activate
   end
 
   def reject!

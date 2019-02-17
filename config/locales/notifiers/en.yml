@@ -48,3 +48,6 @@ en:
         message: 'Your Facebook Event Import has completed.'
     group_invitation:
       message: '%{user} has invited you to group %{group}'
+    group_membership:
+      accepted:
+        message: '%{user} has accepted your request to join %{group_category} %{group}'

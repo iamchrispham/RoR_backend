@@ -17,7 +17,7 @@ module Api
           @invitation.user = current_api_user
           if @invitation.save
             success_response(
-              attendee: serialized_resource(
+              invitation: serialized_resource(
                 @invitation,
                 ::Groups::InvitationSerializer
               )

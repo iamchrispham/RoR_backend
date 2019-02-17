@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190215091904) do
+ActiveRecord::Schema.define(version: 20190217102955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -765,6 +765,20 @@ ActiveRecord::Schema.define(version: 20190215091904) do
   end
 
   add_index "group_invitations", ["group_id", "user_id"], name: "index_group_invitations_on_group_id_and_user_id", unique: true, using: :btree
+
+  create_table "group_membership_notifiers", force: :cascade do |t|
+    t.integer  "showoff_sns_notification_id",           null: false
+    t.integer  "membership_id",                         null: false
+    t.string   "owner_type",                            null: false
+    t.integer  "owner_id",                    limit: 8, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "group_membership_notifiers", ["owner_id", "owner_type"], name: "index_group_membership_notifiers_on_owner", using: :btree
+  add_index "group_membership_notifiers", ["owner_id"], name: "index_group_membership_notifiers_on_owner_id", using: :btree
+  add_index "group_membership_notifiers", ["owner_type"], name: "index_group_membership_notifiers_on_owner_type", using: :btree
+  add_index "group_membership_notifiers", ["showoff_sns_notification_id"], name: "index_group_membership_notifiers_on_notification", using: :btree
 
   create_table "group_subgroup_approvals", force: :cascade do |t|
     t.boolean  "active",      default: false, null: false
@@ -1698,6 +1712,8 @@ ActiveRecord::Schema.define(version: 20190215091904) do
   add_foreign_key "group_invitation_notifiers", "showoff_sns_notifications"
   add_foreign_key "group_invitations", "groups"
   add_foreign_key "group_invitations", "users"
+  add_foreign_key "group_membership_notifiers", "memberships"
+  add_foreign_key "group_membership_notifiers", "showoff_sns_notifications"
   add_foreign_key "groups", "users", name: "groups_user_id_fk", on_delete: :cascade
   add_foreign_key "identifications", "identification_types"
   add_foreign_key "identifications", "users"
