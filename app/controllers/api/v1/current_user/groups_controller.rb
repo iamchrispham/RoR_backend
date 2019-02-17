@@ -7,7 +7,7 @@ module Api
         def index
           groups =
             current_api_user
-            .groups
+            .owned_groups
             .active
             .where(category: params[:category])
             .order(:name)
