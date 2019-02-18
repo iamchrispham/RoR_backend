@@ -6,6 +6,8 @@ class Group < ActiveRecord::Base
   include Taggable
   include Currencyable
 
+  after_create :create_chat
+
   with_options dependent: :destroy do
     has_many :contacts, as: :contactable
     has_many :posts, -> { order(id: :desc) }, as: :postable
@@ -155,6 +157,10 @@ class Group < ActiveRecord::Base
     else
       'warning'
     end
+  end
+
+  def create_chat
+    ChatkitService.new().create_room(user_id, name, 'group')
   end
 
   def update_caches; end

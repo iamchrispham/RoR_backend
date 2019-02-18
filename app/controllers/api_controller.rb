@@ -15,7 +15,7 @@ class ApiController < ActionController::Base
   include Api::UserHelper
   include Api::CommentHelper
 
-  before_action :doorkeeper_authorize!
+  # before_action :doorkeeper_authorize!
   before_action :current_api_user, :set_pagination, :ensure_api_version_is_correct
   before_action :store_request_in_thread
 
