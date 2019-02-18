@@ -6,7 +6,7 @@ module Api
 
         def create
           results, index = featured_objects(Event.not_private.approved_business_events, params, nil, limit, offset, nil)
-          success_response(meta: {offset: index}, bjects: results)
+          success_response(meta: {offset: index}, objects: results)
         end
       end
     end
