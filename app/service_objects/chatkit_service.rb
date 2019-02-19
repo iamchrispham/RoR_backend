@@ -1,33 +1,25 @@
 require 'chatkit'
 
 class ChatkitService < ApiService
-  def initialize(admin_id, name, source_type)
-    @admin_id = admin_id
-    @name = name
-    @source_type = source_type
-  end
-
-  def create_room
-    binding.pry
+  def create_room(user_id, name)
+    check_chatkit_user(user_id)
     chatkit.create_room({
-      creator_id: admin_id,
+      creator_id: user_id.to_s,
       name: name,
-      user_ids: [admin_id],
-      private: true,
-      custom_data: { source_type: source_type }
+      user_ids: [user_id.to_s]
+      # private: true
     })
   end
-  #
-  # def add_users_to_room
-  #   chatkit.add_users_to_room({
-  #     room_id: room_id,
-  #     user_ids: [group.users]
-  #   })
-  # end
+
+  def check_chatkit_user(user_id)
+    user = User.find(user_id)
+    return if user.chatkit_user
+    chatkit.create_user({ id: user_id.to_s, name: user.name })
+    user.update(chatkit_user: true)
+  end
+
 
   private
-
-  attr_reader :admin_id, :name, :source_type
 
   def chatkit
     @chatkit ||= Chatkit::Client.new({

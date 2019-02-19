@@ -160,7 +160,7 @@ class Group < ActiveRecord::Base
   end
 
   def create_chat
-    ChatkitService.new().create_room(user_id, name, 'group')
+    ChatkitService.new().create_room(user_id, name)
   end
 
   def update_caches; end
