@@ -1,6 +1,14 @@
 require 'chatkit'
 
 class ChatkitService < ApiService
+  def create_user(user)
+    chatkit.create_user(id: user.id.to_s, name: user.name)
+  end
+
+  def delete_user(user)
+    chatkit.delete_user(id: user.id.to_s)
+  end
+
   def create_room(user_id, name)
     check_chatkit_user(user_id)
     chatkit.create_room({
@@ -17,7 +25,6 @@ class ChatkitService < ApiService
     chatkit.create_user({ id: user_id.to_s, name: user.name })
     user.update(chatkit_user: true)
   end
-
 
   private
 

@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   include Conversations::Conversationable
   include Currencyable
 
+  include Pusherable
+
   enum user_type: [:personal, :business]
   enum account_type: %i[individual company]
 
