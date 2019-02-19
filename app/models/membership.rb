@@ -33,9 +33,9 @@ class Membership < ActiveRecord::Base
 
   def update_user_in_chat_room
     if active?
-      ChatkitService.new(user_id).add_users_to_chat_room(group.chat.chatkit_id)
+      ChatkitService.new(user, {room_id: group.chat.chatkit_id}).add_users_to_chat_room
     else
-      ChatkitService.new(user_id).remove_users_from_chat_room(group.chat.chatkit_id)
+      ChatkitService.new(user, {room_id: group.chat.chatkit_id}).remove_users_from_chat_room
     end
   end
 end

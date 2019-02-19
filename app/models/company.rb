@@ -4,6 +4,7 @@ class Company < ActiveRecord::Base
   include Showoff::Helpers::SerializationHelper
   include Currencyable
   include Taggable
+  include Pusherable
 
   alias_attribute :name, :title
 

@@ -441,7 +441,7 @@ class Event < ActiveRecord::Base
   end
 
   def init_chat
-    chat = ChatkitService.new(user_from_event_owner.id).create_room(title)
+    chat = ChatkitService.new(user_from_event_owner, {name: title}).create_room
     create_chat(chatkit_id: chat[:body][:id]) if chat[:status] == 201
   end
 

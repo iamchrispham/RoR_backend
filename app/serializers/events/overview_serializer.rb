@@ -4,7 +4,7 @@ module Events
                :reported, :attendance, :attendee_count, :mutual_attendee_count, :mutual_attendees, :conversation,
                :location, :categories, :bring, :address, :country, :private_event,
                :tags, :categories, :event_forwarding, :allow_chat, :show_timeline, :maximum_attendees, :attendance_acceptance_required,
-               :bring, :active, :event_contribution_detail, :event_ticket_detail, :event_media_items, :attendees, :related_events, :updated_at
+               :bring, :active, :event_contribution_detail, :event_ticket_detail, :event_media_items, :attendees, :related_events, :updated_at, :pusher_room_id
 
     def conversation
       return nil if object.conversation.blank?
@@ -71,6 +71,10 @@ module Events
       attendees = object.event_attendees
 
       serialized_resource(attendees.valid.joins(:user).where.not(user: instance_user).order("users.business_name ASC, users.first_name || ' ' || users.last_name ASC").limit(10), ::Events::Attendees::OverviewSerializer, exclude_user: false, user: instance_user)
+    end
+
+    def pusher_room_id
+      object.chat&.chatkit_id
     end
   end
 end

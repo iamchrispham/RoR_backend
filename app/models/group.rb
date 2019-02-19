@@ -162,7 +162,7 @@ class Group < ActiveRecord::Base
   end
 
   def init_chat
-    chat = ChatkitService.new(user_id).create_room(name)
+    chat = ChatkitService.new(owner, {name: name}).create_room
     create_chat(chatkit_id: chat[:body][:id]) if chat[:status] == 201
   end
 

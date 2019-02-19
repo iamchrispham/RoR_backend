@@ -10,7 +10,8 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 20190217102955) do
+
+ActiveRecord::Schema.define(version: 20190219193650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,6 +173,7 @@ ActiveRecord::Schema.define(version: 20190217102955) do
     t.boolean  "active",                 default: true,  null: false
     t.boolean  "suspended",              default: false, null: false
     t.text     "categories"
+    t.string   "pusher_id"
   end
 
   add_index "companies", ["title"], name: "index_companies_on_title", using: :btree

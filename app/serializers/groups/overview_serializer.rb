@@ -24,7 +24,8 @@ module Groups
                :phone,
                :email,
                :website,
-               :group_tags
+               :group_tags,
+               :pusher_room_id
 
     def active_members_count
       object.active_members.count
@@ -40,6 +41,10 @@ module Groups
 
     def type
       object.class.name
+    end
+
+    def pusher_room_id
+      object.chat&.chatkit_id
     end
   end
 end

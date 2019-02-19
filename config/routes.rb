@@ -158,6 +158,10 @@ Rails.application.routes.draw do
 
       resources :companies, module: :companies
 
+      namespace :chats do
+        resources :rooms
+      end
+
       resources :groups, module: :groups, only: crud_w_index do
         get :societies
         get :own_societies, to: 'groups#own_societies_by_parent'
