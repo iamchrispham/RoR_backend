@@ -3,8 +3,6 @@
 class Membership < ActiveRecord::Base
   include Indestructable
 
-  after_create :add_user_to_chat_room
-
   belongs_to :user
   belongs_to :group
   has_one :group_membership_notifier, dependent: :destroy
@@ -16,6 +14,7 @@ class Membership < ActiveRecord::Base
             }
 
   after_save :send_notifications
+  after_save :update_user_in_chat_room
 
   def status
     return :active if active
@@ -32,7 +31,11 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def add_user_to_chat_room
-    ChatkitService.new(user_id).add_users_to_room(group.chat.chatkit_id)
+  def update_user_in_chat_room
+    if active?
+      ChatkitService.new(user_id).add_users_to_chat_room(group.chat.chatkit_id)
+    else
+      ChatkitService.new(user_id).remove_users_from_chat_room(group.chat.chatkit_id)
+    end
   end
 end

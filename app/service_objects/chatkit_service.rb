@@ -32,8 +32,15 @@ class ChatkitService < ApiService
     user.update(pusher_id: response[:body][:id] )
   end
 
-  def add_user_to_chat_room(room_id)
+  def add_users_to_chat_room(room_id)
     chatkit.add_users_to_room({
+      room_id: room_id,
+      user_ids: [user_id]
+    })
+  end
+
+  def remove_users_from_chat_room(room_id)
+    chatkit.remove_users_from_room({
       room_id: room_id,
       user_ids: [user_id]
     })
