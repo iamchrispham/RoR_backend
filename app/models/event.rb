@@ -22,6 +22,8 @@ class Event < ActiveRecord::Base
   has_one :event_contribution_detail, dependent: :destroy
   has_one :event_contribution_type, through: :event_contribution_detail
 
+  has_one :chat, as: :chatable, dependent: :destroy
+
   has_one :event_ticket_detail
 
   has_one :event_cancelled_notifier, dependent: :destroy
@@ -67,7 +69,8 @@ class Event < ActiveRecord::Base
   taggable_attributes :categories
   taggable_owner :event_ownerable
 
-  after_create :create_conversation_if_required
+  after_create :init_chat
+  # after_create :create_conversation_if_required
 
   after_save :create_event_cancelled_notifier_if_necessary
 
@@ -432,7 +435,14 @@ class Event < ActiveRecord::Base
       event_ownerable
     when 'Company'
       event_ownerable.user
+    when 'Group'
+      event_ownerable.owner
     end
+  end
+
+  def init_chat
+    chat = ChatkitService.new(user_from_event_owner.id).create_room(title)
+    create_chat(chatkit_id: chat[:body][:id]) if chat[:status] == 201
   end
 
   private

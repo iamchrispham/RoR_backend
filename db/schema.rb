@@ -10,7 +10,6 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema.define(version: 20190217102955) do
 
   # These are extensions that must be enabled in order to support this database
@@ -140,6 +139,16 @@ ActiveRecord::Schema.define(version: 20190217102955) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "chats", force: :cascade do |t|
+    t.integer  "chatable_id"
+    t.string   "chatable_type"
+    t.string   "chatkit_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "chats", ["chatable_type", "chatable_id"], name: "index_chats_on_chatable_type_and_chatable_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.integer  "user_id",                                null: false
@@ -1612,6 +1621,7 @@ ActiveRecord::Schema.define(version: 20190217102955) do
     t.string   "linkedin_profile_link"
     t.string   "instagram_profile_link"
     t.string   "snapchat_profile_link"
+    t.string   "pusher_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -9,11 +9,11 @@ module Pusherable
   private
 
   def create_pusher_user
-    ChatkitService.new.create_user(self)
+    ChatkitService.new(self.id).create_user(self.name)
     self.update(pusher_id: self.id.to_s)
   end
 
   def delete_pusher_user
-    ChatkitService.new.delete_user(self)
+    ChatkitService.new(self.id).delete_user
   end
 end

@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
   include Taggable
   include Currencyable
 
-  after_create :create_chat
+  after_create :init_chat
 
   with_options dependent: :destroy do
     has_many :contacts, as: :contactable
@@ -72,6 +72,8 @@ class Group < ActiveRecord::Base
     has_many :active_members, -> { active }
     has_many :active_friends, -> { joins(:friendships).active }
   end
+
+  has_one :chat, as: :chatable, dependent: :destroy
 
   has_many :events, as: :event_ownerable
   has_many :tagged_groups, -> { uniq! }, through: :tagged_objects, source: :taggable, source_type: Group
@@ -159,8 +161,9 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def create_chat
-    ChatkitService.new().create_room(user_id, name)
+  def init_chat
+    chat = ChatkitService.new(user_id).create_room(name)
+    create_chat(chatkit_id: chat[:body][:id]) if chat[:status] == 201
   end
 
   def update_caches; end

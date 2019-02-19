@@ -1,32 +1,47 @@
 require 'chatkit'
 
 class ChatkitService < ApiService
-  def create_user(user)
-    chatkit.create_user(id: user.id.to_s, name: user.name)
+
+  def initialize(user_id)
+    @user_id = user_id.to_s
   end
 
-  def delete_user(user)
-    chatkit.delete_user(id: user.id.to_s)
+  def create_user(name)
+    chatkit.create_user(id: user_id, name: name)
   end
 
-  def create_room(user_id, name)
-    check_chatkit_user(user_id)
+  def delete_user
+    chatkit.delete_user(id: user_id)
+  end
+
+
+  def create_room(name)
+    check_chatkit_user
     chatkit.create_room({
-      creator_id: user_id.to_s,
-      name: name,
-      user_ids: [user_id.to_s]
+      creator_id: user_id,
+      name: name[0..59],
+      user_ids: [user_id]
       # private: true
     })
   end
 
-  def check_chatkit_user(user_id)
+  def check_chatkit_user
     user = User.find(user_id)
-    return if user.chatkit_user
-    chatkit.create_user({ id: user_id.to_s, name: user.name })
-    user.update(chatkit_user: true)
+    return if user.pusher_id
+    response = create_user(user.name)
+    user.update(pusher_id: response[:body][:id] )
+  end
+
+  def add_user_to_chat_room(room_id)
+    chatkit.add_users_to_room({
+      room_id: room_id,
+      user_ids: [user_id]
+    })
   end
 
   private
+
+  attr_reader :user_id
 
   def chatkit
     @chatkit ||= Chatkit::Client.new({
