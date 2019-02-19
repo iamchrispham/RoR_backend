@@ -5,8 +5,8 @@ module Api
         skip_before_filter :doorkeeper_authorize!
 
         def create
-          results, index = featured_objects(Event.not_private.approved_business_events, params, nil, limit, offset, nil)
-          success_response(meta: {offset: index}, objects: results)
+          results = featured_objects(Event.not_private.approved_business_events, params, nil, limit, offset, nil)
+          success_response(meta: {offset: results.size}, objects: results)
         end
       end
     end

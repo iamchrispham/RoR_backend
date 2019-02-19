@@ -35,57 +35,7 @@ module Api
 
       objects = objects_for_filters(objects, params, user_location, limit, offset, user)
       objects = objects.starting_at_or_after(Time.now).ordered_by_popular
-      build_mosaic(objects, user)
-    end
-
-    def build_mosaic(objects, user)
-      sizes = %i[small medium large]
-      positions = %i[left right]
-      size = position = previous_position = previous_size = nil
-      index = 0
-      size_constraints = {
-        small: 3,
-        medium: 3,
-        large: 2
-      }
-      results = []
-      while index < objects.length
-        size = sizes.sample
-        position = positions.sample
-        size = sizes.sample while size != :medium && size.eql?(previous_size)
-        position = positions.sample while position.eql?(previous_position)
-        constraint = size_constraints[size]
-        break if (index + constraint) >= objects.length
-        section = objects[index..(index + constraint - 1)].map do |object|
-          {
-            size: size,
-            object: object.cached(user, type: :feed)
-          }
-        end
-        if size.eql?(:medium)
-          section = section.map do |object|
-            object[:size] = :small
-            object
-          end
-          if position.eql?(:left)
-            object = section.first
-            object[:size] = size
-            section[0] = object
-          else
-            object = section.last
-            object[:size] = size
-            section[section.length - 1] = object
-          end
-        end
-        results << {
-          type: "#{position}_#{size}",
-          objects: section
-        }
-        index += size_constraints[size]
-        previous_size = size
-        previous_position = position
-      end
-      [results, index]
+      objects.map { |object| { object: object.cached(user, type: :feed)} }
     end
 
     def objects_for_filters(objects, params, user_location, limit = nil, offset = nil, user)
@@ -138,12 +88,6 @@ module Api
 
       search = params[:search]
       objects = objects.for_term(search[:term]) if search && search[:term].present? && objects.respond_to?(:for_term)
-
-      # if user.present?
-      #   objects = objects.not_eighteen_plus unless user.eighteen_plus
-      #   attending_events = current_api_user.possible_attending_events
-      # end
-      # objects = objects.where(private_event: false).or(objects.where(id: attending_events))
 
       objects = objects.klass.where(id: objects.uniq.map(&:id))
       objects = objects.order_to_now
