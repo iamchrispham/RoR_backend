@@ -9,6 +9,7 @@ class Company < ActiveRecord::Base
 
   belongs_to :user
   has_many :events, as: :event_ownerable
+  has_many :hosting_events, class_name: 'Event', as: :event_ownerable
   has_many :tagged_companies, -> { uniq! }, through: :tagged_objects, source: :taggable, source_type: Company
 
   validates :title, presence: true
@@ -31,15 +32,8 @@ class Company < ActiveRecord::Base
     key
   end
 
-  def cache_serializer(type = :feed)
-    case type
-    when :feed
-      ::Companies::OverviewSerializer
-    when :public
-      ::Companies::Feed::OverviewSerializer
-    else
-      ::Companies::OverviewSerializer
-    end
+  def cache_serializer(_type = :feed)
+    ::Companies::OverviewSerializer
   end
 
   def cached(cache_user = nil, type: :feed)

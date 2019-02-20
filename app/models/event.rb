@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :event_ownerable, polymorphic: true
 
-  has_one :event_contribution_detail
+  has_one :event_contribution_detail, dependent: :destroy
   has_one :event_contribution_type, through: :event_contribution_detail
 
   has_one :event_ticket_detail
@@ -376,13 +376,8 @@ class Event < ActiveRecord::Base
     key
   end
 
-  def cache_serializer(type = :feed)
-    case type
-    when :feed
-      ::Events::Feed::OverviewSerializer
-    else
-      ::Events::OverviewSerializer
-    end
+  def cache_serializer(_type = :feed)
+    ::Events::OverviewSerializer
   end
 
   def cached(cache_event_owner = nil, type: :feed)

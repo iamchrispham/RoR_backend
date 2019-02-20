@@ -27,7 +27,7 @@ module Api
           when 'companies'
             @companies = Company.active.search_by_title(search_params[:term])
           when 'groups'
-            @groups = Group.active.search_by_name(search_params[:term])
+            @groups = Group.where(category: [:college, :meetup]).active.search_by_name(search_params[:term])
           end
         end
 
