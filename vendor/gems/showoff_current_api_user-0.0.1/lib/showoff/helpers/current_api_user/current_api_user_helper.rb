@@ -11,8 +11,6 @@ module Showoff
       # by the first scope string is undefined or there are no scopes, we default
       # to the `User` class.
       def current_api_user
-        RequestStore.write(:current_api_user, User.first)
-          return
         if defined?(:doorkeeper_token)
           if doorkeeper_token.respond_to?(:resource_owner_id) && doorkeeper_token.respond_to?(:scopes)
             default_to_user_class = doorkeeper_token.scopes.include?('basic') || !Object.const_defined?(doorkeeper_token.scopes.first.classify) || doorkeeper_token.scopes.empty?
