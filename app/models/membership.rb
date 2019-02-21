@@ -22,7 +22,6 @@ class Membership < ActiveRecord::Base
     :pending
   end
 
-
   private
 
   def send_notifications

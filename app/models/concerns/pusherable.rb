@@ -6,10 +6,11 @@ module Pusherable
     after_destroy :delete_pusher_user, if: -> { pusher_id.present? }
   end
 
-  private
+  # private
 
   def create_pusher_user
     self.pusher_id = generated_pusher_id
+    self.save
     ChatkitService.new(self).create_user
   end
 
