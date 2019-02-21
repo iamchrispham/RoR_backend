@@ -38,7 +38,7 @@ module Api::V1
         when :hosting
           events = user.hosting_events.active
         when :attending
-          events = user.potentially_attending_events.where.not(user: user).active
+          events = user.attending_events.active
         end
 
         if user != current_api_user
