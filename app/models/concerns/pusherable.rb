@@ -19,6 +19,6 @@ module Pusherable
   end
 
   def generated_pusher_id
-    "#{self.class.name.underscore}_#{self.id}"
+    SecureRandom.uuid
   end
 end
