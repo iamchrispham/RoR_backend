@@ -355,7 +355,7 @@ GEM
       bourbon (>= 4.0)
       sass (>= 3.3)
     nested_form (0.3.2)
-    netaddr (2.0.3)
+    netaddr (2.0.4)
     netrc (0.11.0)
     newrelic_rpm (4.5.0.337)
     nokogiri (1.6.8.1)
