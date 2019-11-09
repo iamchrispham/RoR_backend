@@ -202,7 +202,7 @@ GEM
     country_select (3.1.1)
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
-    crass (1.0.2)
+    crass (1.0.5)
     css_parser (1.6.0)
       addressable
     daemons (1.2.4)
@@ -316,7 +316,7 @@ GEM
       letter_opener (~> 1.0)
       rails (>= 3.2)
     libxml-ruby (3.0.0)
-    loofah (2.1.1)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.6)
