@@ -259,7 +259,7 @@ GEM
       jquery-rails (>= 4.0.5, < 5.0.0)
       jquery-ui-rails (>= 5.0.2)
       momentjs-rails (>= 2.9.0)
-    geocoder (1.4.4)
+    geocoder (1.6.3)
     get_process_mem (0.2.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
