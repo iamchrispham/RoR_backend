@@ -177,7 +177,7 @@ GEM
     cancancan (2.0.0)
     case_transform (0.2)
       activesupport
-    chartkick (2.2.4)
+    chartkick (3.4.0)
     choice (0.2.0)
     climate_control (0.2.0)
     cocaine (0.5.8)
