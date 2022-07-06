@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/mhfs/devise-async.git
+  remote: https://github.com/mhfs/devise-async.git
   revision: 177f6363a002f7ff28f1d289c8cab7ad8d9cb8c5
   branch: devise-4.x
   specs:
@@ -202,7 +202,7 @@ GEM
     country_select (3.1.1)
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
-    crass (1.0.2)
+    crass (1.0.6)
     css_parser (1.6.0)
       addressable
     daemons (1.2.4)
@@ -316,7 +316,7 @@ GEM
       letter_opener (~> 1.0)
       rails (>= 3.2)
     libxml-ruby (3.0.0)
-    loofah (2.1.1)
+    loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.6)
@@ -328,7 +328,9 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mimemagic (0.3.2)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_portile2 (2.1.0)
     minitest (5.10.3)
     momentjs-rails (2.17.1)
@@ -456,8 +458,8 @@ GEM
       activesupport (>= 3.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.4.3)
+      loofah (~> 2.3)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
