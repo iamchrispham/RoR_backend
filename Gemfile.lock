@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/mhfs/devise-async.git
+  remote: https://github.com/mhfs/devise-async.git
   revision: 177f6363a002f7ff28f1d289c8cab7ad8d9cb8c5
   branch: devise-4.x
   specs:
@@ -281,7 +281,8 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     http_accept_language (2.1.1)
-    httparty (0.14.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     i18n (0.8.6)
     i18n_data (0.8.0)
@@ -328,7 +329,10 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mimemagic (0.3.2)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
+    mini_mime (1.1.2)
     mini_portile2 (2.1.0)
     minitest (5.10.3)
     momentjs-rails (2.17.1)
